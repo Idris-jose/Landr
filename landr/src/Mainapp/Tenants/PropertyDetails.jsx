@@ -192,6 +192,35 @@ const PropertyDetails = () => {
                   </div>
                 </div>
               </div>
+              
+                           {/* Requirements */}
+<div className="mb-6">
+  <h3 className="text-lg font-semibold mb-3">Tenant Requirements</h3>
+  <div className="grid grid-cols-2 gap-4">
+    <div>
+      <div className="text-sm text-gray-500">Religion</div>
+      <div className="font-medium">{property.requirements.religion}</div>
+    </div>
+    <div>
+      <div className="text-sm text-gray-500">Age</div>
+      <div className="font-medium">{property.requirements.age}</div>
+    </div>
+    <div>
+      <div className="text-sm text-gray-500">Occupation</div>
+      <div className="font-medium">{property.requirements.occupation}</div>
+    </div>
+    <div>
+      <div className="text-sm text-gray-500">Gender</div>
+      <div className="font-medium">{property.requirements.gender}</div>
+    </div>
+    {property.requirements.maritalStatus && (
+      <div className="col-span-2">
+        <div className="text-sm text-gray-500">Marital Status</div>
+        <div className="font-medium">{property.requirements.maritalStatus}</div>
+      </div>
+    )}
+  </div>
+</div>
 
               {/* Landlord Info */}
               <div className="mb-6">
@@ -208,6 +237,8 @@ const PropertyDetails = () => {
                   </div>
                 </div>
               </div>
+
+ 
 
               {/* Action Buttons */}
               <div className="space-y-3">

@@ -55,18 +55,18 @@ export default function Section1() {
       >
         <motion.div className='flex flex-col gap-6 max-w-4xl' variants={containerVariants}>
           <motion.h1 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+            className="text-4xl md:text-5xl lg:text-5xl font-bold leading-tight"
             variants={itemVariants}
           >
-            Find your next home without middlemen.
+            Find your perfect home straight from the source.
           </motion.h1>
           
           <motion.p 
             className="text-lg md:text-xl font-Poppins text-gray-500 leading-relaxed max-w-3xl"
             variants={itemVariants}
           >
-            Connect directly with landlords and tenants from the comfort of your home.<br />
-            No agents. No fees. Just honest housing.
+           
+            No agents. No extra fees. 
           </motion.p>
           
           <motion.div className="flex gap-4" variants={itemVariants}>
@@ -81,7 +81,7 @@ export default function Section1() {
         </motion.div>
 
         <motion.div 
-          className="flex flex-col md:flex-row gap-6 md:gap-4 items-start justify-items-start"
+          className="flex flex-col md:flex-row gap-10 md:gap-10 items-start justify-items-start"
           variants={containerVariants}
         >
           <motion.div className="flex-1 max-w-sm" variants={imageVariants}>

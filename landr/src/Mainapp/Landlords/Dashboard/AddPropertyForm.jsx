@@ -4,37 +4,44 @@ import { Save, X, Camera, Home, MapPin, Bed, Bath, DollarSign, Ruler, Sofa, PawP
 const AddPropertyForm = ({ onClose, onAdd }) => {
   const [formData, setFormData] = useState({
     type: '',
-    location: '',
+    state: '',
+  lga: '',
+  townCity: '',
     price: '',
     priceUnit: 'month',
     bedrooms: '',
     bathrooms: '',
     description: '',
-    images: [], // Changed from media to images to match dashboard expectations
+    images: [], 
     squareFootage: '',
     furnished: false,
     petFriendly: false,
     amenities: [],
     status: 'vacant',
-    tenant: '',
-    tenantPhone: '',
-    tenantEmail: '',
-    leaseStart: '',
-    leaseEnd: ''
+    religion: '',
+  occupation: '',
+  maritalStatus: '',
+  ageRange: '',
+  additionalRequirements: ''
   });
 
   const [mediaPreviews, setMediaPreviews] = useState([]);
   const [newAmenity, setNewAmenity] = useState('');
   const [activeSection, setActiveSection] = useState('basic');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!formData.type || !formData.location || !formData.price || !formData.bedrooms || !formData.bathrooms) {
-      alert('Please fill in all required fields');
-      return;
-    }
+ const handleSubmit = (e) => {
+  e.preventDefault();
+  if (!formData.type || !formData.state || !formData.lga || !formData.townCity || !formData.price || !formData.bedrooms || !formData.bathrooms) {
+    alert('Please fill in all required fields');
+    return;
+  }
+  
+  
+  const combinedLocation = `${formData.townCity}, ${formData.lga}, ${formData.state}`;
+  
     onAdd({
       ...formData,
+       location: combinedLocation,
       price: parseFloat(formData.price),
       bedrooms: parseInt(formData.bedrooms),
       bathrooms: parseFloat(formData.bathrooms),
@@ -152,22 +159,91 @@ const AddPropertyForm = ({ onClose, onAdd }) => {
                   <option value="Townhouse">Townhouse</option>
                 </select>
               </div>
-              
-              <div className="space-y-1">
-                <label className="block text-sm font-medium text-gray-700 flex items-center">
-                  <MapPin className="mr-2 h-4 w-4" />
-                  Location
-                </label>
-                <input
-                  type="text"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Enter address"
-                  required
-                />
-              </div>
+             <div className="space-y-1">
+  <label className="block text-sm font-medium text-gray-700 flex items-center">
+    <MapPin className="mr-2 h-4 w-4" />
+    State
+  </label>
+  <select
+    name="state"
+    value={formData.state}
+    onChange={handleChange}
+    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
+    required
+  >
+    <option value="">Select State</option>
+    <option value="lagos">Lagos</option>
+    <option value="abuja">Abuja (FCT)</option>
+    <option value="kano">Kano</option>
+    <option value="rivers">Rivers</option>
+    <option value="oyo">Oyo</option>
+    <option value="kaduna">Kaduna</option>
+    <option value="ogun">Ogun</option>
+    <option value="imo">Imo</option>
+    <option value="plateau">Plateau</option>
+    <option value="delta">Delta</option>
+    <option value="edo">Edo</option>
+    <option value="anambra">Anambra</option>
+    <option value="akwa-ibom">Akwa Ibom</option>
+    <option value="osun">Osun</option>
+    <option value="ondo">Ondo</option>
+    <option value="ekiti">Ekiti</option>
+    <option value="kwara">Kwara</option>
+    <option value="ogun">Ogun</option>
+    <option value="cross-river">Cross River</option>
+    <option value="abia">Abia</option>
+    <option value="enugu">Enugu</option>
+    <option value="bayelsa">Bayelsa</option>
+    <option value="benue">Benue</option>
+    <option value="borno">Borno</option>
+    <option value="adamawa">Adamawa</option>
+    <option value="gombe">Gombe</option>
+    <option value="taraba">Taraba</option>
+    <option value="yobe">Yobe</option>
+    <option value="bauchi">Bauchi</option>
+    <option value="katsina">Katsina</option>
+    <option value="sokoto">Sokoto</option>
+    <option value="kebbi">Kebbi</option>
+    <option value="niger">Niger</option>
+    <option value="zamfara">Zamfara</option>
+    <option value="jigawa">Jigawa</option>
+    <option value="kogi">Kogi</option>
+    <option value="nasarawa">Nasarawa</option>
+    <option value="ebonyi">Ebonyi</option>
+  </select>
+</div>
+
+<div className="space-y-1">
+  <label className="block text-sm font-medium text-gray-700 flex items-center">
+    <MapPin className="mr-2 h-4 w-4" />
+    LGA (Local Government Area)
+  </label>
+  <input
+    type="text"
+    name="lga"
+    value={formData.lga}
+    onChange={handleChange}
+    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
+    placeholder="Enter LGA"
+    required
+  />
+</div>
+
+<div className="space-y-1">
+  <label className="block text-sm font-medium text-gray-700 flex items-center">
+    <MapPin className="mr-2 h-4 w-4" />
+    Town/City
+  </label>
+  <input
+    type="text"
+    name="townCity"
+    value={formData.townCity}
+    onChange={handleChange}
+    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
+    placeholder="Enter town or city"
+    required
+  />
+</div>
               
               <div className="space-y-1">
                 <label className="block text-sm font-medium text-gray-700 flex items-center">
@@ -190,9 +266,10 @@ const AddPropertyForm = ({ onClose, onAdd }) => {
                     onChange={handleChange}
                     className="p-3 border border-l-0 border-gray-300 rounded-r-lg bg-gray-50 focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
                   >
-                    <option value="month">/month</option>
-                    <option value="week">/week</option>
-                    <option value="day">/day</option>
+                    <option value="bi annually">/bi annually</option>
+                    <option value="monthly">/monthly</option>
+                    <option value="quaterly">/quaterly</option>
+                      <option value="Yearly">/Yearly</option>
                   </select>
                 </div>
               </div>
@@ -355,85 +432,114 @@ const AddPropertyForm = ({ onClose, onAdd }) => {
           </div>
         );
       
-      case 'tenant':
-        return (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-1">
-                <label className="block text-sm font-medium text-gray-700 flex items-center">
-                  <User className="mr-2 h-4 w-4" />
-                  Tenant Name
-                </label>
-                <input
-                  type="text"
-                  name="tenant"
-                  value={formData.tenant}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
-                  placeholder="Enter tenant name"
-                />
-              </div>
-              
-              <div className="space-y-1">
-                <label className="block text-sm font-medium text-gray-700 flex items-center">
-                  <Phone className="mr-2 h-4 w-4" />
-                  Tenant Phone
-                </label>
-                <input
-                  type="tel"
-                  name="tenantPhone"
-                  value={formData.tenantPhone}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
-                  placeholder="Enter phone number"
-                />
-              </div>
-              
-              <div className="space-y-1">
-                <label className="block text-sm font-medium text-gray-700 flex items-center">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Tenant Email
-                </label>
-                <input
-                  type="email"
-                  name="tenantEmail"
-                  value={formData.tenantEmail}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
-                  placeholder="Enter email address"
-                />
-              </div>
-              
-              <div className="space-y-1">
-                <label className="block text-sm font-medium text-gray-700 flex items-center">
-                  <Calendar className="mr-2 h-4 w-4" />
-                  Lease Start Date
-                </label>
-                <input
-                  type="date"
-                  name="leaseStart"
-                  value={formData.leaseStart}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
-                />
-              </div>
-              
-              <div className="space-y-1">
-                <label className="block text-sm font-medium text-gray-700 flex items-center">
-                  <Calendar className="mr-2 h-4 w-4" />
-                  Lease End Date
-                </label>
-                <input
-                  type="date"
-                  name="leaseEnd"
-                  value={formData.leaseEnd}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
-                />
-              </div>
-            </div>
-          </div>
-        );
+      case 'requirements':
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-1">
+          <label className="block text-sm font-medium text-gray-700 flex items-center">
+            <User className="mr-2 h-4 w-4" />
+            Religion
+          </label>
+          <select
+            name="religion"
+            value={formData.religion}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
+          >
+            <option value="" disabled>Select Religion</option>
+            <option value="christianity">Christianity</option>
+            <option value="islam">Islam</option>
+            <option value="judaism">Judaism</option>
+            <option value="hinduism">Hinduism</option>
+            <option value="buddhism">Buddhism</option>
+            <option value="other">Other</option>
+            <option value="none">No Preference</option>
+          </select>
+        </div>
+        
+        <div className="space-y-1">
+          <label className="block text-sm font-medium text-gray-700 flex items-center">
+            <User className="mr-2 h-4 w-4" />
+            Occupation
+          </label>
+          <select
+            name="occupation"
+            value={formData.occupation}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
+          >
+            <option value="" disabled>Select Occupation</option>
+            <option value="student">Student</option>
+            <option value="employed">Employed</option>
+            <option value="self-employed">Self-Employed</option>
+            <option value="retired">Retired</option>
+            <option value="unemployed">Unemployed</option>
+            <option value="other">Other</option>
+            <option value="none">No Preference</option>
+          </select>
+        </div>
+        
+        <div className="space-y-1">
+          <label className="block text-sm font-medium text-gray-700 flex items-center">
+            <User className="mr-2 h-4 w-4" />
+            Marital Status
+          </label>
+          <select
+            name="maritalStatus"
+            value={formData.maritalStatus}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
+          >
+            <option value="" disabled>Select Marital Status</option>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+            <option value="divorced">Divorced</option>
+            <option value="widowed">Widowed</option>
+            <option value="separated">Separated</option>
+            <option value="none">No Preference</option>
+          </select>
+        </div>
+        
+        <div className="space-y-1">
+          <label className="block text-sm font-medium text-gray-700 flex items-center">
+            <Calendar className="mr-2 h-4 w-4" />
+            Age Range
+          </label>
+          <select
+            name="ageRange"
+            value={formData.ageRange}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
+          >
+            <option value="" disabled>Select Age Range</option>
+            <option value="18-25">18-25 years</option>
+            <option value="26-35">26-35 years</option>
+            <option value="36-45">36-45 years</option>
+            <option value="46-55">46-55 years</option>
+            <option value="56-65">56-65 years</option>
+            <option value="65+">65+ years</option>
+            <option value="none">No Preference</option>
+          </select>
+        </div>
+      </div>
+      
+      <div className="space-y-1">
+        <label className="block text-sm font-medium text-gray-700 flex items-center">
+          <User className="mr-2 h-4 w-4" />
+          Additional Requirements
+        </label>
+        <textarea
+          name="additionalRequirements"
+          value={formData.additionalRequirements}
+          onChange={handleChange}
+          rows="3"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
+          placeholder="Any other specific requirements or preferences..."
+        />
+      </div>
+    </div>
+  );
       
     case 'images':
         return (
@@ -532,10 +638,10 @@ const AddPropertyForm = ({ onClose, onAdd }) => {
                 Amenities
               </button>
               <button
-                onClick={() => setActiveSection('tenant')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${activeSection === 'tenant' ? 'border-[#02D482] text-[#02D482]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                onClick={() => setActiveSection('requirements')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${activeSection === 'requirements' ? 'border-[#02D482] text-[#02D482]' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
               >
-                Tenant Info
+             requirements
               </button>
               <button
                 onClick={() => setActiveSection('images')}
@@ -576,7 +682,7 @@ const AddPropertyForm = ({ onClose, onAdd }) => {
                 <button
                   type="button"
                   onClick={() => setActiveSection(prev => {
-                    const sections = ['basic', 'amenities', 'tenant', 'images'];
+                    const sections = ['basic', 'amenities', 'Reguirements', 'images'];
                     const currentIndex = sections.indexOf(prev);
                     return sections[currentIndex + 1];
                   })}

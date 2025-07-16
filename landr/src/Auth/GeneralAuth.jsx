@@ -7,17 +7,8 @@ import axios from 'axios';
 
 export default function GeneralAuth() {
     const navigate = useNavigate();
-    const [accountType, setAccountType] = useState('tenant');
+    const [accountType, setAccountType] = useState('');
 
-    // const [formData, setFormData] = useState({
-    //     firstName: '',
-    //     lastName: '',
-    //     email: '',
-    //     password: '',
-    //     confirmPassword: '',
-    //     termsAccepted: false,
-    //     privacyAccepted: false
-    // });
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -30,13 +21,6 @@ export default function GeneralAuth() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const handleInputChangev = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: type === 'checkbox' ? checked : value
-        }));
-    };
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData((prev) => ({
@@ -44,33 +28,128 @@ export default function GeneralAuth() {
             [name]: type === 'checkbox' ? checked : value,
         }));
     };
-
-    const NavigateUser = async (role) => {
+ const NavigateUser = async (role) => {
         switch (role) {
             case 'tenant':
-                navigate('/TenantsMainapp');
+            return    navigate('/TenantsMainapp');
 
                 break
+                case 'landlord':
+              return  navigate('/LandlordMainapp');
+
             default:
                 navigate('')
         }
     }
+    // const handleLogin = async (e) => {
+    //     e.preventDefault();
+    //     setIsLoading(true);
+    //     setError('');
 
-    const handleLoginn = async (e) => {
-        e.preventDefault();
-        setError('');
+    //     // Basic validation
+    //     if (formData.password !== formData.confirmPassword) {
+    //         setError("Passwords do not match.");
+    //         setIsLoading(false);
+    //         return;
+    //     }
 
-        // Skip API logic, just route based on accountType
-        if (accountType === 'tenant') {
-            navigate('/TenantsMainapp');
-        } else if (accountType === 'landlord') {
-            navigate('/LandlordMainapp');
-        } else if (accountType === 'enterprise') {
-            navigate('/EnterpriseMainapp');
-        }
-    };
+    //     // API LOGIC - COMMENTED OUT
+        
+    //     const payload = {
+    //         firstName: formData.firstName,
+    //         lastName: formData.lastName,
+    //         email: formData.email,
+    //         password: formData.password,
+    //         role: accountType,
+    //     };
 
-    const handleLogin = async (e) => {
+    //     try {
+    //         const response = await fetch('https://landrentals.azurewebsites.net/api/Authentications/CreateUser', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Accept': 'application/json',
+    //             },
+    //             body: JSON.stringify(payload)
+    //         });
+
+    //         console.log('Response status:', response.status);
+    //         console.log('Response ok:', response.ok);
+    //         console.log('Payload sent:', JSON.stringify(payload));
+
+    //         // Check if response is ok first
+    //         if (!response.ok) {
+    //             // Try to get error message from response
+    //             let errorMessage = `HTTP error! status: ${response.status}`;
+    //             try {
+    //                 const errorData = await response.json();
+    //                 errorMessage = errorData.message || errorMessage;
+    //             } catch (jsonError) {
+    //                 // If JSON parsing fails, use the text content
+    //                 const errorText = await response.text();
+    //                 errorMessage = errorText || errorMessage;
+    //             }
+    //             throw new Error(errorMessage);
+    //         }
+
+    //         // Parse JSON response
+    //         const data = await response.json();
+    //         console.log('Success:', data);
+
+    //         // Check if the response contains an error message
+    //         if (data.error || data.message) {
+    //             throw new Error(data.error || data.message);
+    //         }
+
+    //         // Success - navigate user
+    //         if (accountType === 'tenant') {
+    //             navigate('/TenantsMainapp');
+    //         } else if (accountType === 'landlord') {
+    //             navigate('/LandlordMainapp');
+    //         } else if (accountType === 'enterprise') {
+    //             navigate('/EnterpriseMainapp');
+    //         }
+            
+    //     } catch (err) {
+    //         console.error('Error details:', {
+    //             name: err.name,
+    //             message: err.message,
+    //             stack: err.stack,
+    //         });
+            
+    //         // Handle different types of errors
+    //         if (err.name === 'TypeError' && err.message.includes('fetch')) {
+    //             setError('Network error. Please check your internet connection.');
+    //         } else if (err.message.includes('JSON')) {
+    //             setError('Server response error. Please try again.');
+    //         } else {
+    //             setError(err.message || 'Something went wrong. Please try again.');
+    //         }
+    //     } finally {
+    //         setIsLoading(false);
+    //     }
+        
+
+      
+    //     try {
+    //         if (accountType === 'tenant') {
+    //             navigate('/TenantsMainapp');
+    //         } else if (accountType === 'landlord') {
+    //             navigate('/LandlordMainapp');
+    //         } else if (accountType === 'enterprise') {
+    //             navigate('/EnterpriseMainapp');
+    //         } else {
+    //             setError('Please select an account type');
+    //             setIsLoading(false);
+    //             return;
+    //         }
+    //     } catch (err) {
+    //         setError('Navigation failed. Please try again.');
+    //     } finally {
+    //         setIsLoading(false);
+    //     }
+    // };
+const handleLogin = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         setError('');
@@ -199,6 +278,7 @@ export default function GeneralAuth() {
                             className="border-gray-300 border rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#02D482] transition-all"
                             value={accountType}
                         >
+                            <option value="">Select account type</option>
                             <option value="tenant">Tenant</option>
                             <option value="landlord">Landlord</option>
                             <option value="enterprise">Enterprise</option>
@@ -265,9 +345,7 @@ export default function GeneralAuth() {
 
                     <button
                         className={`rounded-[100px] ${isLoading ? 'bg-gray-400' : 'bg-[#02D482]'} text-white px-4 py-3 text-[13px] font-Poppins`}
-                        // type='        '
                         type='submit'
-
                         disabled={isLoading}
                     >
                         {isLoading ? 'Creating Account...' : 'Next'}

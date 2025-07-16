@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Plus, Edit, Eye, Home, MapPin, Bed, Bath, DollarSign, X } from 'lucide-react';
 import EditPropertyForm from './EditPropertyForm';
 import AddPropertyForm from './AddPropertyForm';
-import { mockProperties } from './mockProperties';
+import PropertyDetailView from './PropertyDetailView'; 
 
-// Status Badge Component
+
 const StatusBadge = ({ status }) => {
   const statusColors = {
     vacant: 'bg-green-100 text-green-800',
@@ -13,24 +13,24 @@ const StatusBadge = ({ status }) => {
   };
   
   return (
-    <span>
-  {status ? status.charAt(0).toUpperCase() + status.slice(1) : ''}
-</span>
+    <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[status] || 'bg-gray-100 text-gray-800'}`}>
+      {status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Unknown'}
+    </span>
   );
 };
 
-// Property Card Component
-const PropertyCard = ({ property, onSelect, onEdit, onDelete }) => {
 
-   const images = property.images || [];
+const PropertyCard = ({ property, onSelect, onEdit, onDelete }) => {
+  const images = property.images || [];
   const mainImage = images[0] || { 
     url: '/placeholder-property.jpg', 
     description: 'Property image' 
   };
+  
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       <div className="relative">
-             <img
+        <img
           src={mainImage.url}
           alt={mainImage.description}
           className="w-full h-48 object-cover"
@@ -39,7 +39,7 @@ const PropertyCard = ({ property, onSelect, onEdit, onDelete }) => {
             e.target.alt = 'Property image';
           }}
         />
-        <div className="absolute bg-[#02D482] text-white rounded-full px-4 py-2 top-2 right-2">
+        <div className="absolute top-2 right-2">
           <StatusBadge status={property.status} />
         </div>
       </div>
@@ -58,28 +58,25 @@ const PropertyCard = ({ property, onSelect, onEdit, onDelete }) => {
           {property.location}
         </p>
 
-    <div className="flex space-x-4 text-sm text-gray-600">
-             <span className="flex items-center">
-              <Bed size={14} className="mr-1" />
-              {property.bedrooms}
-            </span>
-            <span className="flex items-center">
-              <Bath size={14} className="mr-1" />
-              {property.bathrooms}
-            </span>
-          </div>
-       
+        <div className="flex space-x-4 text-sm text-gray-600">
+          <span className="flex items-center">
+            <Bed size={14} className="mr-1" />
+            {property.bedrooms}
+          </span>
+          <span className="flex items-center">
+            <Bath size={14} className="mr-1" />
+            {property.bathrooms}
+          </span>
+        </div>
         
         <div className="flex justify-between items-center mt-4">
-      
-          
           <div className="flex space-x-2">
             <button 
               onClick={(e) => {
                 e.stopPropagation();
                 onDelete(property);
               }}
-              className="px-3 bg-red-600 font-Poppins rounded text-white hover:bg-red-700 "
+              className="px-3 bg-red-600 font-Poppins rounded text-white hover:bg-red-700"
               aria-label="delete property"
             >
               Delete lease
@@ -111,7 +108,7 @@ const PropertyCard = ({ property, onSelect, onEdit, onDelete }) => {
   );
 };
 
-// Search and Filter Component
+// Search and Filter Component (unchanged)
 const SearchAndFilter = ({ onSearch, onFilter }) => {
   const [searchTerm, setSearchTerm] = useState('');
   
@@ -161,131 +158,23 @@ const SearchAndFilter = ({ onSearch, onFilter }) => {
   );
 };
 
-const DetailModal = ({ property, onClose, onEdit, onDelete }) => {
-  if (!property) return null;
-  
-  // Safely handle images array
-  const images = property.images || [];
-  const mainImage = images[0] || { 
-    url: '/placeholder-property.jpg', 
-    description: 'Property image' 
-  };
-  
+
+const EmptyState = ({ onAddProperty }) => {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white p-4 border-b flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-gray-800">{property.type} Details</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <X size={24} />
-          </button>
-        </div>
-        
-        <div className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <img 
-                src={mainImage.url} 
-                alt={mainImage.description || 'Property image'} 
-                className="w-full h-64 object-cover rounded-lg"
-                onError={(e) => {
-                  e.target.src = '/placeholder-property.jpg';
-                  e.target.alt = 'Property image';
-                }}
-              />
-              <div className="grid grid-cols-3 gap-2 mt-2">
-                {images.slice(0, 3).map((img, idx) => (
-                  <img 
-                    key={idx} 
-                    src={img.url} 
-                    alt={img.description || `Property image ${idx + 1}`} 
-                    className="h-20 w-full object-cover rounded"
-                    onError={(e) => {
-                      e.target.src = '/placeholder-property.jpg';
-                      e.target.alt = `Property image ${idx + 1}`;
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-            
-            <div>
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-xl font-semibold">{property.type}</h3>
-                  <p className="text-gray-600 flex items-center">
-                    <MapPin size={14} className="mr-1" />
-                    {property.location}
-                  </p>
-                </div>
-                <StatusBadge status={property.status} />
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="text-sm text-gray-500">Price</p>
-                  <p className="font-medium flex items-center">
-                    <DollarSign size={16} className="mr-1" />
-                    {property.price}/{property.priceUnit}
-                  </p>
-                </div>
-                <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="text-sm text-gray-500">Bedrooms</p>
-                  <p className="font-medium flex items-center">
-                    <Bed size={16} className="mr-1" />
-                    {property.bedrooms}
-                  </p>
-                </div>
-                <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="text-sm text-gray-500">Bathrooms</p>
-                  <p className="font-medium flex items-center">
-                    <Bath size={16} className="mr-1" />
-                    {property.bathrooms}
-                  </p>
-                </div>
-                <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="text-sm text-gray-500">Area</p>
-                  <p className="font-medium">{property.squareFootage || property.area || 'N/A'} sqft</p>
-                </div>
-              </div>
-              
-              <div className="mb-4">
-                <h4 className="font-medium mb-2">Description</h4>
-                <p className="text-gray-600">{property.description || 'No description provided.'}</p>
-              </div>
-              
-              <div className="mb-4">
-                <h4 className="font-medium mb-2">Amenities</h4>
-                <div className="flex flex-wrap gap-2">
-                  {property.amenities?.length > 0 ? (
-                    property.amenities.map((amenity, idx) => (
-                      <span key={idx} className="bg-blue-50 text-[#02D482] px-3 py-1 rounded-full text-sm">
-                        {amenity}
-                      </span>
-                    ))
-                  ) : (
-                    <p className="text-gray-500">No amenities listed</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="flex justify-end space-x-3 border-t pt-4">
-            <button
-              onClick={onClose}
-              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              Close
-            </button>
-            <button
-              onClick={() => onEdit(property)}
-              className="px-4 py-2 bg-[#02D482] text-white rounded-lg hover:bg-[#02D482] transition-colors"
-            >
-              Edit Property
-            </button>
-          </div>
-        </div>
+    <div className="bg-white rounded-xl shadow-md p-12 text-center">
+      <div className="max-w-md mx-auto">
+        <Home size={64} className="mx-auto text-gray-400 mb-6" />
+        <h3 className="text-2xl font-semibold text-gray-900 mb-3">No Properties Yet</h3>
+        <p className="text-gray-600 mb-6">
+          Get started by adding your first property to the dashboard. You can manage all your rental properties from here.
+        </p>
+        <button
+          onClick={onAddProperty}
+          className="inline-flex items-center gap-2 bg-[#02D482] text-white px-6 py-3 rounded-lg hover:bg-[#02c075] transition-colors font-medium"
+        >
+          <Plus size={20} />
+          Add Your First Property
+        </button>
       </div>
     </div>
   );
@@ -293,11 +182,12 @@ const DetailModal = ({ property, onClose, onEdit, onDelete }) => {
 
 // Main Dashboard Component
 const LandlordDashboard = () => {
-  const [properties, setProperties] = useState(mockProperties);
-  const [filteredProperties, setFilteredProperties] = useState(mockProperties);
+  const [properties, setProperties] = useState([]);
+  const [filteredProperties, setFilteredProperties] = useState([]);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const [viewMode, setViewMode] = useState(false); // New state for view mode
 
   const handleSearch = (term) => {
     if (!term) {
@@ -327,18 +217,21 @@ const LandlordDashboard = () => {
 
   const handleSelectProperty = (property) => {
     setSelectedProperty(property);
+    setViewMode(true); // Set view mode to true when viewing details
     setIsEditing(false);
     setIsAdding(false);
   };
 
   const handleCloseDetail = () => {
     setSelectedProperty(null);
+    setViewMode(false);
     setIsEditing(false);
     setIsAdding(false);
   };
 
   const handleEditProperty = (property) => {
     setSelectedProperty(property);
+    setViewMode(false);
     setIsEditing(true);
     setIsAdding(false);
   };
@@ -352,27 +245,38 @@ const LandlordDashboard = () => {
     );
     setSelectedProperty(updatedProperty);
     setIsEditing(false);
+    setViewMode(true); // Switch back to view mode after editing
   };
 
   const handleAddProperty = (newProperty) => {
     const newId = properties.length > 0 ? Math.max(...properties.map(p => p.id)) + 1 : 1;
-    const propertyWithId = { ...newProperty, id: newId };
+    const propertyWithId = { 
+      ...newProperty, 
+      id: newId,
+      status: newProperty.status || 'vacant'
+    };
     setProperties(prev => [...prev, propertyWithId]);
     setFilteredProperties(prev => [...prev, propertyWithId]);
     setSelectedProperty(propertyWithId);
     setIsAdding(false);
+    setViewMode(true); // Show the newly added property in view mode
   };
 
   const handleStartAdd = () => {
     setIsAdding(true);
     setSelectedProperty(null);
     setIsEditing(false);
+    setViewMode(false);
   };
 
   const handleDelete = (propertyToDelete) => {
-    setProperties(prev => prev.filter(prop => prop.id !== propertyToDelete.id))
-    setFilteredProperties(prev => prev.filter(prop => prop.id !== propertyToDelete.id))
-  }
+    setProperties(prev => prev.filter(prop => prop.id !== propertyToDelete.id));
+    setFilteredProperties(prev => prev.filter(prop => prop.id !== propertyToDelete.id));
+    if (selectedProperty && selectedProperty.id === propertyToDelete.id) {
+      setSelectedProperty(null);
+      setViewMode(false);
+    }
+  };
 
   return (
     <div className="">
@@ -391,19 +295,23 @@ const LandlordDashboard = () => {
           </button>
         </div>
 
-        <SearchAndFilter 
-          onSearch={handleSearch} 
-          onFilter={handleFilter} 
-        />
+        {properties.length > 0 && (
+          <SearchAndFilter 
+            onSearch={handleSearch} 
+            onFilter={handleFilter} 
+          />
+        )}
 
-        {filteredProperties.length === 0 ? (
+        {properties.length === 0 ? (
+          <EmptyState onAddProperty={handleStartAdd} />
+        ) : filteredProperties.length === 0 ? (
           <div className="bg-white rounded-xl shadow p-8 text-center">
             <Home size={48} className="mx-auto text-gray-400 mb-4" />
             <h3 className="text-xl font-medium text-gray-900 mb-2">No properties found</h3>
             <p className="text-gray-500 mb-4">Try adjusting your search or add a new property</p>
             <button
               onClick={handleStartAdd}
-              className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center gap-2 bg-[#02D482] text-white px-4 py-2 rounded-lg hover:bg-[#02c075] transition-colors"
             >
               <Plus size={20} />
               Add Property
@@ -423,8 +331,9 @@ const LandlordDashboard = () => {
           </div>
         )}
 
-        {selectedProperty && !isEditing && !isAdding && (
-          <DetailModal
+        {/* Property Detail View Modal */}
+        {viewMode && selectedProperty && (
+          <PropertyDetailView
             property={selectedProperty}
             onClose={handleCloseDetail}
             onEdit={handleEditProperty}

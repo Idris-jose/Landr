@@ -1,11 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { MoveLeft, Camera, Upload } from 'lucide-react';
+import { MoveLeft, Camera, Upload,ArrowLeft } from 'lucide-react';
 
 export default function Profile() {
     const navigate = useNavigate();
   return (
     <div className="bg-white min-h-screen p-6 max-w-4xl mx-auto">
-    
+     <button 
+          onClick={() => navigate("/TenantsMainapp")}
+          className="flex items-center gap-2 font-Poppins text-gray-700 hover:text-[#02D482] transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          <span >Back</span>
+        </button>
       
       <div className="mb-10">
         <h2 className="text-xl font-semibold mb-4">Settings</h2>

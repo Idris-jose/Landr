@@ -34,6 +34,93 @@ export default function Onboarding() {
             />
           </div>
           
+           <label className="block text-sm font-medium text-gray-700 items-center">
+ 
+    State
+  </label>
+  <select
+    name="state"
+    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
+    required
+  >
+    <option value="">Select State</option>
+    <option value="lagos">Lagos</option>
+    <option value="abuja">Abuja (FCT)</option>
+    <option value="kano">Kano</option>
+    <option value="rivers">Rivers</option>
+    <option value="oyo">Oyo</option>
+    <option value="kaduna">Kaduna</option>
+    <option value="ogun">Ogun</option>
+    <option value="imo">Imo</option>
+    <option value="plateau">Plateau</option>
+    <option value="delta">Delta</option>
+    <option value="edo">Edo</option>
+    <option value="anambra">Anambra</option>
+    <option value="akwa-ibom">Akwa Ibom</option>
+    <option value="osun">Osun</option>
+    <option value="ondo">Ondo</option>
+    <option value="ekiti">Ekiti</option>
+    <option value="kwara">Kwara</option>
+    <option value="ogun">Ogun</option>
+    <option value="cross-river">Cross River</option>
+    <option value="abia">Abia</option>
+    <option value="enugu">Enugu</option>
+    <option value="bayelsa">Bayelsa</option>
+    <option value="benue">Benue</option>
+    <option value="borno">Borno</option>
+    <option value="adamawa">Adamawa</option>
+    <option value="gombe">Gombe</option>
+    <option value="taraba">Taraba</option>
+    <option value="yobe">Yobe</option>
+    <option value="bauchi">Bauchi</option>
+    <option value="katsina">Katsina</option>
+    <option value="sokoto">Sokoto</option>
+    <option value="kebbi">Kebbi</option>
+    <option value="niger">Niger</option>
+    <option value="zamfara">Zamfara</option>
+    <option value="jigawa">Jigawa</option>
+    <option value="kogi">Kogi</option>
+    <option value="nasarawa">Nasarawa</option>
+    <option value="ebonyi">Ebonyi</option>
+  </select>
+
+  <label className="block text-sm font-medium text-gray-700  items-center">
+            
+              Religion
+            </label>
+            <select
+              name="religion"
+         
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
+            >
+              <option value="" disabled>Select Religion</option>
+              <option value="christianity">Christianity</option>
+              <option value="islam">Islam</option>
+              <option value="judaism">Judaism</option>
+              <option value="hinduism">Hinduism</option>
+              <option value="buddhism">Buddhism</option>
+              <option value="other">Other</option>
+              <option value="none">No Preference</option>
+            </select>
+
+             <label className="block text-sm font-medium text-gray-700  items-center">
+                    
+                        Occupation
+                      </label>
+                      <select
+                        name="occupation"
+                     
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02D482] focus:border-transparent"
+                      >
+                        <option value="" disabled>Select Occupation</option>
+                        <option value="student">Student</option>
+                        <option value="employed">Employed</option>
+                        <option value="self-employed">Self-Employed</option>
+                        <option value="retired">Retired</option>
+                        <option value="unemployed">Unemployed</option>
+                        <option value="other">Other</option>
+                        <option value="none">No Preference</option>
+                      </select>
           <div>
             <label className="block text-sm font-medium font-Poppins text-gray-700 mb-1">Street of Residence</label>
             <input

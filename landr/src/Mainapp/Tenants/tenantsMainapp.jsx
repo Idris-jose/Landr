@@ -6,6 +6,7 @@ import ContactLandlord from './Contactlandlord.jsx';
 import { MapPin, User, CheckCircle, Search, Star, Heart, X } from 'lucide-react';
 
 const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord }) => {
+  const navigate = useNavigate();
   // Use the first imported image as the display image
   const displayImage = property.images && property.images.length > 0 
     ? property.images[0].url 
@@ -14,7 +15,12 @@ const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord }) =>
   return (
     <div className="group cursor-pointer">
       {/* Image Container */}
-      <div className="relative h-64 bg-gray-200 rounded-xl overflow-hidden mb-3">
+      <div 
+      onClick={(e) => {
+                e.stopPropagation();
+                onMoreInfo(property);
+              }}
+      className="relative h-64 bg-gray-200 rounded-xl  overflow-hidden mb-3">
         <img
           src={displayImage}
           alt={`${property.type} in ${property.location}`}
@@ -207,7 +213,7 @@ const TenantsMainapp = () => {
         />
       )}
      
-      {/* Setup Modal - only shows when explicitly triggered */}
+     
       {showSetupModal && (
         <div className="fixed inset-0 bg-gray-600/70 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl p-6 max-w-md w-full relative">
@@ -258,7 +264,9 @@ const TenantsMainapp = () => {
             />
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+            <div 
+            onClick={()=>{navigate("/TenantsMainapp/profile")}}
+            className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
               <User className="w-4 h-4 text-gray-600" />
             </div>
           </div>

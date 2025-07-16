@@ -22,7 +22,7 @@ export default function LandlordMainapp() {
     <>
       <div className="flex flex-col items-center justify-center min-h-screen bg-white">
         {showmodel && (
-          <div className="fixed inset-0 bg-gray-600/70 flex items-center justify-center z-50 p-4">
+          <div className="fixed inset-0 bg-gray-600/50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-xl p-6 max-w-md w-full relative">
               <div className="flex items-center justify-between mb-6">
                 <button
@@ -51,7 +51,7 @@ export default function LandlordMainapp() {
                 </button>
                 <button
                   onClick={handleKycComplete}
-                  className="mt-2 bg-gray-300 text-gray-800 py-2 rounded font-Poppins font-medium hover:bg-gray-400 transition-colors"
+                  className="mt-2 bg-gray-300 text-gray-800 py-3 rounded-full font-Poppins font-medium hover:bg-gray-400 transition-colors"
                 >
                   Skip KYC (Demo)
                 </button>
