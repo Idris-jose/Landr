@@ -43,7 +43,7 @@ export default function Navbar() {
         setError('');
 
         try {
-            const response = await fetch('/api/api/Authentications/UserLogin', {
+            const response = await fetch('https://landrentals.azurewebsites.net/api/Authentications/UserLogin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
