@@ -4,8 +4,11 @@ import Frame2 from '../assets/Frame2.png';
 import Frame3 from '../assets/Frame 3.png';
 import { useNavigate } from 'react-router-dom';
 import { Element } from 'react-scroll';
+import {MapPin, BedSingle, Wallet } from 'lucide-react';
+import Citysearch from './modals/citysearch';
+import { useState } from 'react';
 
-// Animation variants
+// An
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -41,8 +44,22 @@ const imageVariants = {
   }
 };
 
+
 export default function Section1() {
   const navigate = useNavigate();
+  const [showCitySearch, setShowCitySearch] = useState(false);
+
+  const handleCitySearch = () => {
+    setShowCitySearch(true);
+    
+   
+}
+  const handleBedSearch = () => {
+  // Logic for searching by bed
+  }
+  const handleBudgetSearch = () => {
+    // Logic for searching by budget
+  }
   
   return (
     <Element name="section1">
@@ -55,10 +72,10 @@ export default function Section1() {
       >
         <motion.div className='flex flex-col gap-6 max-w-4xl' variants={containerVariants}>
           <motion.h1 
-            className="text-4xl md:text-5xl lg:text-5xl font-bold leading-tight"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
             variants={itemVariants}
           >
-            Find your perfect home straight from the source.
+          Find your next home without  middlemen.
           </motion.h1>
           
           <motion.p 
@@ -66,18 +83,28 @@ export default function Section1() {
             variants={itemVariants}
           >
            
-            No agents. No extra fees. 
+        Connect directly with landlords and tenants from the comfort of your home. No agents. No fees. Just honest housing.
           </motion.p>
           
-          <motion.div className="flex gap-4" variants={itemVariants}>
-            <button
-              onClick={() => navigate('/signup')}
-              className="rounded-[100px] bg-[#02D482] text-white px-6 py-3 text-sm font-Poppins hover:bg-[#02C478] transition-colors w-fit"
-              style={{ width: '180px' }}
-            >
-              Get started
+          <div className='flex font-Poppins flex-col md:flex-row gap-4 items-start md:items-center'>
+            <button 
+            onClick={handleCitySearch}
+            className='border-2 border-[#02D482] rounded-full px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'>
+              <MapPin className='w-5 h-5'/> City
             </button>
-          </motion.div>
+            <button className='border-2 border-[#02D482] rounded-full px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'>
+              <BedSingle className='w-5 h-5'/> Bed
+            </button>
+            <button className='border-2 border-[#02D482] rounded-full px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'>
+              <Wallet className='w-5 h-5'/> Budget
+            </button>
+
+             <button className=' bg-[#02D482] rounded-full px-10 py-2 text-white hover:bg-green-700 transition-colors duration-200'>
+              Find your ideal Home
+            </button>
+          </div>
+          {showCitySearch && <Citysearch onClose={() => setShowCitySearch(false)} />}
+        
         </motion.div>
 
         <motion.div 

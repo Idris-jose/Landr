@@ -249,7 +249,7 @@ const TenantsMainapp = () => {
       )}
 
       {/* Navbar */}
-      <nav className='flex justify-between items-center bg-white px-8 py-4 shadow-sm border-b'>
+       <nav className='flex justify-between items-center bg-white px-8 py-4 shadow-sm border-b'>
         <div className="flex items-center">
           <img src={logo} className='w-20' alt="Logo" />
         </div>
