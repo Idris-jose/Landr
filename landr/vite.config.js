@@ -19,7 +19,7 @@ export default defineConfig({
       '/api': {
         target: 'https://landrentals.azurewebsites.net',
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, ''),
+        // rewrite: path => path.replace(/^\/api/, ''),
       },
     },
   },
