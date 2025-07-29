@@ -5,8 +5,10 @@ import Frame3 from '../assets/Frame 3.png';
 import { useNavigate } from 'react-router-dom';
 import { Element } from 'react-scroll';
 import {MapPin, BedSingle, Wallet } from 'lucide-react';
+import BudgetSlider from './modals/BudgetSlider';
 import Citysearch from './modals/citysearch';
-import { useState } from 'react';
+import Bedsearch from './modals/bedsearch';
+import { useState, useRef } from 'react';
 
 // An
 const containerVariants = {
@@ -46,25 +48,67 @@ const imageVariants = {
 
 
 export default function Section1() {
-  const navigate = useNavigate();
   const [showCitySearch, setShowCitySearch] = useState(false);
+  const [showBedSearch, setShowBedSearch] = useState(false);
+  const [showBudgetSearch, setShowBudgetSearch] = useState(false);
+  
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedBed, setSelectedBed] = useState(null);
+  const [budgetRange, setBudgetRange] = useState({
+    min: 50000,
+    max: 500000
+  });
+
+  const cityButtonRef = useRef(null);
+  const bedButtonRef = useRef(null);
+  const budgetButtonRef = useRef(null);
+
 
   const handleCitySearch = () => {
     setShowCitySearch(true);
-    
-   
-}
+    setShowBedSearch(false); // Close other modal
+  };
+
   const handleBedSearch = () => {
-  // Logic for searching by bed
-  }
-  const handleBudgetSearch = () => {
-    // Logic for searching by budget
-  }
-  
-  return (
-    <Element name="section1">
+    setShowBedSearch(true);
+    setShowCitySearch(false); // Close other modal
+  };
+
+ const handleBudgetSearch = () => {
+  setShowBudgetSearch(true);
+  setShowCitySearch(false);
+  setShowBedSearch(false);
+};
+
+ const handleCitySelect = (city) => {
+    setSelectedCity(city);
+    setShowCitySearch(false);
+  };
+
+  const handleBedSelect = (bed) => {
+    setSelectedBed(bed);
+    setShowBedSearch(false);
+  };
+
+
+   const handleBudgetChange = (min, max) => {
+    setBudgetRange({ min, max });
+  };
+
+  // Format currency for budget display
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
+
+   return (
+    <section name="section1">
       <motion.section 
-        className='flex flex-col gap-12 px-6 md:px-10 py-8 md:py-12'
+        className='flex flex-col gap-12 px-6 md:px-10 py-8 md:py-12 relative'
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -75,36 +119,82 @@ export default function Section1() {
             className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
             variants={itemVariants}
           >
-          Find your next home without  middlemen.
+            Find your next home without middlemen.
           </motion.h1>
           
           <motion.p 
             className="text-lg md:text-xl font-Poppins text-gray-500 leading-relaxed max-w-3xl"
             variants={itemVariants}
           >
-           
-        Connect directly with landlords and tenants from the comfort of your home. No agents. No fees. Just honest housing.
+            Connect directly with landlords and tenants from the comfort of your home. No agents. No fees. Just honest housing.
           </motion.p>
           
-          <div className='flex font-Poppins flex-col md:flex-row gap-4 items-start md:items-center'>
+          <div className='flex font-Poppins flex-col md:flex-row gap-4 items-start md:items-center relative'>
+           <div className='flex font-Poppins flex-col md:flex-row gap-4 items-start md:items-center relative'>
+          {/* City Button */}
+          <div className="relative">
             <button 
-            onClick={handleCitySearch}
-            className='border-2 border-[#02D482] rounded-full px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'>
-              <MapPin className='w-5 h-5'/> City
+              ref={cityButtonRef}
+              onClick={handleCitySearch}
+              className='border-2 border-[#02D482] rounded-full px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'
+            >
+              <MapPin className='w-5 h-5'/> 
+              {selectedCity || 'City'}
             </button>
-            <button className='border-2 border-[#02D482] rounded-full px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'>
-              <BedSingle className='w-5 h-5'/> Bed
-            </button>
-            <button className='border-2 border-[#02D482] rounded-full px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'>
-              <Wallet className='w-5 h-5'/> Budget
-            </button>
-
-             <button className=' bg-[#02D482] rounded-full px-10 py-2 text-white hover:bg-green-700 transition-colors duration-200'>
-              Find your ideal Home
-            </button>
+            {showCitySearch && (
+              <Citysearch 
+                onClose={() => setShowCitySearch(false)} 
+                onSelect={handleCitySelect}
+                triggerRef={cityButtonRef}
+              />
+            )}
           </div>
-          {showCitySearch && <Citysearch onClose={() => setShowCitySearch(false)} />}
-        
+          
+          {/* Bed Button */}
+          <div className="relative">
+            <button
+              ref={bedButtonRef}
+              onClick={handleBedSearch}
+              className='border-2 border-[#02D482] rounded-full px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'
+            >
+              <BedSingle className='w-5 h-5'/> 
+              {selectedBed || 'Bed'}
+            </button>
+            {showBedSearch && (
+              <Bedsearch  
+                onClose={() => setShowBedSearch(false)} 
+                onSelect={handleBedSelect}
+                triggerRef={bedButtonRef}
+              />
+            )}
+          </div>
+          
+          {/* Budget Button */}
+          <div className="relative">
+            <button 
+              ref={budgetButtonRef}
+              onClick={handleBudgetSearch}
+              className='border-2 border-[#02D482] rounded-full px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'
+            >
+              <Wallet className='w-5 h-5'/> 
+              {budgetRange.min === 50000 && budgetRange.max === 500000 
+                ? 'Budget' 
+                : `${formatCurrency(budgetRange.min)} - ${formatCurrency(budgetRange.max)}`}
+            </button>
+            {showBudgetSearch && (
+              <BudgetSlider 
+                onClose={() => setShowBudgetSearch(false)} 
+                onBudgetChange={handleBudgetChange}
+                triggerRef={budgetButtonRef}
+              />
+            )}
+          </div>
+
+          <button className='bg-[#02D482] rounded-full px-10 py-2 text-white hover:bg-green-700 transition-colors duration-200'>
+            Find your ideal Home
+          </button>
+        </div>
+        </div>
         </motion.div>
 
         <motion.div 
@@ -138,7 +228,7 @@ export default function Section1() {
             animation: 'marquee 12s linear infinite'
           }}
         >
-          Join Landr today &amp; truly live within your means.
+          Join Landr today & truly live within your means.
         </div>
       </motion.div>
       
@@ -153,6 +243,6 @@ export default function Section1() {
         }
         `}
       </style>
-    </Element>
-  )
+    </section>
+  );
 }
