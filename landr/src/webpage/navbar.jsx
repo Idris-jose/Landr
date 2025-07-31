@@ -151,13 +151,13 @@ export default function Navbar() {
                 {/* Desktop Buttons */}
                 <div className="hidden md:flex items-center gap-2">
                     <button
-                        className="rounded-[100px] border-black border py-3 px-6 text-[13px] font-Poppins"
+                        className=" border-black border py-3 px-6 text-[13px] font-Poppins"
                         onClick={handleLoginOpen}
                     >
                         Login
                     </button>
                     <button
-                        className="rounded-[100px] bg-[#02D482] text-white px-4 py-3 text-[13px] font-Poppins"
+                        className=" bg-[#02D482] text-white px-4 py-3 text-[13px] font-Poppins"
                         onClick={() => {
                             navigate('/signup');
                         }}
@@ -232,7 +232,7 @@ export default function Navbar() {
                         Contact
                     </Link>
                     <button
-                        className="rounded-[100px] border-black border py-3 px-6 text-[13px] font-Poppins"
+                        className=" border-black border py-3 px-6 text-[13px] font-Poppins"
                         onClick={() => {
                             setMenuOpen(false);
                             handleLoginOpen();
@@ -241,7 +241,7 @@ export default function Navbar() {
                         Login
                     </button>
                     <button
-                        className="rounded-[100px] bg-[#02D482] text-white px-4 py-3 text-[13px] font-Poppins"
+                        className=" bg-[#02D482] text-white px-4 py-3 text-[13px] font-Poppins"
                         onClick={() => {
                             setMenuOpen(false);
                             navigate('/signup')

@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import Frame1 from '../assets/Frame1.png';
-import Frame2 from '../assets/Frame2.png';
-import Frame3 from '../assets/Frame 3.png';
+import background from '../assets/main.png';
 import { useNavigate } from 'react-router-dom';
 import { Element } from 'react-scroll';
 import {MapPin, BedSingle, Wallet } from 'lucide-react';
@@ -136,7 +135,7 @@ export default function Section1() {
             <button 
               ref={cityButtonRef}
               onClick={handleCitySearch}
-              className='border-2 border-[#02D482] rounded-full px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'
+              className='border-2 border-[#02D482]  px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'
             >
               <MapPin className='w-5 h-5'/> 
               {selectedCity || 'City'}
@@ -155,7 +154,7 @@ export default function Section1() {
             <button
               ref={bedButtonRef}
               onClick={handleBedSearch}
-              className='border-2 border-[#02D482] rounded-full px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'
+              className='border-2 border-[#02D482]  px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'
             >
               <BedSingle className='w-5 h-5'/> 
               {selectedBed || 'Bed'}
@@ -174,7 +173,7 @@ export default function Section1() {
             <button 
               ref={budgetButtonRef}
               onClick={handleBudgetSearch}
-              className='border-2 border-[#02D482] rounded-full px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'
+              className='border-2 border-[#02D482]  px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'
             >
               <Wallet className='w-5 h-5'/> 
               {budgetRange.min === 50000 && budgetRange.max === 500000 
@@ -190,27 +189,18 @@ export default function Section1() {
             )}
           </div>
 
-          <button className='bg-[#02D482] rounded-full px-10 py-2 text-white hover:bg-green-700 transition-colors duration-200'>
+          <button className='bg-[#02D482]  px-10 py-2 shadow-black  text-white hover:bg-green-700 transition-colors duration-200'>
             Find your ideal Home
           </button>
         </div>
         </div>
         </motion.div>
 
-        <motion.div 
-          className="flex flex-col md:flex-row gap-10 md:gap-10 items-start justify-items-start"
-          variants={containerVariants}
-        >
-          <motion.div className="flex-1 max-w-sm" variants={imageVariants}>
-            <img src={Frame1} alt="Landlord dashboard preview" className="w-full h-auto rounded-lg shadow-sm" />
-          </motion.div>
-          <motion.div className="flex-1 max-w-sm" variants={imageVariants}>
-            <img src={Frame2} alt="Property listing preview" className="w-full h-auto rounded-lg shadow-sm" />
-          </motion.div>
-          <motion.div className="flex-1 max-w-sm" variants={imageVariants}>
-            <img src={Frame3} alt="Tenant dashboard preview" className="w-full h-auto rounded-lg shadow-sm" />
-          </motion.div>
-        </motion.div>
+        <img 
+          src={background}
+          alt="Landlord dashboard preview"
+          className="w-full h-auto rounded-lg shadow-sm"
+        />
       </motion.section>
 
       <motion.div 

@@ -1,55 +1,87 @@
-import Frame4 from '../assets/Frame4.png'
-import { Link, Element, scroller } from 'react-scroll';
+import React from 'react';
+import { Element } from 'react-scroll';
+import first from '../assets/first.png';
+import second from '../assets/second.png';
+import third from '../assets/third.png';
 
-export default function Section2 (){
-    const reasons = [
-        {
-            heading: "Easy access to affordable housing",
-            text: "Landr seeks to reduce the normally arduous task of house hunting. Give us your preferences & we'll do the dirty job for you, while you sip your cold zobo."
-        },
-        {
-            heading: "Tenancy protection",
-            text: "Landr seeks to make that helpless feeling house seekers face, when even after exorbitant prices, they have to pay hidden inexplicable fees. Everyone deserves a voice. Landr is speaking for you."
-        },
-        {
-            heading: "Digitalization of real estate",
-            text: "The landlord-tenancy industry is still largely analog and stuck on old principles that do not necessarily encourage economic growth. Landr intends to bridge that gap."
-        },
-        {
-            heading: "Investment incentives",
-            text: "A digitalized housing system creates jobs and a fertile ground for investments and visible growth. Landr seeks to facilitate this too."
-        },
-        {
-            heading: "Landlord empowerment",
-            text: "Landlords also aren't spared from the growing percentage demands. Landr seeks to return the initiative to landowners & establish a fair ground for all parties."
-        },
-        {
-            heading: "Reduction on the cost of housing",
-            text: "Housing in Nigeria today is incredibly high & doesn't reflect the prevalent economic indices of the people. Landr seeks to provide a fair ground for everyone to truly get their money's worth."
-        }
-    ];
-    
-    return(
-         <Element name="section2">
-              <section className="bg-[#F2F4F3] py-12 md:py-16">
-            <div className="max-w-7xl mx-auto px-6 md:px-10">
-                <h1 className="text-3xl md:text-4xl font-bold mb-12 text-left">
-                    Why <span className="text-[#8B8F92]">Landr?</span>
-                </h1>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                    {reasons.map((reason, idx) => (
-                        <div key={idx} className="bg-white rounded-[30px] p-6 h-auto min-h-[244px] flex flex-col shadow-sm hover:shadow-md transition-shadow">
-                            <div className='flex items-center gap-3 mb-4'>
-                                <img src={Frame4} alt="Landr feature icon" className="flex-shrink-0 w-6 h-6 mt-1" />
-                                <h2 className="font-semibold text-lg leading-tight">{reason.heading}</h2>
-                            </div>
-                            <p className="text-[#8B8F92] font-Poppins leading-relaxed flex-grow">{reason.text}</p>
-                        </div>
-                    ))}
+
+export default function Section2() {
+   
+    const images = [{
+        src: first,
+        text: "Select your preferred city and ideal location.",
+        letter: "A"
+    }, {
+        src: second,
+        text: "Select your bed or preferable house type.",
+        letter: "B"
+    }, {
+        src: third,
+        text: "Set your price range from minimum to maximum.",
+        letter: "C"
+    }];
+
+    return (
+        <Element name="section2" className="min-h-screen bg-white ">
+            <div className="mt-16">
+                {/* Header Section */}
+                <div className="text-center mb-16">
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                        Doom Scrolling for here?
+                    </h2>
+                    <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                        Get in Jor! click the button below, make we match u asap to better crip
+                    </p>
+                    <button className="bg-[#02D482] hover:bg-green-600 text-white font-medium py-2 px-8 font-Poppins text-lg transition-colors duration-200">
+                        Get started
+                    </button>
                 </div>
+
+                {/* How to use section */}
+                <div className="space-y-12 bg-[#02D482] p-8 ">
+
+                    <h3 className="text-3xl md:text-4xl text-left font-bold text-white mb-4">
+                        How to use our filters?
+                    </h3>
+                    <p className="text-xl text-gray-200 text-left font-Poppins mb-12">
+                        Ours is as simple as ABC. Let us show you.
+                    </p>
+
+                    {/* Steps Container */}
+                    <div className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12">
+                        {images.map((image, index) => (
+                            <div key={index} className="flex flex-col items-center max-w-sm">
+                                {/* Phone mockup with letter and shadow */}
+                                <div className="relative mb-6">
+                                    {/* Thick shadow */}
+                                    <div className="absolute top-2 left-2 w-full h-full bg-black rounded-3xl"></div>
+                                    
+                                    {/* Phone container */}
+                                    <div className="relative bg-white rounded-3xl p-2 border-4 border-black">
+                                        <img 
+                                            src={image.src}
+                                            alt={`Step ${image.letter}`}
+                                            className="w-80 h-auto rounded-2xl"
+                                        />
+                                    </div>
+                                    
+                                    {/* Letter badge */}
+                                    <div className="absolute -top-4 -right-4 w-12 h-12 font-Poppins bg-red-500 text-white font-bold text-xl flex items-center justify-center rounded-full border-4 border-white shadow-lg">
+                                        {image.letter}
+                                    </div>
+                                </div>
+
+                                {/* Description text */}
+                                <p className="text-lg text-white font-Poppins  text-left font-light">
+                                     {image.text}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                   
+                </div>
+
             </div>
-        </section>
-         </Element>
-       
-    )
+        </Element>
+    );
 }

@@ -1,109 +1,95 @@
-import Frame5 from '../assets/Frame5.png'
-import Frame6 from '../assets/Frame6.png'
-import Frame7 from '../assets/house-7313645_1280.jpg'
-import Frame8 from '../assets/image23.jpeg'
-import Frame9 from '../assets/happy-african-american-bank-manager-shaking-hands-with-client-after-successful-agreement-office.jpg'
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link, Element, scroller } from 'react-scroll';
 
 export default function Section3() {
   const navigate = useNavigate();
-  
+  const [expandedIndex, setExpandedIndex] = useState(0);
+
+  const faqs = [
+    {
+      question: "How do landlords make money off the site ?",
+      answer: "Vitae purus consequat orci cursus. Laoreet volutpat nulla venus dui in scelerisque velit eget. Morbi proin ipsum tellus ultricies lectus nunc fusce turpis. Commodo ornare nunc nec ut vulputate sit et. Ut quis lorem interdum nibh dui."
+    },
+    {
+      question: "How do landlords make money off the site ?",
+      answer: "Vitae purus consequat orci cursus. Laoreet volutpat nulla venus dui in scelerisque velit eget. Morbi proin ipsum tellus ultricies lectus nunc fusce turpis. Commodo ornare nunc nec ut vulputate sit et. Ut quis lorem interdum nibh dui."
+    },
+    {
+      question: "How do landlords make money off the site ?",
+      answer: "Vitae purus consequat orci cursus. Laoreet volutpat nulla venus dui in scelerisque velit eget. Morbi proin ipsum tellus ultricies lectus nunc fusce turpis. Commodo ornare nunc nec ut vulputate sit et. Ut quis lorem interdum nibh dui."
+    },
+    {
+      question: "How do landlords make money off the site ?",
+      answer: "Vitae purus consequat orci cursus. Laoreet volutpat nulla venus dui in scelerisque velit eget. Morbi proin ipsum tellus ultricies lectus nunc fusce turpis. Commodo ornare nunc nec ut vulputate sit et. Ut quis lorem interdum nibh dui."
+    },
+    {
+      question: "How do landlords make money off the site ?",
+      answer: "Vitae purus consequat orci cursus. Laoreet volutpat nulla venus dui in scelerisque velit eget. Morbi proin ipsum tellus ultricies lectus nunc fusce turpis. Commodo ornare nunc nec ut vulputate sit et. Ut quis lorem interdum nibh dui."
+    }
+  ];
+
+  const toggleFAQ = (index) => {
+    setExpandedIndex(expandedIndex === index ? -1 : index);
+  };
   return (
-    <>
-      <Element name="section3">
-        {/* Landlord Section */}
-        <section className="flex flex-col lg:flex-row items-center justify-between px-4 sm:px-6 md:px-10 py-8 md:py-16 gap-8 md:gap-12 lg:gap-24">
-          <div className="flex-1 max-w-xl order-2 lg:order-1">
-            <h1 className='text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-4'>Are you a <span className="text-[#8B8F92]">Landlord?</span></h1>
-            <p className="text-[#8B8F92] font-Poppins text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8">Here's what Landr Offers you</p>
-            <ul className="list-disc pl-5 sm:pl-6 text-black font-Poppins space-y-3 sm:space-y-4 text-base sm:text-lg md:text-xl leading-relaxed mb-8 sm:mb-10">
-              <li>A pool of 10k plus active tenants within your vicinity.</li>
-              <li>A dashboard for multiple house listing.</li>
-              <li>Ease of doing business from the comfort of your homes.</li>
-              <li>Control of your estate & finance & tenancy monitoring.</li>
-            </ul>
-            <button 
-              onClick={() => navigate('/signup')}
-              className="rounded-[100px] bg-[#02D482] text-white px-6 py-3 text-sm font-Poppins hover:bg-[#02C478] transition-colors w-full sm:w-[180px]"
-            >
-              Get started
-            </button>
-          </div>
-          
-          <div className="flex-1 w-full order-1 lg:order-2 mb-8 lg:mb-0">
-            <div className="relative aspect-video w-full max-w-[650px] mx-auto">
-              <img 
-                src={Frame9} 
-                alt="Landr solutions illustration" 
-                className="h-full w-full object-cover rounded-2xl shadow-lg" 
-              />
-            </div>
-          </div>
-        </section>
+    <Element name="section3" className="min-h-screen bg-white py-16 px-4">
+      <div className="max-w-4xl mx-auto">
+        {/* FAQ Header */}
+        <div className="mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Frequently Asked Questions
+          </h2>
 
-        {/* Tenant Section */}
-        <section className="flex flex-col lg:flex-row-reverse items-center justify-between px-4 sm:px-6 md:px-10 py-8 md:py-16 gap-8 md:gap-12 lg:gap-24 bg-[#F2F4F3]">
-          <div className="flex-1 max-w-xl order-2 lg:order-2">
-            <h1 className='text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-4'>Are you a <span className="text-[#8B8F92]">Tenant?</span></h1>
-            <p className="text-[#8B8F92] font-Poppins text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8">Here's what Landr Offers you</p>
-            <ul className="list-disc pl-5 sm:pl-6 text-black font-Poppins space-y-3 sm:space-y-4 text-base sm:text-lg md:text-xl leading-relaxed mb-8 sm:mb-10">
-              <li>A pool of 10k plus available houses within your vicinity.</li>
-              <li>A regulated housing scheme that ensures you get your money's worth.</li>
-              <li>Zero agency/hidden fees.</li>
-              <li>A regulated agreement & dispute management channel.</li>
-            </ul>
-            <button
-              onClick={() => navigate('/signup')}
-              className="rounded-[100px] bg-[#02D482] text-white px-6 py-3 text-sm font-Poppins hover:bg-[#02C478] transition-colors w-full sm:w-[180px]"
-            >
-              Get started
-            </button>
-          </div>
-          
-          <div className="flex-1 w-full order-1 lg:order-1 mb-8 lg:mb-0">
-            <div className="relative aspect-video w-full max-w-[650px] mx-auto">
-              <img 
-                src={Frame8} 
-                alt="Landr solutions illustration" 
-                className="h-full w-full object-cover rounded-2xl shadow-lg" 
-              />
-            </div>
-          </div>
-        </section>
+            <p className="text-gray-600  font-light font-Poppins">
+              We know you have questions, and we have answers too.
+            </p>
+        
+        </div>
 
-        {/* Enterprise Section */}
-        <section className="flex flex-col lg:flex-row-reverse items-center justify-between px-4 sm:px-6 md:px-10 py-8 md:py-16 gap-8 md:gap-12 lg:gap-24">
-          <div className="flex-1 w-full order-2 lg:order-2 mb-8 lg:mb-0">
-            <div className="relative aspect-video w-full max-w-[650px] mx-auto">
-              <img 
-                src={Frame7} 
-                alt="Landr tenant dashboard illustration" 
-                className="h-full w-full object-cover rounded-2xl shadow-lg" 
-              />
+        {/* FAQ Items */}
+        <div className="space-y-4">
+          {faqs.map((faq, index) => (
+            <div key={index} className="border-2 relative border-black overflow-hidden">
+              {/* Shadow outline */}
+              <div className="absolute top-2 left-2 w-full h-full border-2 border-black rounded-lg -z-10"></div>
+              
+              {/* Question Header */}
+              <button
+                onClick={() => toggleFAQ(index)}
+                className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors duration-200 relative z-10"
+              >
+                <h3 className="text-lg font-semibold text-gray-900 text-left">
+                  {faq.question}
+                </h3>
+                
+                {/* Toggle Icon */}
+                <div className="flex-shrink-0 ml-4">
+                  {expandedIndex === index ? (
+                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold text-lg">−</span>
+                    </div>
+                  ) : (
+                    <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                      <span className="text-gray-600 font-bold text-lg">+</span>
+                    </div>
+                  )}
+                </div>
+              </button>
+
+              {/* Answer Content */}
+              {expandedIndex === index && (
+                <div className=" border-black bg-gray-50 p-4">
+                  <p className="text-gray-700 font-Poppins leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              )}
             </div>
-          </div>
-         
-          <div className="flex-1 max-w-xl order-1 lg:order-1">
-            <h1 className='text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-4'>Are you an <span className="text-[#8B8F92]">enterprise?</span></h1>
-            <p className="text-[#8B8F92] font-Poppins text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8">Here's what Landr Offers you</p>
-            <ul className="list-disc pl-5 sm:pl-6 text-black font-Poppins space-y-3 sm:space-y-4 text-base sm:text-lg md:text-xl leading-relaxed mb-8 sm:mb-10">
-              <li>A pool of 10k plus available clients within your vicinity.</li>
-              <li>A regulated housing scheme that ensures you get your money's worth.</li>
-              <li>Zero agency/hidden fees.</li>
-              <li>A regulated agreement & dispute management channel.</li>
-            </ul>
-            <button 
-              onClick={() => navigate('/signup')}
-              className="rounded-[100px] bg-[#02D482] text-white px-6 py-3 text-sm font-Poppins hover:bg-[#02C478] transition-colors w-full sm:w-[180px]"
-            >
-              Get started
-            </button>
-          </div>
-          
-         
-        </section>
-      </Element>
-    </>
-  )
+          ))}
+        </div>
+      </div>
+        
+    </Element>
+  );
 }
