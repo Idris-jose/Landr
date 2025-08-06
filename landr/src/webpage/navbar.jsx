@@ -156,13 +156,11 @@ export default function Navbar() {
                     >
                         Login
                     </button>
-                     <div className='relative'>
-         <div className="absolute top-2 left-2 w-full h-full bg-black "></div>
+                  
       <button
                         className=" bg-[#02D482] relative text-white px-4 py-3 text-[13px] font-Poppins"
                         onClick={() => {
-                            setMenuOpen(false);
-                            handleSignupOpen();
+                          navigate("/Signup")
                         }}
                     >
                         Create an account
@@ -181,7 +179,7 @@ export default function Navbar() {
                     <span className={`block h-1 w-6 bg-black mb-1 transition-all ${menuOpen ? 'opacity-0' : ''}`}></span>
                     <span className={`block h-1 w-6 bg-black transition-all ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
                 </button>
-            </div>
+            
 
             {/* Mobile Menu */}
             {menuOpen && (
@@ -252,8 +250,7 @@ export default function Navbar() {
       <button
                         className=" bg-[#02D482] text-white px-4 py-3 text-[13px] font-Poppins"
                         onClick={() => {
-                            setMenuOpen(false);
-                            handleSignupOpen();
+                           
                         }}
                     >
                         Create an account
@@ -337,10 +334,7 @@ export default function Navbar() {
                 </div>
             )}
 
-           <SignupModal 
-    showSignup={showSignup} 
-    onClose={handleSignupClose} 
-/>
+   
         </>
     );
 }

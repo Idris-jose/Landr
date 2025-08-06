@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { X, UserRound, Mail, LockKeyhole, Eye, EyeOff } from 'lucide-react';
+import { UserRound, Mail, LockKeyhole, Eye, EyeOff } from 'lucide-react';
+import background from '../assets/architecture-1719526_1920.jpg'; 
+import logo from '../assets/Landr.png';
 
-// Import your images here
-import background from '../assets/architecture-1719526_1920.jpg'; // Replace with your actual path
-import logo from '../assets/Landr.png'; // Replace with your actual path
-
-export default function SignupModal({ showSignup, onClose }) {
+export default function SignupPage() {
   const [signupData, setSignupData] = useState({
     firstName: '',
     lastName: '',
@@ -32,34 +30,35 @@ export default function SignupModal({ showSignup, onClose }) {
     }));
   };
 
+  const NavigateUser = (accountType) => {
+    if (accountType === 'tenant') {
+      console.log('Navigate to tenant app');
+    } else if (accountType === 'landlord') {
+      console.log('Navigate to landlord app');
+    }
+  };
+
   const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-        setError('');
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
 
-        // Optional: Basic validation
-        if (formData.password !== formData.confirmPassword) {
-            setError("Passwords do not match.");
-            setIsLoading(false);
-            return;
-        }
-        {
-            //   "firstName": "string",
-            //   "lastName": "string",
-            //   "email": "string",
-            //   "role": "string",
-            //   "password": "string"
-        }
-        const payload = {
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            email: formData.email,
-            password: formData.password,
-            role: accountType,
+    // Basic validation
+    if (signupData.password !== signupData.confirmPassword) {
+      setError("Passwords do not match.");
+      setIsLoading(false);
+      return;
+    }
 
-        };
+    const payload = {
+      firstName: signupData.firstName,
+      lastName: signupData.lastName,
+      email: signupData.email,
+      password: signupData.password,
+      role: signupData.accountType,
+    };
 
-        try {
+     try {
             const response = await fetch('https://landrentals.azurewebsites.net/api/Authentications/CreateUser', {
                 method: 'POST',
                 headers: {
@@ -104,44 +103,40 @@ export default function SignupModal({ showSignup, onClose }) {
     console.log('Google sign in clicked');
   };
 
-  // Don't render if not showing
-  if (!showSignup) return null;
+  const goToLogin = () => {
+    console.log('Navigate to login page');
+    onClose(); // Close modal when navigating
+  }
+
 
   return (
-    <div className="fixed inset-0 z-50 bg-gray-700/45 flex items-center justify-center p-4">
-      <div className="flex flex-col lg:flex-row w-full max-w-4xl bg-white  overflow-hidden shadow-xl max-h-[90vh]">
-        
-        {/* Background Image Section */}
-        <div className="hidden lg:block lg:w-1/2 h-[600px] relative">
-          <div 
-            className="w-full h-full bg-cover bg-center"
-            style={{ backgroundImage: `url(${background || backgroundFallback})` }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/60"></div>
-            <div className="absolute mb-10 bottom-8 left-8 z-10 text-white">
-              <p className="text-2xl font-bold drop-shadow-lg">Finding your next home made easy.</p>
-              <p className="text-sm mt-2 opacity-90 drop-shadow-md">Join us today and start your journey.</p>
-            </div>
+    <div className="min-h-screen flex flex-col lg:flex-row w-full bg-white">
+      
+      {/* Background Image Section */}
+      <div className="hidden lg:flex lg:w-1/2 min-h-screen relative">
+        <div 
+          className="w-full h-full bg-cover bg-center flex-1"
+          style={{ backgroundImage: `url(${background})` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/60"></div>
+          <div className="absolute mb-10 bottom-8 left-8 z-10 text-white">
+            <p className="text-2xl font-bold drop-shadow-lg">Finding your next home made easy.</p>
+            <p className="text-sm mt-2 opacity-90 drop-shadow-md">Join us today and start your journey.</p>
           </div>
         </div>
-        
-        {/* Form Section */}
-        <div className="w-full lg:w-1/2 p-6 max-h-[600px] overflow-y-auto">
-          {/* Header with Logo and Close Button */}
-          <div className="flex justify-between items-center mb-6">
-            <img src={logo || logoFallback} className="h-10" alt="Landr Logo" />
-            <button
-              onClick={handleClose}
-              aria-label="Close"
-              className="p-2 hover:bg-gray-100 rounded-full transition-all duration-200 hover:shadow-md"
-            >
-              <X className="w-6 h-6 text-gray-600 hover:text-gray-800" />
-            </button>
+      </div>
+      
+      {/* Form Section */}
+      <div className="w-full lg:w-1/2 min-h-screen flex items-center justify-center p-6">
+        <div className="w-full max-w-md">
+          {/* Header with Logo */}
+          <div className="flex justify-center items-center mb-6">
+            <img src={logo} className="h-10" alt="Landr Logo" />
           </div>
           
           {/* Title and Description */}
-          <h2 className="text-2xl font-bold text-left mb-2">Create your Landr account</h2>
-          <p className="text-left mb-6 text-sm text-gray-600">
+          <h2 className="text-2xl font-bold text-center mb-2">Create your Landr account</h2>
+          <p className="text-center mb-6 text-sm text-gray-600">
             Create your account, purchase landr coins & start bidding for your dream home.
           </p>
 
@@ -156,15 +151,15 @@ export default function SignupModal({ showSignup, onClose }) {
           <div className="flex flex-col gap-4">
             
             {/* First Name */}
-            <div className="relative transform hover:scale-[1.01] transition-transform duration-200">
-              <div className="absolute top-1 left-1 w-full h-full bg-gray-400 rounded shadow-sm"></div>
-              <div className="relative bg-white flex items-center rounded border border-gray-200">
+            <div className="relative group transform hover:scale-[1.01] transition-transform duration-200">
+              <div className="absolute top-1 left-1 w-full h-full bg-gray-400 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+              <div className="relative bg-white flex items-center rounded">
                 <UserRound className="absolute left-3 text-white z-10 w-5 h-5 drop-shadow-sm" />
                 <input
                   name="firstName"
                   type="text"
                   placeholder="First Name"
-                  className="bg-[#02D482] placeholder-white text-white px-4 py-3 pl-10   focus:outline-none  transition-all duration-300 w-full rounded shadow-md hover:shadow-lg"
+                  className="bg-[#02D482] placeholder-white text-white px-4 py-3 pl-10 focus:outline-none transition-all duration-300 w-full rounded shadow-md hover:shadow-lg"
                   value={signupData.firstName}
                   onChange={handleInputChange}
                   required
@@ -174,15 +169,15 @@ export default function SignupModal({ showSignup, onClose }) {
             </div>
 
             {/* Last Name */}
-            <div className="relative transform hover:scale-[1.01] transition-transform duration-200">
-              <div className="absolute top-1 left-1 w-full h-full bg-gray-300 rounded shadow-sm"></div>
+            <div className="relative group transform hover:scale-[1.01] transition-transform duration-200">
+              <div className="absolute top-1 left-1 w-full h-full bg-gray-300 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
               <div className="relative bg-white flex items-center rounded">
                 <UserRound className="absolute left-3 text-[#02D482] z-10 w-5 h-5 drop-shadow-sm" />
                 <input
                   name="lastName"
                   type="text"
                   placeholder="Last Name"
-                  className="border-2 border-[#02D482] placeholder-[#02D482] text-[#02D482] px-4 py-3 pl-10 focus:outline-none  transition-all duration-300 w-full rounded bg-white shadow-md hover:shadow-lg"
+                  className="border-2 border-[#02D482] placeholder-[#02D482] text-[#02D482] px-4 py-3 pl-10 focus:outline-none transition-all duration-300 w-full rounded bg-white shadow-md hover:shadow-lg"
                   value={signupData.lastName}
                   onChange={handleInputChange}
                   required
@@ -192,15 +187,15 @@ export default function SignupModal({ showSignup, onClose }) {
             </div>
 
             {/* Account Type */}
-            <div className="relative transform hover:scale-[1.01] transition-transform duration-200">
-              <div className="absolute top-2 left-2 w-full h-full border-[#02D482] border-2 rounded shadow-sm"></div>
+            <div className="relative group transform hover:scale-[1.01] transition-transform duration-200">
+              <div className="absolute top-2 left-2 w-full h-full border-[#02D482] border-2 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
               <div className="relative bg-white flex items-center rounded">
                 <select
                   name="accountType"
                   value={signupData.accountType}
                   onChange={handleInputChange}
                   required
-                  className="bg-[#02D482] text-white p-3 w-full rounded focus:outline-none  appearance-none cursor-pointer transition-all duration-300 shadow-md hover:shadow-lg"
+                  className="bg-[#02D482] text-white p-3 w-full rounded focus:outline-none appearance-none cursor-pointer transition-all duration-300 shadow-md hover:shadow-lg"
                   disabled={isLoading}
                 >
                   <option value="" disabled>Are you a landlord or a tenant?</option>
@@ -216,8 +211,8 @@ export default function SignupModal({ showSignup, onClose }) {
             </div>
 
             {/* Email */}
-            <div className="relative transform hover:scale-[1.01] transition-transform duration-200">
-              <div className="absolute top-2 left-2 w-full h-full border-[#02D482] border-2 rounded shadow-sm"></div>
+            <div className="relative group transform hover:scale-[1.01] transition-transform duration-200">
+              <div className="absolute top-2 left-2 w-full h-full border-[#02D482] border-2 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
               <div className="relative bg-white flex items-center rounded">
                 <Mail className="absolute left-3 text-gray-400 z-10 w-5 h-5 drop-shadow-sm" />
                 <input
@@ -234,15 +229,15 @@ export default function SignupModal({ showSignup, onClose }) {
             </div>
 
             {/* Password */}
-            <div className="relative transform hover:scale-[1.01] transition-transform duration-200">
-              <div className="absolute top-2 left-2 w-full h-full border-[#02D482] border-2 rounded shadow-sm"></div>
+            <div className="relative group transform hover:scale-[1.01] transition-transform duration-200">
+              <div className="absolute top-2 left-2 w-full h-full border-[#02D482] border-2 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
               <div className="relative bg-white flex items-center rounded">
                 <LockKeyhole className="absolute left-3 text-gray-400 z-10 w-5 h-5 drop-shadow-sm" />
                 <input
                   name="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Password"
-                  className="border-2  bg-white px-4 py-3 pl-10 pr-10 focus:outline-none  transition-all duration-300 w-full rounded "
+                  className="border-2 bg-white px-4 py-3 pl-10 pr-10 focus:outline-none transition-all duration-300 w-full rounded"
                   value={signupData.password}
                   onChange={handleInputChange}
                   required
@@ -250,8 +245,9 @@ export default function SignupModal({ showSignup, onClose }) {
                   disabled={isLoading}
                 />
                 <button
+                  type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 cursor-pointer z-10 p-1 rounded  transition-colors duration-200"
+                  className="absolute right-3 cursor-pointer z-10 p-1 rounded transition-colors duration-200"
                 >
                   {showPassword ? <EyeOff className="text-gray-400 w-5 h-5" /> : <Eye className="text-gray-400 w-5 h-5" />}
                 </button>
@@ -259,15 +255,15 @@ export default function SignupModal({ showSignup, onClose }) {
             </div>
 
             {/* Confirm Password */}
-            <div className="relative transform hover:scale-[1.01] transition-transform duration-200">
-              <div className="absolute top-2 left-2 w-full h-full border-[#02D482] border-2 rounded shadow-sm"></div>
+            <div className="relative group transform hover:scale-[1.01] transition-transform duration-200">
+              <div className="absolute top-2 left-2 w-full h-full border-[#02D482] border-2 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
               <div className="relative bg-white flex items-center rounded">
                 <LockKeyhole className="absolute left-3 text-gray-400 z-10 w-5 h-5 drop-shadow-sm" />
                 <input
                   name="confirmPassword"
                   type="password"
                   placeholder="Confirm Password"
-                  className="border-2  bg-white px-4 py-3 pl-10 focus:outline-none  transition-all duration-300 w-full rounded shadow-md hover:shadow-lg"
+                  className="border-2 bg-white px-4 py-3 pl-10 focus:outline-none transition-all duration-300 w-full rounded shadow-md hover:shadow-lg"
                   value={signupData.confirmPassword}
                   onChange={handleInputChange}
                   required
@@ -295,12 +291,13 @@ export default function SignupModal({ showSignup, onClose }) {
 
             {/* Submit Button */}
             <button
-              className={`w-full py-3 mt-2 text-sm font-medium  transition-all ${
+              type="button"
+              onClick={handleSubmit}
+              className={`w-full py-3 mt-2 text-sm font-medium transition-all ${
                 isLoading 
                   ? 'bg-gray-400 cursor-not-allowed' 
                   : 'bg-[#02D482] hover:bg-[#02C474] active:bg-[#02B467]'
-              } text-white disabled:opacity-50`}
-              onClick={handleSubmit}
+              } text-white disabled:opacity-50 rounded`}
               disabled={isLoading}
             >
               {isLoading ? 'Creating Account...' : 'Continue'}
@@ -309,12 +306,12 @@ export default function SignupModal({ showSignup, onClose }) {
             <div className="text-sm text-gray-500 text-center mt-4">or</div>
 
             {/* Sign in with Google Button */}
-            <div className="relative">
-              <div className="absolute top-1 left-1 w-full h-full border border-[#02D482] "></div>
+            <div className="relative group">
+              <div className="absolute top-1 left-1 w-full h-full border border-[#02D482] opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
               <button
                 type="button"
                 onClick={handleGoogleSignIn}
-                className="w-full py-3 relative text-sm font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all  border border-black"
+                className="w-full py-3 relative text-sm font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all border border-black"
                 disabled={isLoading}
               >
                 Sign in with Google
@@ -325,7 +322,8 @@ export default function SignupModal({ showSignup, onClose }) {
             <div className="text-center text-sm text-gray-600 mt-4">
               Already have an account?{' '}
               <button
-                onClick={() => navigate('/login')}
+                type="button"
+                onClick={goToLogin}
                 className="text-[#02D482] hover:underline font-medium"
               >
                 Log in
