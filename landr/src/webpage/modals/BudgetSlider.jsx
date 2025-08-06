@@ -64,7 +64,7 @@ export default function BudgetSlider({ onClose, onBudgetChange, triggerRef }) {
           left: position.left
         }}
       >
-        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
+        <div className="bg-white  shadow-2xl overflow-hidden border border-gray-100">
           {/* Green header section */}
           <div className="bg-[#02D482] px-6 py-5 relative">
             <div className="flex items-center justify-between">

@@ -189,9 +189,15 @@ export default function Section1() {
             )}
           </div>
 
-          <button className='bg-[#02D482]  px-10 py-2 shadow-black  text-white hover:bg-green-700 transition-colors duration-200'>
+       <div className='relative'>
+         <div className="absolute top-2 left-2 w-full h-full bg-black "></div>
+      <button className='bg-[#02D482] relative px-10 py-2 shadow-black  text-white hover:bg-green-700 transition-colors duration-200'>
             Find your ideal Home
+
+           
           </button>
+       </div>
+          
         </div>
         </div>
         </motion.div>

@@ -11,10 +11,10 @@ export default function Section4 (){
 
      
         <section className='px-6 md:px-10 py-12 md:py-16'>
-            <div className='bg-[#F2F4F3] rounded-3xl p-8 md:p-12 flex flex-col lg:flex-row items-center gap-8 lg:gap-12'>
+            <div className='bg-[#F2F4F3]  p-8 md:p-12 flex flex-col lg:flex-row items-center gap-8 lg:gap-12'>
                 <div className='flex-1 max-w-2xl'>
                     <h1 className='text-3xl md:text-4xl font-bold leading-tight mb-6'>
-                        See how we solve <span className="text-[#8B8F92]">solutions effectively</span>
+                        See how we solve solutions effectively
                     </h1>
                     <p className='font-Poppins text-lg leading-relaxed mb-6 text-gray-700'>
                         At Landr, our focus is the Nigerian. The average people working extremely hard, but facing monstrous housing costs, that ought not to be so. We believe in our resolve to ensure everyone has a home.
@@ -22,13 +22,18 @@ export default function Section4 (){
                     <p className='font-Poppins font-bold text-lg mb-8 text-gray-800'>
                         - The team at Landr.
                     </p>
-                    <button
-                      onClick={() => {
-                  navigate('/signup')
-                                       }}
-                    className="rounded-[100px] bg-[#02D482] text-white px-6 py-3 text-sm font-Poppins hover:bg-[#02C478] transition-colors" style={{ width: '180px' }}>
-                        Get started
-                    </button>
+
+                   <div className="relative inline-block">
+  <div className="absolute top-1.5 left-1.5 w-full h-full bg-black rounded"></div>
+  <button
+    onClick={() => navigate('/signup')}
+    className="relative bg-green-300 border border-black text-black px-6 py-3 text-sm font-Poppins hover:bg-[#02C478] transition-colors rounded"
+    style={{ width: '180px' }}
+  >
+    Get started
+  </button>
+</div>
+
                 </div>
                 
    <div className="flex-1 flex justify-center lg:justify-end">
@@ -36,7 +41,7 @@ export default function Section4 (){
     <img 
       src={Frame9} 
       alt="Landr solutions illustration" 
-      className="absolute h-full w-full object-cover rounded-2xl shadow-lg" 
+      className="absolute h-full w-full object-cover shadow-lg" 
     />
   </div>
 </div>

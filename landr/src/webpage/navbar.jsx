@@ -1,14 +1,15 @@
-
 import logo from '../assets/Landr.png'
 import { Link } from 'react-scroll';
 import { ToastContainer, toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
 import React, { useState } from 'react';
+import SignupModal from '../Auth/GeneralAuth.jsx';
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
+    const [showSignup, setShowSignup] = useState(false);
     const [loginData, setLoginData] = useState({
         email: '',
         password: ''
@@ -23,10 +24,18 @@ export default function Navbar() {
         setError('');
     }
 
+    function handleSignupOpen() {
+        setShowSignup(true);
+    }
+
     function handleLoginClose() {
         setShowLogin(false);
         setLoginData({ email: '', password: '' });
         setError('');
+    }
+
+    function handleSignupClose() {
+        setShowSignup(false);
     }
 
     function handleInputChange(e) {
@@ -55,30 +64,21 @@ export default function Navbar() {
             });
             const data = await response.json();
 
-            console.log("USerloging:::" + JSON.stringify(data))
-            console.log("USerloging error:::" + data.message)
-            // if (!response.ok) {
-            //     throw new Error(`Login failed: ${response.status}`);
-            // }
+            console.log("User logging:::" + JSON.stringify(data))
+            console.log("User logging error:::" + data.message)
+            
             if (data.message) {
                 throw new Error(` ${data.message}`);
             }
-            // const data = await response.json();
-
 
             console.log('Login successful:', data);
-            toast.success("welcome back" + data.firstName + " " + data.lastName, {
+            toast.success("Welcome back " + data.firstName + " " + data.lastName, {
                 position: "top-right",
                 autoClose: 5000,
-            }
-            )
+            });
 
-
-
-
-            navigate("/TenantsMainapp")
-
-
+            handleLoginClose();
+            navigate("/TenantsMainapp");
 
         } catch (err) {
             console.error('Login error:', err);
@@ -156,14 +156,19 @@ export default function Navbar() {
                     >
                         Login
                     </button>
-                    <button
-                        className=" bg-[#02D482] text-white px-4 py-3 text-[13px] font-Poppins"
+                     <div className='relative'>
+         <div className="absolute top-2 left-2 w-full h-full bg-black "></div>
+      <button
+                        className=" bg-[#02D482] relative text-white px-4 py-3 text-[13px] font-Poppins"
                         onClick={() => {
-                            navigate('/signup');
+                            setMenuOpen(false);
+                            handleSignupOpen();
                         }}
                     >
                         Create an account
                     </button>
+
+       </div>
                 </div>
 
                 {/* Hamburger Icon */}
@@ -240,15 +245,21 @@ export default function Navbar() {
                     >
                         Login
                     </button>
-                    <button
+                   
+                    
+       <div className='relative'>
+         <div className="absolute top-2 left-2 w-full h-full bg-black "></div>
+      <button
                         className=" bg-[#02D482] text-white px-4 py-3 text-[13px] font-Poppins"
                         onClick={() => {
                             setMenuOpen(false);
-                            navigate('/signup')
+                            handleSignupOpen();
                         }}
                     >
                         Create an account
                     </button>
+
+       </div>
                     <button
                         className="absolute top-4 right-6 text-2xl"
                         onClick={() => setMenuOpen(false)}
@@ -309,9 +320,27 @@ export default function Navbar() {
                                 {isLoading ? 'Logging in...' : 'Login'}
                             </button>
                         </form>
+
+                        <p className="text-center text-sm text-gray-600 mt-4">
+                            Don't have an account?{' '}
+                            <button
+                                className="text-[#02D482] hover:underline"
+                                onClick={() => {
+                                    handleLoginClose();
+                                    handleSignupOpen();
+                                }}
+                            >
+                                Sign up
+                            </button>
+                        </p>
                     </div>
                 </div>
             )}
+
+           <SignupModal 
+    showSignup={showSignup} 
+    onClose={handleSignupClose} 
+/>
         </>
     );
 }

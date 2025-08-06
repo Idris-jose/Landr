@@ -32,8 +32,11 @@ export default function Section2() {
                     <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
                         Get in Jor! click the button below, make we match u asap to better crip
                     </p>
-                    <button className="bg-[#02D482] hover:bg-green-600 text-white font-medium py-2 px-8 font-Poppins text-lg transition-colors duration-200">
-                        Get started
+                    <div>
+                        
+                    </div>
+                    <button className="bg-[#02D482] text-white px-6 py-3  font-Poppins text-lg hover:bg-[#02B76F] transition-colors duration-200">
+                        Get Started
                     </button>
                 </div>
 
@@ -54,10 +57,10 @@ export default function Section2() {
                                 {/* Phone mockup with letter and shadow */}
                                 <div className="relative mb-6">
                                     {/* Thick shadow */}
-                                    <div className="absolute top-2 left-2 w-full h-full bg-black rounded-3xl"></div>
+                                    <div className="absolute top-2 left-2 w-full h-full bg-black "></div>
                                     
                                     {/* Phone container */}
-                                    <div className="relative bg-white rounded-3xl p-2 border-4 border-black">
+                                    <div className="relative bg-white  p-2 border-4 ">
                                         <img 
                                             src={image.src}
                                             alt={`Step ${image.letter}`}
@@ -66,7 +69,7 @@ export default function Section2() {
                                     </div>
                                     
                                     {/* Letter badge */}
-                                    <div className="absolute -top-4 -right-4 w-12 h-12 font-Poppins bg-red-500 text-white font-bold text-xl flex items-center justify-center rounded-full border-4 border-white shadow-lg">
+                                    <div className="absolute -top-4 -right-4 w-12 h-12 font-Poppins bg-red-500 text-white font-bold text-xl flex items-center justify-center border-2 border-white shadow-lg">
                                         {image.letter}
                                     </div>
                                 </div>

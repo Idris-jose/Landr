@@ -2,7 +2,7 @@
 export default function Section5(){
     return(
         <section className="bg-[#F2F4F3] px-6 md:px-10 py-12 md:py-16">
-            <div className="bg-[#02D482] rounded-2xl p-8 md:p-12">
+            <div className="bg-[#02D482]  p-8 md:p-12">
                 <div className="text-left mb-8">
                     <h1 className="text-white font-medium text-2xl md:text-3xl leading-tight mb-6">
                         It's time to take back our housing & truly start living.<br />
