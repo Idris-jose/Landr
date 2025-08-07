@@ -3,7 +3,243 @@ import logo from '../../assets/Landr.png';
 import { mockProperties } from './mockProperties.jsx';
 import { useNavigate } from 'react-router-dom';
 import ContactLandlord from './Contactlandlord.jsx';
-import { MapPin, User, CheckCircle, Search, Star, Heart, X } from 'lucide-react';
+import { MapPin, User, CheckCircle, Search, X } from 'lucide-react';
+
+// Updated Sponsored Property Slideshow Component
+const SponsoredPropertySlideshow = ({ properties, onContact, onMoreInfo, onContactLandlord }) => {
+  const [currentPropertyIndex, setCurrentPropertyIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Get current property
+  const currentProperty = properties[currentPropertyIndex];
+  
+  // Get images for current property
+  const currentImages = currentProperty?.images && currentProperty.images.length > 0
+    ? currentProperty.images.map(img => typeof img === 'string' ? img : img.url)
+    : ['https://via.placeholder.com/1200x400?text=No+Image'];
+
+  // Navigation functions for properties
+  const goToNextProperty = (e) => {
+    e.stopPropagation();
+    setCurrentPropertyIndex((prevIndex) => (prevIndex + 1) % properties.length);
+    setCurrentImageIndex(0); // Reset image index when changing property
+  };
+
+  const goToPrevProperty = (e) => {
+    e.stopPropagation();
+    setCurrentPropertyIndex((prevIndex) => 
+      (prevIndex - 1 + properties.length) % properties.length
+    );
+    setCurrentImageIndex(0); // Reset image index when changing property
+  };
+
+  // Navigation functions for images within current property
+  const goToNextImage = (e) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % currentImages.length);
+  };
+
+  const goToPrevImage = (e) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prevIndex) => 
+      (prevIndex - 1 + currentImages.length) % currentImages.length
+    );
+  };
+
+  // Auto-advance slideshow every 8 seconds (for properties)
+  useEffect(() => {
+    if (properties.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentPropertyIndex((prevIndex) => (prevIndex + 1) % properties.length);
+        setCurrentImageIndex(0);
+      }, 8000);
+      
+      return () => clearInterval(interval);
+    }
+  }, [properties.length]);
+
+  // Auto-advance images every 4 seconds (within current property)
+  useEffect(() => {
+    if (currentImages.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % currentImages.length);
+      }, 4000);
+      
+      return () => clearInterval(interval);
+    }
+  }, [currentImages.length, currentPropertyIndex]);
+
+  if (!properties || properties.length === 0) return null;
+
+  return (
+    <div className="relative w-300 h-[842px] justify-center overflow-hidden  mb-8 cursor-pointer group">
+      {/* Background Image */}
+      <div className="absolute  inset-0">
+        <img
+          src={currentImages[currentImageIndex]}
+          alt={`${currentProperty.type} in ${currentProperty.location}`}
+          className="w-full h-full object-cover transition-all duration-500 ease-in-out"
+          style={{ 
+            objectFit: 'cover',
+            backgroundColor: '#f3f4f6'
+          }}
+          onError={(e) => {
+            e.target.src = 'https://via.placeholder.com/1200x400/f3f4f6/9ca3af?text=Property+Image';
+          }}
+        />
+      </div>
+      
+    
+      
+      {/* Sponsored Badge */}
+      <div className="absolute top-4 right-4 bg-white text-gray-900 px-2 py-3  text-sm font-semibold ">
+         Sponsored Post
+      </div>
+      
+      {/* Property Navigation Arrows - Main slideshow controls */}
+      {properties.length > 1 && (
+        <>
+          <button
+            onClick={goToPrevProperty}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#02D482]/80 hover:bg-[#02D482] text-white p-3 rounded-full z-20 transition-all duration-300 backdrop-blur-sm shadow-lg"
+            aria-label="Previous property"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            onClick={goToNextProperty}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#02D482]/80 hover:bg-[#02D482] text-white p-3 rounded-full z-20 transition-all duration-300 backdrop-blur-sm shadow-lg"
+            aria-label="Next property"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </>
+      )}
+
+      {/* Image Navigation Arrows - For images within current property */}
+      {currentImages.length > 1 && (
+        <>
+          <button
+            onClick={goToPrevImage}
+            className="absolute left-16 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full z-15 transition-all duration-300 backdrop-blur-sm"
+            aria-label="Previous image"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            onClick={goToNextImage}
+            className="absolute right-16 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full z-15 transition-all duration-300 backdrop-blur-sm"
+            aria-label="Next image"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </>
+      )}
+
+      {/* Content Overlay - Bottom Center with Glassmorphism */}
+<div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+  <div className="bg-white/10 backdrop-blur-md border text-left border-white/20  p-6 shadow-2xl max-w-md">
+    {/* House Type */}
+    <h1 className="text-4xl font-bold mb-3 text-white ">
+      {currentProperty.type}
+    </h1>
+    
+    {/* Price */}
+    <p className="text-2xl mb-3 font-semibold text-white ">
+      ${currentProperty.price.toLocaleString()}/{currentProperty.priceUnit}
+    </p>
+    
+    {/* Location */}
+    <div className="flex items-center mb-3">
+      <MapPin className="w-5 h-5 mr-2 text-white" />
+      <p className="text-lg text-white">{currentProperty.location}</p>
+    </div>
+    
+    {/* Landlord */}
+    <div className="flex items-center  mb-3">
+      <User className="w-5 h-5 mr-2 text-white" />
+      <p className="text-lg text-white">{currentProperty.landlordName}</p>
+    </div>
+    
+    {/* Documentation Status */}
+    <div className="flex items-center  mb-6">
+      <CheckCircle className="w-5 h-5 mr-2 text-green-400" />
+      <p className="text-lg text-white">{currentProperty.documentationStatus}</p>
+    </div>
+    
+    {/* Action Buttons */}
+    <div className="flex gap-4 w-full justify-center">
+      <button 
+        onClick={(e) => {
+          e.stopPropagation();
+          onMoreInfo(currentProperty);
+        }}
+        className="bg-[#02D482] hover:bg-green-600 text-white w-full py-3  font-semibold transition-all duration-200 transform hover:scale-105 "
+      >
+        Bid for Virtual Tour
+      </button>
+     
+    </div>
+  </div>
+</div>
+      
+      {/* Property Pagination Dots - Main slideshow indicators */}
+      {properties.length > 1 && (
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3 z-10">
+          {properties.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentPropertyIndex(idx);
+                setCurrentImageIndex(0);
+              }}
+              className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                currentPropertyIndex === idx 
+                  ? 'bg-[#02D482] scale-110' 
+                  : 'bg-white/50 hover:bg-white/70'
+              }`}
+              aria-label={`Go to property ${idx + 1}`}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Image Pagination Dots - For current property images */}
+      {currentImages.length > 1 && (
+        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+          {currentImages.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentImageIndex(idx);
+              }}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                currentImageIndex === idx 
+                  ? 'bg-white scale-110' 
+                  : 'bg-white/40 hover:bg-white/60'
+              }`}
+              aria-label={`Go to image ${idx + 1}`}
+            />
+          ))}
+        </div>
+      )}
+
+     
+    </div>
+  );
+};
+
+
 
 const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord }) => {
   const navigate = useNavigate();
@@ -16,24 +252,18 @@ const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord }) =>
     <div className="group cursor-pointer">
       {/* Image Container */}
       <div 
-      onClick={(e) => {
-                e.stopPropagation();
-                onMoreInfo(property);
-              }}
-      className="relative h-64 bg-gray-200 rounded-xl  overflow-hidden mb-3">
+        onClick={(e) => {
+          e.stopPropagation();
+          onMoreInfo(property);
+        }}
+        className="relative h-64 bg-gray-200 overflow-hidden mb-3"
+      >
         <img
           src={displayImage}
           alt={`${property.type} in ${property.location}`}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover transition-transform duration-300"
         />
         
-        {/* Sponsored Badge */}
-        {property.sponsored && (
-          <div className="absolute top-3 left-3 bg-[#02D482] text-white px-3 py-1 rounded-full text-xs font-medium">
-            Sponsored
-          </div>
-        )}
-
         {/* Verification Badge */}
         {property.documentationStatus === 'Verified' && (
           <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full flex items-center gap-1">
@@ -83,74 +313,56 @@ const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord }) =>
             </span>
             <span className="text-sm text-gray-600">/{property.priceUnit}</span>
           </div>
-          <div className="flex gap-2">
-            <button 
-              onClick={(e) => {
-                e.stopPropagation();
-                onMoreInfo(property);
-              }}
-              className="border-[#02D482] border-1 text-[#02D482] px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#02D482] hover:text-amber-50 transition-colors"
-            >
-              More info
-            </button>
-            <button 
-              onClick={(e) => {
-                e.stopPropagation();
-                onContactLandlord(property);
-              }}
-              className="bg-[#02D482] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors"
-            >
-              Contact
-            </button>
-          </div>
+        </div>
+        
+        {/* Action Buttons */}
+        <div className="flex gap-2">
+          <button 
+           onClick={(e) => {
+              e.stopPropagation();
+              onContactLandlord(property);
+            }}
+           
+            className="border-[#02D482] border-1 px-4 py-2 text-sm font-medium hover:bg-[#02D482] hover:text-amber-50 transition-colors"
+          >
+            Bid for live tour
+          </button>
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              onMoreInfo(property);
+            }}
+            className="bg-[#02D482] text-white px-4 py-2 text-sm font-medium hover:bg-green-600 transition-colors"
+          >
+            View property
+          </button>
         </div>
       </div>
     </div>
   );
 };
+
 const TenantsMainapp = () => {
-  // State for properties data
+  // State management
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [showContactModal, setShowContactModal] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState(null);
+  const [showSetupModal, setShowSetupModal] = useState(false);
 
   const navigate = useNavigate();
 
-  // State for filters
-  const [activeCategory, setActiveCategory] = useState('homes');
-  const [sortBy, setSortBy] = useState('recency');
-  
-  // Modal state - removed auto-show for setup modal
-  const [showSetupModal, setShowSetupModal] = useState(false);
-
-  // Categories configuration
-  const categories = [
-    { id: 'homes', label: 'Homes', active: true },
-    { id: 'properties', label: 'Properties', active: false },
-    { id: 'lands', label: 'Lands', active: false },
-    { id: 'shops', label: 'Shops', active: false },
-    { id: 'flats', label: 'Flats', active: false }
-  ];
-
-  // Sort options
-  const sortOptions = [
-    { value: 'recency', label: 'Recency' },
-    { value: 'popularity', label: 'Popularity' },
-    { value: 'price', label: 'Price' }
-  ];
-
+  // Event handlers
   const handleContactLandlord = (property) => {
     setSelectedProperty(property);
     setShowContactModal(true);
   };
 
   const handleMoreInfo = (property) => {
-   
     console.log('More info for property:', property);
-    navigate(`/property/${property.id}`)
+    navigate(`/property/${property.id}`);
   };
 
   const handleSearch = (e) => {
@@ -161,15 +373,7 @@ const TenantsMainapp = () => {
     setShowSetupModal(false);
   };
 
-  const handleCategoryChange = (categoryId) => {
-    setActiveCategory(categoryId);
-  };
-
-  const handleSortChange = (sortValue) => {
-    setSortBy(sortValue);
-  };
-
-  // Simulate API call
+  // Fetch properties data
   useEffect(() => {
     const fetchProperties = async () => {
       try {
@@ -184,7 +388,7 @@ const TenantsMainapp = () => {
     };
 
     fetchProperties();
-  }, [activeCategory, sortBy]);
+  }, []);
 
   // Filter properties based on search query
   const filteredProperties = properties.filter(property =>
@@ -213,7 +417,7 @@ const TenantsMainapp = () => {
         />
       )}
      
-     
+      {/* Setup Modal */}
       {showSetupModal && (
         <div className="fixed inset-0 bg-gray-600/70 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl p-6 max-w-md w-full relative">
@@ -248,8 +452,8 @@ const TenantsMainapp = () => {
         </div>
       )}
 
-      {/* Navbar */}
-       <nav className='flex justify-between items-center bg-white px-8 py-4 shadow-sm border-b'>
+      {/* Navigation Bar */}
+      <nav className='flex justify-between items-center bg-white px-8 py-4 shadow-sm border-b'>
         <div className="flex items-center">
           <img src={logo} className='w-20' alt="Logo" />
         </div>
@@ -265,82 +469,34 @@ const TenantsMainapp = () => {
           </div>
           <div className="flex items-center gap-2">
             <div 
-            onClick={()=>{navigate("/TenantsMainapp/profile")}}
-            className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+              onClick={() => {navigate("/TenantsMainapp/profile")}}
+              className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center cursor-pointer"
+            >
               <User className="w-4 h-4 text-gray-600" />
             </div>
           </div>
         </div>
       </nav>
 
+      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-8 py-8">
-        {/* Categories */}
-        <div className="mb-8 flex md:flex lg:flex justify-between">
-          <h1 className="text-2xl font-semibold font-Poppins text-gray-900 mb-6">Categories</h1>
-          <div className="flex flex-wrap gap-3">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => handleCategoryChange(category.id)}
-                className={`px-6 py-3 rounded-full text-sm font-medium transition-all ${
-                  activeCategory === category.id
-                    ? 'bg-[#02D482] text-white shadow-lg'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {category.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Filter and Sort Section */}
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-lg font-medium text-gray-900">
-            {filteredProperties.length} properties available
-          </h2>
-          
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">Sort by:</span>
-            <div className="flex gap-2">
-              {sortOptions.map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => handleSortChange(option.value)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    sortBy === option.value
-                      ? 'bg-gray-900 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Sponsored Properties */}
+        {/* Sponsored Properties - New Banner Style */}
         {sponsoredProperties.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-6 text-gray-900">Sponsored Properties</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {sponsoredProperties.map((property) => (
-                <PropertyCard 
-                  key={property.id} 
-                  property={property} 
-                  onContact={handleContactLandlord}
-                  onMoreInfo={handleMoreInfo}
-                  onContactLandlord={handleContactLandlord}
-                />
-              ))}
-            </div>
+            <SponsoredPropertySlideshow
+              properties={sponsoredProperties}
+              onContact={handleContactLandlord}
+              onMoreInfo={handleMoreInfo}
+              onContactLandlord={handleContactLandlord}
+            />
           </div>
         )}
 
         {/* Regular Properties */}
         <div>
-          <h2 className="text-xl font-semibold mb-6 text-gray-900">Available Properties</h2>
+          <h2 className="text-2xl font-normal mb-6 text-gray-900">
+            Home according <span className='text-[#02D482]'>to your Search</span>
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {regularProperties.map((property) => (
               <PropertyCard 
@@ -360,35 +516,9 @@ const TenantsMainapp = () => {
             <div className="text-gray-500 text-lg mb-2">No properties found</div>
             <div className="text-gray-400">Try adjusting your search criteria</div>
           </div>
+       
         )}
       </div>
-
-      {/* Footer */}
-      <footer className="bg-gray-50 border-t mt-16">
-        <div className='overflow-hidden bg-[#02D482] text-white p-2'>
-          <div
-            className="whitespace-nowrap animate-marquee text-center text-lg font-semibold"
-            style={{
-              display: 'inline-block',
-              minWidth: '100%',
-              animation: 'marquee 12s linear infinite'
-            }}
-          >
-            Sponsored post here 
-          </div>
-        </div>
-        <style>
-          {`
-          @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-          }
-          .animate-marquee {
-            animation: marquee 12s linear infinite;
-          }
-          `}
-        </style>
-      </footer>
     </div>
   );
 };
