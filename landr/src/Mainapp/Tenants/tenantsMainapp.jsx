@@ -72,170 +72,109 @@ const SponsoredPropertySlideshow = ({ properties, onContact, onMoreInfo, onConta
   if (!properties || properties.length === 0) return null;
 
   return (
-    <div className="relative w-300 h-[842px] justify-center overflow-hidden  mb-8 cursor-pointer group">
-      {/* Background Image */}
-      <div className="absolute  inset-0">
-        <img
-          src={currentImages[currentImageIndex]}
-          alt={`${currentProperty.type} in ${currentProperty.location}`}
-          className="w-full h-full object-cover transition-all duration-500 ease-in-out"
-          style={{ 
-            objectFit: 'cover',
-            backgroundColor: '#f3f4f6'
-          }}
-          onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/1200x400/f3f4f6/9ca3af?text=Property+Image';
-          }}
-        />
-      </div>
-      
-    
-      
-      {/* Sponsored Badge */}
-      <div className="absolute top-4 right-4 bg-white text-gray-900 px-2 py-3  text-sm font-semibold ">
-         Sponsored Post
-      </div>
-      
-      {/* Property Navigation Arrows - Main slideshow controls */}
-      {properties.length > 1 && (
-        <>
-          <button
-            onClick={goToPrevProperty}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#02D482]/80 hover:bg-[#02D482] text-white p-3 rounded-full z-20 transition-all duration-300 backdrop-blur-sm shadow-lg"
-            aria-label="Previous property"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            onClick={goToNextProperty}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#02D482]/80 hover:bg-[#02D482] text-white p-3 rounded-full z-20 transition-all duration-300 backdrop-blur-sm shadow-lg"
-            aria-label="Next property"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </>
-      )}
+   <div className="relative w-full max-w-screen-lg mx-auto aspect-[3/4] sm:aspect-[16/9] overflow-hidden mb-8 cursor-pointer group">
+  {/* Background Image */}
+  <div className="absolute inset-0">
+    <img
+      src={currentImages[currentImageIndex]}
+      alt={`${currentProperty.type} in ${currentProperty.location}`}
+      className="w-full h-full object-cover transition-all duration-500 ease-in-out"
+      style={{ backgroundColor: '#f3f4f6' }}
+      onError={(e) => {
+        e.target.src =
+          'https://via.placeholder.com/1200x400/f3f4f6/9ca3af?text=Property+Image';
+      }}
+    />
+  </div>
 
-      {/* Image Navigation Arrows - For images within current property */}
-      {currentImages.length > 1 && (
-        <>
-          <button
-            onClick={goToPrevImage}
-            className="absolute left-16 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full z-15 transition-all duration-300 backdrop-blur-sm"
-            aria-label="Previous image"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            onClick={goToNextImage}
-            className="absolute right-16 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full z-15 transition-all duration-300 backdrop-blur-sm"
-            aria-label="Next image"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </>
-      )}
+  {/* Sponsored Badge */}
+  <div className="absolute top-3 right-3 bg-white text-gray-900 px-2 py-1 text-xs sm:text-sm font-semibold shadow">
+    Sponsored Post
+  </div>
 
-      {/* Content Overlay - Bottom Center with Glassmorphism */}
-<div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
-  <div className="bg-white/10 backdrop-blur-md border text-left border-white/20  p-6 shadow-2xl max-w-md">
-    {/* House Type */}
-    <h1 className="text-4xl font-bold mb-3 text-white ">
-      {currentProperty.type}
-    </h1>
-    
-    {/* Price */}
-    <p className="text-2xl mb-3 font-semibold text-white ">
-      ${currentProperty.price.toLocaleString()}/{currentProperty.priceUnit}
-    </p>
-    
-    {/* Location */}
-    <div className="flex items-center mb-3">
-      <MapPin className="w-5 h-5 mr-2 text-white" />
-      <p className="text-lg text-white">{currentProperty.location}</p>
-    </div>
-    
-    {/* Landlord */}
-    <div className="flex items-center  mb-3">
-      <User className="w-5 h-5 mr-2 text-white" />
-      <p className="text-lg text-white">{currentProperty.landlordName}</p>
-    </div>
-    
-    {/* Documentation Status */}
-    <div className="flex items-center  mb-6">
-      <CheckCircle className="w-5 h-5 mr-2 text-green-400" />
-      <p className="text-lg text-white">{currentProperty.documentationStatus}</p>
-    </div>
-    
-    {/* Action Buttons */}
-    <div className="flex gap-4 w-full justify-center">
-      <button 
+  {/* Property Navigation Arrows */}
+  {properties.length > 1 && (
+    <>
+      <button
+        onClick={goToPrevProperty}
+        className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-[#02D482]/80 hover:bg-[#02D482] text-white p-2 sm:p-3 rounded-full z-20 transition-all duration-300 backdrop-blur-sm shadow-lg"
+      >
+        <svg
+          className="w-4 h-4 sm:w-6 sm:h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
+      <button
+        onClick={goToNextProperty}
+        className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-[#02D482]/80 hover:bg-[#02D482] text-white p-2 sm:p-3 rounded-full z-20 transition-all duration-300 backdrop-blur-sm shadow-lg"
+      >
+        <svg
+          className="w-4 h-4 sm:w-6 sm:h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </button>
+    </>
+  )}
+
+  {/* Inner Overlay */}
+  <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10 w-[90%] sm:w-auto">
+    <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 sm:p-6 shadow-2xl max-w-lg">
+      <h1 className="text-2xl sm:text-4xl font-bold mb-2 sm:mb-3 text-white">
+        {currentProperty.type}
+      </h1>
+      <p className="text-lg sm:text-2xl mb-2 sm:mb-3 font-semibold text-white">
+        ${currentProperty.price.toLocaleString()}/{currentProperty.priceUnit}
+      </p>
+      <div className="flex items-center mb-2 sm:mb-3">
+        <MapPin className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-white" />
+        <p className="text-sm sm:text-lg text-white">
+          {currentProperty.location}
+        </p>
+      </div>
+      <div className="flex items-center mb-2 sm:mb-3">
+        <User className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-white" />
+        <p className="text-sm sm:text-lg text-white">
+          {currentProperty.landlordName}
+        </p>
+      </div>
+      <div className="flex items-center mb-4 sm:mb-6">
+        <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-green-400" />
+        <p className="text-sm sm:text-lg text-white">
+          {currentProperty.documentationStatus}
+        </p>
+      </div>
+
+      <button
         onClick={(e) => {
           e.stopPropagation();
           onMoreInfo(currentProperty);
         }}
-        className="bg-[#02D482] hover:bg-green-600 text-white w-full py-3  font-semibold transition-all duration-200 transform hover:scale-105 "
+        className="bg-[#02D482] hover:bg-green-600 text-white w-full py-2 sm:py-3 font-semibold transition-all duration-200 transform hover:scale-105"
       >
         Bid for Virtual Tour
       </button>
-     
     </div>
   </div>
 </div>
-      
-      {/* Property Pagination Dots - Main slideshow indicators */}
-      {properties.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3 z-10">
-          {properties.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={(e) => {
-                e.stopPropagation();
-                setCurrentPropertyIndex(idx);
-                setCurrentImageIndex(0);
-              }}
-              className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                currentPropertyIndex === idx 
-                  ? 'bg-[#02D482] scale-110' 
-                  : 'bg-white/50 hover:bg-white/70'
-              }`}
-              aria-label={`Go to property ${idx + 1}`}
-            />
-          ))}
-        </div>
-      )}
 
-      {/* Image Pagination Dots - For current property images */}
-      {currentImages.length > 1 && (
-        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
-          {currentImages.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={(e) => {
-                e.stopPropagation();
-                setCurrentImageIndex(idx);
-              }}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                currentImageIndex === idx 
-                  ? 'bg-white scale-110' 
-                  : 'bg-white/40 hover:bg-white/60'
-              }`}
-              aria-label={`Go to image ${idx + 1}`}
-            />
-          ))}
-        </div>
-      )}
-
-     
-    </div>
   );
 };
 
