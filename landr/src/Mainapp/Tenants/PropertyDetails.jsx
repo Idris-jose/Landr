@@ -119,6 +119,7 @@ export default function PropertyDetails() {
         {/* Left Column - Property Card & Amenities */}
         <div className="space-y-6 ">
           {/* Property Card */}
+          
           <div className="relative transition-transform duration-200 hover:-translate-y-1 w-full group">
             <div className="absolute top-1 left-1 w-full h-full border-2 border-black opacity-0 group-hover:opacity-100 pointer-events-none"></div>
             <div className="relative border-2 border-black bg-white p-4 shadow-sm hover:shadow-lg transition-shadow duration-200">
