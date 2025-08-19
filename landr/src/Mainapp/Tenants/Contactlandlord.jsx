@@ -61,8 +61,7 @@ const ContactLandlord = ({ landlord, property, onClose }) => {
             onClick={onClose}
             className="flex items-center gap-2 text-gray-700 hover:text-[#02D482] transition-colors"
           >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Back</span>
+        
           </button>
           <h2 className="text-xl font-bold text-gray-900">Contact Landlord</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
@@ -70,8 +69,9 @@ const ContactLandlord = ({ landlord, property, onClose }) => {
           </button>
         </div>
         
-        {/* Content */}
-        <div className="p-6">
+         
+        {/* Content */} 
+        < div className="p-6">
           <div className="flex items-center gap-4 mb-6">
             <img 
               src={landlord.landlordAvatar} 
