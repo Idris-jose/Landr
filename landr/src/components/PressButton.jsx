@@ -34,23 +34,3 @@ export default function PressButton({
   );
 }
 
-// *************************************
-// *****************OUTLINE BUTTON********************
-
-// CHECK THE EXPORT CODE / DEFAULT FUNCTION PRESSBUTTON
-
-// export function OutlineButton({ text, onClick, shadow }) {
-//   // const shadowClass = {
-//   //   black:
-//   //     "shadow-[6px_6px_0px_rgba(2,212,130,0.5)]  active:shadow-[2px_2px_0px_rgba(2,212,130,0.2)] active:translate-y-[2px]",
-//   // };
-
-//   // return (
-//   //   <button
-//   //     onClick={onClick}
-//   //     className={`${shadowClass[shadow]} relative group px-6 py-3 font-semibold text-[#02D482] border-2 border-[#02D482] transition-all active:translate-x-[2px] active:translate-y-[2px] transition-all`}
-//   //   >
-//   //     {text}
-//   //   </button>
-//   // );
-// }
