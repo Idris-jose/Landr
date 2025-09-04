@@ -1,14 +1,14 @@
-import { motion } from 'framer-motion';
-import Frame1 from '../assets/Frame1.png';
-import background from '../assets/main.png';
-import { useNavigate } from 'react-router-dom';
-import { Element } from 'react-scroll';
-import {MapPin, BedSingle, Wallet } from 'lucide-react';
-import BudgetSlider from './modals/BudgetSlider';
-import Citysearch from './modals/citysearch';
-import Bedsearch from './modals/bedsearch';
-import { useState, useRef } from 'react';
-
+import { motion } from "framer-motion";
+import Frame1 from "../assets/Frame1.png";
+import background from "../assets/main.png";
+import { useNavigate } from "react-router-dom";
+import { Element } from "react-scroll";
+import { MapPin, BedSingle, Wallet } from "lucide-react";
+import BudgetSlider from "./modals/BudgetSlider";
+import Citysearch from "./modals/citysearch";
+import Bedsearch from "./modals/bedsearch";
+import { useState, useRef } from "react";
+import PressButton from "../components/PressButton";
 // An
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -16,9 +16,9 @@ const containerVariants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.2,
-      delayChildren: 0.3
-    }
-  }
+      delayChildren: 0.3,
+    },
+  },
 };
 
 const itemVariants = {
@@ -28,9 +28,9 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: "easeOut"
-    }
-  }
+      ease: "easeOut",
+    },
+  },
 };
 
 const imageVariants = {
@@ -40,28 +40,26 @@ const imageVariants = {
     scale: 1,
     transition: {
       duration: 0.8,
-      ease: "easeOut"
-    }
-  }
+      ease: "easeOut",
+    },
+  },
 };
-
 
 export default function Section1() {
   const [showCitySearch, setShowCitySearch] = useState(false);
   const [showBedSearch, setShowBedSearch] = useState(false);
   const [showBudgetSearch, setShowBudgetSearch] = useState(false);
-  
+
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedBed, setSelectedBed] = useState(null);
   const [budgetRange, setBudgetRange] = useState({
     min: 50000,
-    max: 500000
+    max: 500000,
   });
 
   const cityButtonRef = useRef(null);
   const bedButtonRef = useRef(null);
   const budgetButtonRef = useRef(null);
-
 
   const handleCitySearch = () => {
     setShowCitySearch(true);
@@ -73,13 +71,13 @@ export default function Section1() {
     setShowCitySearch(false); // Close other modal
   };
 
- const handleBudgetSearch = () => {
-  setShowBudgetSearch(true);
-  setShowCitySearch(false);
-  setShowBedSearch(false);
-};
+  const handleBudgetSearch = () => {
+    setShowBudgetSearch(true);
+    setShowCitySearch(false);
+    setShowBedSearch(false);
+  };
 
- const handleCitySelect = (city) => {
+  const handleCitySelect = (city) => {
     setSelectedCity(city);
     setShowCitySearch(false);
   };
@@ -89,128 +87,137 @@ export default function Section1() {
     setShowBedSearch(false);
   };
 
-
-   const handleBudgetChange = (min, max) => {
+  const handleBudgetChange = (min, max) => {
     setBudgetRange({ min, max });
   };
 
   // Format currency for budget display
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(amount);
   };
 
-   return (
+  return (
     <section name="section1">
-      <motion.section 
-        className='flex flex-col gap-12 px-6 md:px-10 py-8 md:py-12 relative'
+      <motion.section
+        className="flex flex-col gap-12 px-6 md:px-10 py-8 md:py-12 relative"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={containerVariants}
       >
-        <motion.div className='flex flex-col gap-6 max-w-4xl' variants={containerVariants}>
-          <motion.h1 
+        <motion.div
+          className="flex flex-col gap-6 max-w-4xl"
+          variants={containerVariants}
+        >
+          <motion.h1
             className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
             variants={itemVariants}
           >
             Find your next home without middlemen.
           </motion.h1>
-          
-          <motion.p 
-            className="text-lg md:text-xl font-Poppins text-gray-500 leading-relaxed max-w-3xl"
+
+          {/* ***********************removing the font-poppins class ************************* */}
+          <motion.p
+            className="text-lg md:text-xl text-gray-500 leading-relaxed max-w-3xl"
             variants={itemVariants}
           >
-            Connect directly with landlords and tenants from the comfort of your home. No agents. No fees. Just honest housing.
+            Connect directly with landlords and tenants from the comfort of your
+            home. No agents. No fees. Just honest housing.
           </motion.p>
-          
-          <div className='flex font-Poppins flex-col md:flex-row gap-4 items-start md:items-center relative'>
-           <div className='flex font-Poppins flex-col md:flex-row gap-4 items-start md:items-center relative'>
-          {/* City Button */}
-          <div className="relative">
-            <button 
-              ref={cityButtonRef}
-              onClick={handleCitySearch}
-              className='border-2 border-[#02D482]  px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'
-            >
-              <MapPin className='w-5 h-5'/> 
-              {selectedCity || 'City'}
-            </button>
-            {showCitySearch && (
-              <Citysearch 
-                onClose={() => setShowCitySearch(false)} 
-                onSelect={handleCitySelect}
-                triggerRef={cityButtonRef}
-              />
-            )}
-          </div>
-          
-          {/* Bed Button */}
-          <div className="relative">
-            <button
-              ref={bedButtonRef}
-              onClick={handleBedSearch}
-              className='border-2 border-[#02D482]  px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'
-            >
-              <BedSingle className='w-5 h-5'/> 
-              {selectedBed || 'Bed'}
-            </button>
-            {showBedSearch && (
-              <Bedsearch  
-                onClose={() => setShowBedSearch(false)} 
-                onSelect={handleBedSelect}
-                triggerRef={bedButtonRef}
-              />
-            )}
-          </div>
-          
-          {/* Budget Button */}
-          <div className="relative">
-            <button 
-              ref={budgetButtonRef}
-              onClick={handleBudgetSearch}
-              className='border-2 border-[#02D482]  px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2'
-            >
-              <Wallet className='w-5 h-5'/> 
-              {budgetRange.min === 50000 && budgetRange.max === 500000 
-                ? 'Budget' 
-                : `${formatCurrency(budgetRange.min)} - ${formatCurrency(budgetRange.max)}`}
-            </button>
-            {showBudgetSearch && (
-              <BudgetSlider 
-                onClose={() => setShowBudgetSearch(false)} 
-                onBudgetChange={handleBudgetChange}
-                triggerRef={budgetButtonRef}
-              />
-            )}
-          </div>
 
-       <div className='relative'>
+          <div className="flex font-Poppins flex-col md:flex-row gap-4 items-start md:items-center relative">
+            <div className="flex font-Poppins flex-col md:flex-row gap-4 items-start md:items-center relative">
+              {/* City Button */}
+              <div className="relative">
+                <button
+                  ref={cityButtonRef}
+                  onClick={handleCitySearch}
+                  className="border-2 border-[#02D482]  px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2"
+                >
+                  <MapPin className="w-5 h-5" />
+                  {selectedCity || "City"}
+                </button>
+                {showCitySearch && (
+                  <Citysearch
+                    onClose={() => setShowCitySearch(false)}
+                    onSelect={handleCitySelect}
+                    triggerRef={cityButtonRef}
+                  />
+                )}
+              </div>
+
+              {/* Bed Button */}
+              <div className="relative">
+                <button
+                  ref={bedButtonRef}
+                  onClick={handleBedSearch}
+                  className="border-2 border-[#02D482]  px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2"
+                >
+                  <BedSingle className="w-5 h-5" />
+                  {selectedBed || "Bed"}
+                </button>
+                {showBedSearch && (
+                  <Bedsearch
+                    onClose={() => setShowBedSearch(false)}
+                    onSelect={handleBedSelect}
+                    triggerRef={bedButtonRef}
+                  />
+                )}
+              </div>
+
+              {/* Budget Button */}
+              <div className="relative">
+                <button
+                  ref={budgetButtonRef}
+                  onClick={handleBudgetSearch}
+                  className="border-2 border-[#02D482]  px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2"
+                >
+                  <Wallet className="w-5 h-5" />
+                  {budgetRange.min === 50000 && budgetRange.max === 500000
+                    ? "Budget"
+                    : `${formatCurrency(budgetRange.min)} - ${formatCurrency(
+                        budgetRange.max
+                      )}`}
+                </button>
+                {showBudgetSearch && (
+                  <BudgetSlider
+                    onClose={() => setShowBudgetSearch(false)}
+                    onBudgetChange={handleBudgetChange}
+                    triggerRef={budgetButtonRef}
+                  />
+                )}
+              </div>
+              {/* ************commenting the initial button out to replace it with the press button************** */}
+
+              {/* <div className='relative'>
          <div className="absolute top-2 left-2 w-full h-full bg-black "></div>
       <button className='bg-[#02D482] relative px-10 py-2 shadow-black  text-white hover:bg-green-700 transition-colors duration-200'>
-            Find your ideal Home
-
-           
+            Find your ideal Home           
           </button>
-       </div>
-          
-        </div>
-        </div>
+       </div> */}
+              <PressButton
+                text="Find your ideal Home"
+                color="green"
+                shadow="black"
+              />
+            </div>
+          </div>
         </motion.div>
 
-        <img 
+        <img
           src={background}
           alt="Landlord dashboard preview"
           className="w-full h-auto rounded-lg shadow-sm"
         />
       </motion.section>
 
-      <motion.div 
-        className='overflow-hidden bg-[#02D482] text-white p-2'
+      <motion.div
+        className="overflow-hidden bg-[#02D482] text-white p-2"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -219,15 +226,15 @@ export default function Section1() {
         <div
           className="whitespace-nowrap animate-marquee text-center text-lg font-semibold"
           style={{
-            display: 'inline-block',
-            minWidth: '100%',
-            animation: 'marquee 12s linear infinite'
+            display: "inline-block",
+            minWidth: "100%",
+            animation: "marquee 12s linear infinite",
           }}
         >
           Join Landr today & truly live within your means.
         </div>
       </motion.div>
-      
+
       <style>
         {`
         @keyframes marquee {

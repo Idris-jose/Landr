@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import background from "../../assets/black-white-photo-buildings-crane 1.png";
-import image1 from  "../../assets/hugging face.png" 
-import coins from "../../assets/coins.png" 
+import image1 from "../../assets/hugging face.png";
+import coins from "../../assets/coins.png";
+import GlassEffect from "../../components/GlassEffect";
+import PressButton from "../../components/PressButton";
 
 export default function MultiStepForm() {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
 
-  
-   const [card, setCard] = useState({
+  const [card, setCard] = useState({
     cardNumber: "",
     expMonth: "",
     expYear: "",
-    cvc: ""
+    cvc: "",
   });
 
   const formatCardNumber = (val) => {
@@ -71,19 +72,24 @@ export default function MultiStepForm() {
 
   const handleSubmit = () => {
     console.log("Form submitted:", formData);
-    navigate('/TenantsMainapp');
+    navigate("/TenantsMainapp");
     alert("Form submitted ✅");
   };
 
   return (
-    <div 
-   style={{
-  backgroundImage: `url(${background})`,
-  backgroundSize: 'cover',
-  backgroundPosition: 'center'
-}}
-    className="min-h-screen flex justify-center items-center p-4 text-white">
-      <div className="bg-[#1A3E32] p-8 w-full max-w-2xl shadow-xl">
+    <div
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        // changed to "bottom" from "center"
+        backgroundPosition: "bottom",
+      }}
+      className="min-h-screen flex justify-center items-center p-4 text-white"
+    >
+      {/* <div className="bg-[#1A3E32] p-8 w-full max-w-2xl shadow-xl"> */}
+      {/* ******************************************* */}
+      {/* ******************ADDING GLASS EFFECT************************* */}
+      <GlassEffect>
         {/* Step indicator */}
         <div className="mb-8 text-center">
           <div className="flex justify-center items-center gap-2 mb-2">
@@ -92,10 +98,10 @@ export default function MultiStepForm() {
                 key={stepNum}
                 className={`w-8 h-8 flex items-center justify-center text-sm font-medium ${
                   stepNum === step
-                    ? 'bg-[#02D482] text-white'
+                    ? "bg-[#02D482] text-white"
                     : stepNum < step
-                    ? 'bg-[#02D482] bg-opacity-50 text-white'
-                    : 'bg-gray-600 text-gray-300'
+                    ? "bg-[#02D482] bg-opacity-50 text-white"
+                    : "bg-gray-600 text-gray-300"
                 }`}
               >
                 {stepNum}
@@ -109,50 +115,82 @@ export default function MultiStepForm() {
         {step === 1 && (
           <div className="text-center flex flex-col items-center justify-center space-y-6">
             <div className="w-32 h-32 flex items-center justify-center">
-              <img src={image1} className="w-full h-full object-contain" alt="Progress illustration" />
+              <img
+                src={image1}
+                className="w-full h-full object-contain"
+                alt="Progress illustration"
+              />
             </div>
             <div className="space-y-2">
               <h2 className="text-2xl font-semibold">You are 99% done.</h2>
-              <p className="font-Poppins text-sm text-gray-300 max-w-md">
+              <p className="font-Poppins text-sm text-gray max-w-md">
                 Just a few steps left, so you can enjoy our full potential.
               </p>
             </div>
-            
-            <div className="relative group w-full max-w-sm">
-               <div className="absolute top-1 left-1 w-full h-full border-2 bg-amber-50 opacity-0 group-hover:opacity-100 pointer-events-none"></div>
-            <button className="relative bg-[#02D482] w-full py-3 px-6 font-medium text-white hover:bg-[#02D482] hover:bg-opacity-90 transition-all duration-200" onClick={nextStep}>
-              Proceed
-            </button>
-            </div>
+
+            {/* <div className="relative group w-full max-w-sm">
+              <div className="absolute top-1 left-1 w-full h-full border-2 bg-amber-50 opacity-0 group-hover:opacity-100 pointer-events-none"></div>
+              <button
+                className="relative bg-[#02D482] w-full py-3 px-6 font-medium text-white hover:bg-[#02D482] hover:bg-opacity-90 transition-all duration-200"
+                onClick={nextStep}
+              >
+                Proceed
+              </button>
+            </div> */}
+            <PressButton onClick={nextStep} text="Proceed" shadow="white" />
           </div>
         )}
 
         {step === 2 && (
           <div className="text-center flex flex-col items-center justify-center space-y-6">
             <div className="w-32 h-32 flex items-center justify-center">
-              <img src={coins} className="w-full h-full object-contain" alt="Landr coins illustration" />
+              <img
+                src={coins}
+                className="w-full h-full object-contain"
+                alt="Landr coins illustration"
+              />
             </div>
             <div className="space-y-2">
               <h2 className="text-2xl font-semibold">Landr Coins</h2>
               <p className="font-Poppins font-light text-gray-300 max-w-md leading-relaxed">
-                Landr coins is a special token that allows you to bid for multiple homes without having to worry about extra fees.
+                Landr coins is a special token that allows you to bid for
+                multiple homes without having to worry about extra fees.
               </p>
             </div>
-            
+            {/* ********************** */}
+            {/* ***********ADDING PRESS BUTTON*********** */}
             <div className="flex flex-col gap-3 w-full max-w-sm">
-              <div className="relative group w-full">
-                 <div className="absolute top-1 left-1 w-full h-full border-2 bg-amber-50 opacity-0 group-hover:opacity-100 pointer-events-none"></div>
-              <button className="relative bg-[#02D482] w-full py-3 px-6 font-medium text-white hover:bg-[#02D482] hover:bg-opacity-90 transition-all duration-200" onClick={nextStep}>
-               Get Token Here
-              </button>
-              </div>
+              {/* <div className="relative group w-full">
+                <div className="absolute top-1 left-1 w-full h-full border-2 bg-amber-50 opacity-0 group-hover:opacity-100 pointer-events-none"></div>
+                <button
+                  className="relative bg-[#02D482] w-full py-3 px-6 font-medium text-white hover:bg-[#02D482] hover:bg-opacity-90 transition-all duration-200"
+                  onClick={nextStep}
+                >
+                  Get Token Here
+                </button>
+              </div> */}
 
-               <div className="relative group w-full">
-                 <div className="absolute top-1 left-1 w-full h-full bg-[#02D482] opacity-0 group-hover:opacity-100 pointer-events-none"></div>
-              <button className="relative bg-white text-[#02D482] w-full py-3 px-6 font-medium hover:bg-gray-100 transition-all duration-200" onClick={() => navigate('/TenantsMainapp')}>
-               Skip the process
+              {/* <div className="relative group w-full">
+                <div className="absolute top-1 left-1 w-full h-full bg-[#02D482] opacity-0 group-hover:opacity-100 pointer-events-none"></div>
+                <button
+                  className="relative bg-white text-[#02D482] w-full py-3 px-6 font-medium hover:bg-gray-100 transition-all duration-200"
+                  onClick={() => navigate("/TenantsMainapp")}
+                >
+                  Skip the process
+                </button>
+              </div> */}
+              <PressButton
+                onClick={nextStep}
+                text="Get Token Here"
+                shadow="white"
+              />
+
+              <button
+                className="relative text-[#fff] w-full py-3 px-6 font-medium hover:bg-gray-100 transition-all duration-200"
+                onClick={() => navigate("/TenantsMainapp")}
+              >
+                Skip the process
               </button>
-              </div>
             </div>
           </div>
         )}
@@ -161,17 +199,25 @@ export default function MultiStepForm() {
           <div className="space-y-6">
             <div className="text-center space-y-2">
               <h2 className="text-2xl font-semibold">Select Your Package</h2>
-              <p className="text-gray-300">Choose the number of Landr coins you'd like to purchase</p>
+              <p className="text-gray-300">
+                Choose the number of Landr coins you'd like to purchase
+              </p>
             </div>
-            
+
             <div className="space-y-4">
-              <select 
-                name="landrCoin" 
-                className="w-full p-4 text-white bg-[#02D482] shadow-md focus:outline-none focus:ring-2 focus:ring-[#02D482] focus:ring-opacity-50" 
-                value={selectedPack?.id || ""} 
-                onChange={(e) => setSelectedPack(coinPacks.find((p) => p.id === e.target.value))}
+              <select
+                name="landrCoin"
+                className="w-full p-4 text-white bg-[#02D482] shadow-md focus:outline-none focus:ring-2 focus:ring-[#02D482] focus:ring-opacity-50"
+                value={selectedPack?.id || ""}
+                onChange={(e) =>
+                  setSelectedPack(
+                    coinPacks.find((p) => p.id === e.target.value)
+                  )
+                }
               >
-                <option value="" disabled>Select Landr Coin Package</option>
+                <option value="" disabled>
+                  Select Landr Coin Package
+                </option>
                 {coinPacks.map((p) => (
                   <option key={p.id} value={p.id}>
                     {p.coins} Landr coins for ${p.price.toFixed(2)}
@@ -183,16 +229,22 @@ export default function MultiStepForm() {
                 <div className="bg-[#1f473a] p-4 shadow-md">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-300">Selected Package:</span>
-                    <span className="font-semibold">{selectedPack.coins} coins - ${selectedPack.price.toFixed(2)}</span>
+                    <span className="font-semibold">
+                      {selectedPack.coins} coins - $
+                      {selectedPack.price.toFixed(2)}
+                    </span>
                   </div>
                 </div>
               )}
 
               <div className="relative group w-full">
-                 <div className="absolute top-1 left-1 w-full h-full bg-[#02D482] opacity-0 group-hover:opacity-100 pointer-events-none"></div>
-              <button className="relative bg-white text-[#02D482] w-full py-3 px-6 font-medium hover:bg-gray-100 transition-all duration-200" onClick={nextStep}>
-               Proceed to Payment
-              </button>
+                <div className="absolute top-1 left-1 w-full h-full bg-[#02D482] opacity-0 group-hover:opacity-100 pointer-events-none"></div>
+                <button
+                  className="relative bg-white text-[#02D482] w-full py-3 px-6 font-medium hover:bg-gray-100 transition-all duration-200"
+                  onClick={nextStep}
+                >
+                  Proceed to Payment
+                </button>
               </div>
             </div>
           </div>
@@ -208,7 +260,9 @@ export default function MultiStepForm() {
             <div className="flex flex-col lg:flex-row gap-6 text-white w-full">
               {/* Left - Payment Form */}
               <div className="flex-1 bg-gradient-to-b from-[#1a3e32] to-[#0f1f1a] p-6 shadow-lg">
-                <h3 className="text-lg font-semibold mb-6">Add a Billing Method</h3>
+                <h3 className="text-lg font-semibold mb-6">
+                  Add a Billing Method
+                </h3>
 
                 <div className="mb-6 p-4 bg-[#1f473a] shadow-sm">
                   <label className="flex items-center gap-3">
@@ -222,7 +276,9 @@ export default function MultiStepForm() {
                     />
                     <div className="flex-1">
                       <span className="font-medium block">Payment Card</span>
-                      <span className="text-sm text-gray-300">Visa, Mastercard, Verve</span>
+                      <span className="text-sm text-gray-300">
+                        Visa, Mastercard, Verve
+                      </span>
                     </div>
                   </label>
                   <p className="text-sm text-gray-400 mt-2">
@@ -233,7 +289,9 @@ export default function MultiStepForm() {
                 <div className="space-y-4">
                   {/* Card Number */}
                   <div>
-                    <label className="block text-sm font-medium mb-2">Card Number</label>
+                    <label className="block text-sm font-medium mb-2">
+                      Card Number
+                    </label>
                     <input
                       type="text"
                       name="cardNumber"
@@ -251,7 +309,9 @@ export default function MultiStepForm() {
                   {/* Expiration Date */}
                   <div className="flex gap-4">
                     <div className="flex-1">
-                      <label className="block text-sm font-medium mb-2">Month</label>
+                      <label className="block text-sm font-medium mb-2">
+                        Month
+                      </label>
                       <input
                         type="text"
                         name="expMonth"
@@ -266,7 +326,9 @@ export default function MultiStepForm() {
                       />
                     </div>
                     <div className="flex-1">
-                      <label className="block text-sm font-medium mb-2">Year</label>
+                      <label className="block text-sm font-medium mb-2">
+                        Year
+                      </label>
                       <input
                         type="text"
                         name="expYear"
@@ -284,7 +346,9 @@ export default function MultiStepForm() {
 
                   {/* Security Code */}
                   <div>
-                    <label className="block text-sm font-medium mb-2">Security Code</label>
+                    <label className="block text-sm font-medium mb-2">
+                      Security Code
+                    </label>
                     <input
                       type="text"
                       name="cvc"
@@ -303,9 +367,9 @@ export default function MultiStepForm() {
                     onClick={nextStep}
                     disabled={!isCardValid}
                     className={`w-full py-3 px-6 font-medium transition-all duration-200 ${
-                      isCardValid 
-                        ? 'bg-[#02D482] text-white hover:bg-[#02D482] hover:bg-opacity-90' 
-                        : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                      isCardValid
+                        ? "bg-[#02D482] text-white hover:bg-[#02D482] hover:bg-opacity-90"
+                        : "bg-gray-600 text-gray-400 cursor-not-allowed"
                     }`}
                   >
                     Save & Proceed
@@ -316,7 +380,8 @@ export default function MultiStepForm() {
               {/* Right - Summary */}
               <div className="bg-[#1f473a] w-full lg:w-80 p-6 shadow-lg self-start">
                 <h3 className="flex items-center gap-2 text-lg font-medium mb-6">
-                  <span className="text-yellow-400">🟡</span> Buy {selectedPack?.coins ?? 10} Landr Coins
+                  <span className="text-yellow-400">🟡</span> Buy{" "}
+                  {selectedPack?.coins ?? 10} Landr Coins
                 </h3>
 
                 <div className="space-y-3 mb-6">
@@ -343,29 +408,33 @@ export default function MultiStepForm() {
 
                 <div className="bg-[#0f1f1a] p-3 shadow-sm">
                   <p className="text-xs text-gray-300 leading-relaxed">
-                    These tokens would expire on <b>31 July, 2025</b> & unused tokens would be rolled over for the next month.
+                    These tokens would expire on <b>31 July, 2025</b> & unused
+                    tokens would be rolled over for the next month.
                   </p>
                 </div>
               </div>
             </div>
           </div>
         )}
-        
+
         {step === 5 && (
           <div className="text-center space-y-6">
             <div className="space-y-2">
               <div className="text-6xl mb-4">🎉</div>
               <h2 className="text-2xl font-semibold">All Done!</h2>
-              <p className="text-gray-300">Thank you, {formData.name}. Your account is ready.</p>
+              <p className="text-gray-300">
+                Thank you, {formData.name}. Your account is ready.
+              </p>
             </div>
-            <button 
-            
-            className="bg-[#02D482] w-full max-w-sm py-3 px-6 font-medium text-white hover:bg-[#02D482] hover:bg-opacity-90 transition-all duration-200" onClick={handleSubmit}>
+            <button
+              className="bg-[#02D482] w-full max-w-sm py-3 px-6 font-medium text-white hover:bg-[#02D482] hover:bg-opacity-90 transition-all duration-200"
+              onClick={handleSubmit}
+            >
               Finish
             </button>
           </div>
         )}
-      </div>
+      </GlassEffect>
     </div>
   );
 }
