@@ -16,6 +16,7 @@ import Profile from './Mainapp/Tenants/Profile/profile'
 import Onboarding from './Mainapp/Tenants/Profile/onboarding'
 import Onboarding2 from './Mainapp/Tenants/Profile/onboarding2'
 
+import VirtualBidForm from './Mainapp/Tenants/VirtualBidForm'
 import MultiStepForm from './Mainapp/Tenants/landrCoin'
 import Kyc from './Mainapp/Landlords/Kyc'
 import { Routes, Route,BrowserRouter } from 'react-router-dom'
@@ -54,6 +55,7 @@ function App() {
         <Route path="/TenantsMainapp/profile/onboarding2" element={<Onboarding2 />} />
         <Route path="/LandlordsMainapp/kyc" element={<Kyc />} />
         <Route path="/TenantsMainapp/landrCoin" element={<MultiStepForm />} />
+        <Route path="/TenantsMainapp/VirtualBid" element={<VirtualBidForm/>}/>
         
         {/* Add more routes as needed */}
       </Routes>

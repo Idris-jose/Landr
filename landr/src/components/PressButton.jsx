@@ -27,7 +27,7 @@ export default function PressButton({
   return (
     <button
       onClick={onClick}
-      className={`${colorClasses[color]} ${borderClasses[border]} px-10 py-3 w-full transition-all ${shadowClass[shadow]}`}
+      className={`${colorClasses[color]} ${borderClasses[border]} px-10 py-3 text-sm w-full transition-all ${shadowClass[shadow]}`}
     >
       {text}
     </button>

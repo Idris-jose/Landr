@@ -11,6 +11,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import VirtualBidForm from './VirtualBidForm.jsx';
 
 export default function PropertyDetails() {
   const { id } = useParams();
@@ -21,10 +22,8 @@ export default function PropertyDetails() {
   );
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-   const [open, setOpen] = useState(false);
-
-  
+  const [open, setOpen] = useState(false);
+  const [showVirtualBidForm, setShowVirtualBidForm] = useState(false);
 
   if (!property) {
     return (
@@ -64,8 +63,24 @@ export default function PropertyDetails() {
     }
   }, [images.length]);
 
+  const handleVirtualTourClick = () => {
+    setShowVirtualBidForm(true);
+  };
+
+  const closeVirtualBidForm = () => {
+    setShowVirtualBidForm(false);
+  };
+
   return (
-     <div className="bg-white min-h-screen flex flex-col gap-8 p-4 lg:p-8">
+    <div className="bg-white min-h-screen flex flex-col gap-8 p-4 lg:p-8">
+
+      {/* Virtual Bid Form Modal */}
+      <VirtualBidForm 
+        property={property} 
+        isOpen={showVirtualBidForm} 
+        onClose={closeVirtualBidForm} 
+      />
+
       {/* Top Slideshow */}
       <div className="relative w-full h-[400px] overflow-hidden group rounded-b-xl shadow-md">
         <img
@@ -180,63 +195,64 @@ export default function PropertyDetails() {
       </div>
 
       <div className="bg-white border-2 border-black p-6 rounded-lg shadow-md mt-6">
-  <h2 className="text-lg font-bold mb-4">Property details</h2>
-  
-  <div className="divide-y divide-gray-300">
-    {/* Row */}
-    <div className="flex flex-col sm:flex-row justify-between py-3">
-      <span className="font-medium">Application Costs</span>
-      <div className="flex items-center gap-3">
-        <span>10 Landr Coins</span>
-        <button className="bg-[#02D482] text-white px-3 py-1 text-sm shadow hover:shadow-md">
-          Purchase coins here
-        </button>
+        <h2 className="text-lg font-bold mb-4">Property details</h2>
+        
+        <div className="divide-y divide-gray-300">
+          {/* Row */}
+          <div className="flex flex-col sm:flex-row justify-between py-3">
+            <span className="font-medium">Application Costs</span>
+            <div className="flex items-center gap-3">
+              <span>10 Landr Coins</span>
+              <button className="bg-[#02D482] text-white px-3 py-1 text-sm shadow hover:shadow-md">
+                Purchase coins here
+              </button>
+            </div>
+          </div>
+
+          {/* Row */}
+          <div className="flex flex-col sm:flex-row justify-between py-3">
+            <span className="font-medium">Pets</span>
+            <span>Allowed</span>
+          </div>
+
+          {/* Row */}
+          <div className="flex flex-col sm:flex-row justify-between py-3">
+            <span className="font-medium">Application Fee</span>
+            <span>100 Landr Coins</span>
+          </div>
+
+          {/* Row */}
+          <div className="flex flex-col sm:flex-row justify-between py-3">
+            <span className="font-medium">Location</span>
+            <span className="text-gray-600">
+              Philip Adesanya Crescent, Lagos
+            </span>
+          </div>
+
+          {/* Row */}
+          <div className="flex flex-col sm:flex-row justify-between py-3">
+            <span className="font-medium">Apartment sharing</span>
+            <span>Allowed</span>
+          </div>
+
+          {/* Row */}
+          <div className="flex flex-col sm:flex-row justify-between py-3">
+            <span className="font-medium">Rent Duration</span>
+            <span>12 Months</span>
+          </div>
+
+          {/* Row — Bid for Virtual Tour */}
+          <div className="flex flex-col sm:flex-row justify-between py-3">
+            <span className="font-medium">Virtual Tour</span>
+            <button 
+              onClick={handleVirtualTourClick}
+              className="bg-[#02D482] text-white px-4 py-2 rounded shadow hover:shadow-md transition"
+            >
+              Bid for Virtual Tour
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-
-    {/* Row */}
-    <div className="flex flex-col sm:flex-row justify-between py-3">
-      <span className="font-medium">Pets</span>
-      <span>Allowed</span>
-    </div>
-
-    {/* Row */}
-    <div className="flex flex-col sm:flex-row justify-between py-3">
-      <span className="font-medium">Application Fee</span>
-      <span>100 Landr Coins</span>
-    </div>
-
-    {/* Row */}
-    <div className="flex flex-col sm:flex-row justify-between py-3">
-      <span className="font-medium">Location</span>
-      <span className="text-gray-600">
-        Philip Adesanya Crescent, Lagos
-      </span>
-    </div>
-
-    {/* Row */}
-    <div className="flex flex-col sm:flex-row justify-between py-3">
-      <span className="font-medium">Apartment sharing</span>
-      <span>Allowed</span>
-    </div>
-
-    {/* Row */}
-    <div className="flex flex-col sm:flex-row justify-between py-3">
-      <span className="font-medium">Rent Duration</span>
-      <span>12 Months</span>
-    </div>
-
-    {/* Row — Bid for Virtual Tour */}
-    <div className="flex flex-col sm:flex-row justify-between py-3">
-      <span className="font-medium">Virtual Tour</span>
-      <button className="bg-[#02D482] text-white px-4 py-2 rounded shadow hover:shadow-md transition">
-        Bid for Virtual Tour
-      </button>
-    </div>
-  </div>
-</div>
-
-
     </div>
   );
 }
