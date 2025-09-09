@@ -17,6 +17,7 @@ export default function PressButton({
   const colorClasses = {
     green: "bg-[#02D482]  hover:bg-[#02D482] text-[#ffffff]",
     white: "bg-white text-[#02d482]",
+    black: "bg-[#02D482] text-white"
   };
 
   const borderClasses = {

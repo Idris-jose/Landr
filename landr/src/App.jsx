@@ -49,7 +49,7 @@ function App() {
         <Route path="/signup" element={<GeneralAuth />} />
         <Route path="/LandlordMainapp" element={<LandlordMainapp />} />
         <Route path="/tenantsmainapp" element={<TenantsMainapp />} />
-         <Route path="/property/:id" element={<PropertyDetails />} />
+        <Route path="/property/:id" element={<PropertyDetails />} />
         <Route path="/TenantsMainapp/profile" element={<Profile />} />
         <Route path="/TenantsMainapp/profile/onboarding" element={<Onboarding />} />
         <Route path="/TenantsMainapp/profile/onboarding2" element={<Onboarding2 />} />

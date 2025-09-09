@@ -8,81 +8,62 @@ import coins from "../../assets/coins.png";
 import GlassEffect from "../../components/GlassEffect";
 import PressButton from "../../components/PressButton";
 
-export default function VirtualBidForm({ property, isOpen, onClose }) {
-  const navigate = useNavigate();
+const VirtualBidForm = ({ property, onClose }) => {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
-  const displayImage =
-    property.images && property.images.length > 0
-      ? property.images[0].url
-      : "https://via.placeholder.com/400x300?text=No+Image";
-
-  const coinPacks = [
-    { id: "pack10", coins: 10, price: 1.2 },
-    { id: "pack20", coins: 20, price: 2.2 },
-    { id: "pack30", coins: 30, price: 3.0 },
-    { id: "pack40", coins: 40, price: 3.8 },
-  ];
-  const [selectedPack, setSelectedPack] = useState(coinPacks[0]);
-
-  const nextStep = () => setStep((prev) => prev + 1);
-  const prevStep = () => setStep((prev) => prev - 1);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const nextStep = () => {
+    setStep(step + 1);
   };
 
-  const handleSubmit = () => {
-    console.log("Form submitted:", formData);
-    navigate("/TenantsMainapp");
-    alert("Form submitted ✅");
-  };
+  // Use the first imported image as the display image
+  const displayImage = property.images && property.images.length > 0 
+    ? property.images[0].url 
+    : 'https://via.placeholder.com/400x300?text=No+Image';
 
   return (
-    <div className="absolute inset-0 z-40 flex justify-center items-center p-4 text-white">
+    <div className="m-20">
+    <div className="fixed inset-0 z-40 flex justify-center items-center p-10  bg-gray-800/80 text-white">
       <GlassEffect>
+         <div className="max-w-lg w-full max-h-[100vh] overflow-y-auto p-6 ">
         {/* Step 1 - Property Details */}
         {step === 1 && (
-          <div className="space-y-2">
-            <CircleX className="justify-end cursor-pointer" onClick={onClose} />
+          <div className="space-y-3 sm:space-y-4">
+            <div className="flex justify-end">
+              <CircleX className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-red-400 transition-colors" onClick={onClose} />
+            </div>
 
             <img
               src={displayImage}
               alt={property.title}
-              className="w-full h-60 object-cover"
+              className="w-full h-48 sm:h-60 object-cover "
             />
 
             {/* Location and Rating */}
             <div className="flex justify-between items-start">
-              <div className="flex items-center gap-1 text-sm text-white">
-                <MapPin className="w-4 h-4 text-green-300" />
+              <div className="flex items-center gap-1 text-xs sm:text-sm text-white">
+                <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-green-300 flex-shrink-0" />
                 <span className="truncate">{property.location}</span>
               </div>
             </div>
 
             {/* Property Type */}
-            <h3 className="font-light mb-3 font-Poppins text-white group-hover:text-[#02D482] transition-colors">
+            <h3 className="font-light text-lg sm:text-xl mb-3 font-Poppins text-white group-hover:text-[#02D482] transition-colors">
               {property.type}
             </h3>
 
             {/* Landlord Info */}
-            <div className="flex items-center gap-2 text-sm text-white">
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-white">
               <img
                 src={property.landlordAvatar}
                 alt={property.landlordName}
-                className="w-5 h-5 rounded-full object-cover"
+                className="w-4 h-4 sm:w-5 sm:h-5 rounded-full object-cover flex-shrink-0"
               />
               <span>Hosted by {property.landlordName}</span>
             </div>
 
             {/* Property Features */}
-            <div className="flex mt-3 items-center gap-3 text-sm text-white">
+            <div className="flex mt-3 items-center gap-2 sm:gap-3 text-xs sm:text-sm text-white">
               <span>
                 {property.bedrooms} Bed{property.bedrooms > 1 ? "s" : ""}
               </span>
@@ -95,10 +76,10 @@ export default function VirtualBidForm({ property, isOpen, onClose }) {
             {/* Price and Buttons */}
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-lg font-semibold text-white">
+                <span className="text-lg sm:text-xl font-semibold text-white">
                   ${property.price}
                 </span>
-                <span className="text-sm text-white">
+                <span className="text-xs sm:text-sm text-white">
                   /{property.priceUnit}
                 </span>
               </div>
@@ -117,9 +98,13 @@ export default function VirtualBidForm({ property, isOpen, onClose }) {
 
         {/* Step 2 */}
         {step === 2 && (
-          <div className="flex flex-col space-y-6">
+          <div className="flex flex-col space-y-3 sm:space-y-6">
+             <div className="flex justify-end">
+              <CircleX className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-red-400 transition-colors" onClick={onClose} />
+            </div>
+
             <div>
-              <h1>
+              <h1 className="text-lg sm:text-xl leading-tight">
                 Request a virtual tour
                 <br />
                 for {property.landlordName}'s {property.bedrooms} Bedroom{" "}
@@ -130,17 +115,17 @@ export default function VirtualBidForm({ property, isOpen, onClose }) {
             <div className="border-t border-gray-200" />
 
             <div>
-              <div className="bg-[#02D482] p-8">
-                <div className="flex items-center mb-6 gap-2 text-sm text-white">
+              <div className="bg-[#02D482] p-4 sm:p-6 md:p-8 rounded-lg">
+                <div className="flex items-center mb-4 sm:mb-6 gap-2 text-xs sm:text-sm text-white">
                   <img
                     src={property.landlordAvatar}
                     alt={property.landlordName}
-                    className="w-5 h-5 rounded-full object-cover"
+                    className="w-4 h-4 sm:w-5 sm:h-5 rounded-full object-cover flex-shrink-0"
                   />
                   <span className="font-medium">{property.landlordName}</span>
                 </div>
-                <p className="font-light">
-                  Hi, Sandles I'm interested in Scheduling a tour with <br />{" "}
+                <p className="font-light text-sm sm:text-base mb-4">
+                  Hi, Sandles I'm interested in Scheduling a tour with <br className="hidden sm:block" />{" "}
                   your property. Thanks
                 </p>
                 <PressButton onClick={nextStep} text="Edit" shadow="white" />
@@ -152,21 +137,21 @@ export default function VirtualBidForm({ property, isOpen, onClose }) {
             <div className="flex flex-col gap-3">
 
               <div>
-              <h1 className="">Schedule your date</h1>
+              <h1 className="text-base sm:text-lg mb-2">Schedule your date</h1>
               <div>
                 <input
                   type="date"
-                  className="w-full p-4 text-white bg-[#1f473a] shadow-md focus:outline-none focus:ring-2 focus:ring-[#02D482] focus:ring-opacity-50"
+                  className="w-full p-3 sm:p-4 text-white bg-[#1f473a]  shadow-md focus:outline-none focus:ring-2 focus:ring-[#02D482] focus:ring-opacity-50 text-sm sm:text-base"
                 />
               </div>
               </div>
               
               <div>
-              <h1>Schedule your Time</h1>
+              <h1 className="text-base sm:text-lg mb-2">Schedule your Time</h1>
               <div>
                 <input
                   type="time"
-                  className="w-full p-4 text-white bg-[#1f473a] shadow-md focus:outline-none focus:ring-2 focus:ring-[#02D482] focus:ring-opacity-50"
+                  className="w-full p-3 sm:p-4 text-white bg-[#1f473a]  shadow-md focus:outline-none focus:ring-2 focus:ring-[#02D482] focus:ring-opacity-50 text-sm sm:text-base"
                 />
               </div>
               </div>
@@ -178,19 +163,23 @@ export default function VirtualBidForm({ property, isOpen, onClose }) {
 
         {/* Step 3 */}
         {step === 3 && (
-          <div className="flex flex-col space-y-6">
+          <div className="flex flex-col  space-y-4 sm:space-y-6">
+             <div className="flex justify-end">
+              <CircleX className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-red-400 transition-colors" onClick={onClose} />
+            </div>
+
             <div>
-              <h1 className="text-2xl ">Add your contact information</h1>
-            <p>enter your contact information</p>
+              <h1 className="text-lg sm:text-xl md:text-2xl mb-2">Add your contact information</h1>
+            <p className="text-sm sm:text-base text-white">enter your contact information</p>
             </div>
            
 
-          <input type="number" placeholder="Input Phone Number" className="bg-[#02D482] p-5"/>
+          <input type="number" placeholder="Input Phone Number" className="bg-[#02D482] p-4 sm:p-5  text-white placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm sm:text-base"/>
           <div className="border-t border-gray-200" />
 
-          <div className="bg-emerald-800 p-3 flex items-center justify-center gap-1">
-            <img src={idea} alt="idea" className="w-15 h-15 mb-4"/>
-           <h1>Including your phone number inyour tour request bid,increases your chance of landing the house by 30%</h1>
+          <div className="bg-emerald-800 p-3 sm:p-4  flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
+            <img src={idea} alt="idea" className="w-10 h-10 sm:w-12 sm:h-12 mb-2 sm:mb-0 flex-shrink-0"/>
+           <h1 className="text-xs sm:text-sm text-center sm:text-left">Including your phone number inyour tour request bid,increases your chance of landing the house by 30%</h1>
           </div>
 
            <div className="border-t border-gray-200" />
@@ -203,19 +192,27 @@ export default function VirtualBidForm({ property, isOpen, onClose }) {
 
         {/* Step 4 */}
         {step === 4 && (
-          <div className="text-center ">
-            <div className="space-y-2 mb-5">
-              <img src={Celebration} alt="celebration" className="w-70 mx-auto"/>
-              <h2 className="text-2xl font-semibold">Voilaaa!</h2>
-              <p className="text-white">
+          <div className="text-center">
+             <div className="flex justify-end">
+              <CircleX className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer hover:text-red-400 transition-colors" onClick={onClose} />
+            </div>
+
+            <div className="space-y-3 sm:space-y-4 mb-6">
+              <img src={Celebration} alt="celebration" className="w-32 sm:w-48 md:w-56 mx-auto"/>
+              <h2 className="text-xl sm:text-2xl font-semibold">Voilaaa!</h2>
+              <p className="text-white text-sm sm:text-base">
                 Your bid to view {property.landlordName}'s<br/> home is on its way!'.
               </p>
             </div>
             
-            <PressButton onClick={nextStep} text="Proceed to dashboard" shadow="white" />
+            <PressButton onClick={onclose} text="Proceed to dashboard" shadow="white" />
           </div>
         )}
+        </div>
       </GlassEffect>
     </div>
+    </div>
   );
-}
+};
+
+export default VirtualBidForm;

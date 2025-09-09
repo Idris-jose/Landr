@@ -1,5 +1,6 @@
 import { mockProperties } from './mockProperties.jsx';
 import React, { useState, useEffect } from "react";
+import PressButton from '../../components/PressButton.jsx';
 import { useParams, useNavigate } from "react-router-dom";
 import {
   MapPin,
@@ -75,14 +76,17 @@ export default function PropertyDetails() {
     <div className="bg-white min-h-screen flex flex-col gap-8 p-4 lg:p-8">
 
       {/* Virtual Bid Form Modal */}
+      <div className={`fixed inset-0   flex items-center justify-center z-50 transition-opacity ${showVirtualBidForm ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+
       <VirtualBidForm 
         property={property} 
         isOpen={showVirtualBidForm} 
         onClose={closeVirtualBidForm} 
       />
+      </div>
 
       {/* Top Slideshow */}
-      <div className="relative w-full h-[400px] overflow-hidden group rounded-b-xl shadow-md">
+      <div className="relative w-full h-[400px] overflow-hidden group  shadow-md">
         <img
           src={images[currentImageIndex]}
           alt={`${property.type} in ${property.location}`}
@@ -203,9 +207,9 @@ export default function PropertyDetails() {
             <span className="font-medium">Application Costs</span>
             <div className="flex items-center gap-3">
               <span>10 Landr Coins</span>
-              <button className="bg-[#02D482] text-white px-3 py-1 text-sm shadow hover:shadow-md">
-                Purchase coins here
-              </button>
+               <div>
+                 <PressButton text="Purchase coin here" shadow='green'  />
+            </div>
             </div>
           </div>
 
@@ -244,12 +248,9 @@ export default function PropertyDetails() {
           {/* Row — Bid for Virtual Tour */}
           <div className="flex flex-col sm:flex-row justify-between py-3">
             <span className="font-medium">Virtual Tour</span>
-            <button 
-              onClick={handleVirtualTourClick}
-              className="bg-[#02D482] text-white px-4 py-2 rounded shadow hover:shadow-md transition"
-            >
-              Bid for Virtual Tour
-            </button>
+            <div>
+                 <PressButton text="Bid for virtual tour" shadow='green' onClick={handleVirtualTourClick} />
+            </div>
           </div>
         </div>
       </div>
