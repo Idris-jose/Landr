@@ -5,6 +5,7 @@ import image1 from "../../assets/hugging face.png";
 import coins from "../../assets/coins.png";
 import GlassEffect from "../../components/GlassEffect";
 import PressButton from "../../components/PressButton";
+import { ChevronDown} from "lucide-react"
 
 export default function MultiStepForm() {
   const navigate = useNavigate();
@@ -75,6 +76,8 @@ export default function MultiStepForm() {
     navigate("/TenantsMainapp");
     alert("Form submitted ✅");
   };
+ 
+   const [open, setOpen] = useState(false);
 
   return (
     <div
@@ -91,26 +94,7 @@ export default function MultiStepForm() {
       {/* ******************ADDING GLASS EFFECT************************* */}
       <GlassEffect>
         {/* Step indicator */}
-        <div className="mb-8 text-center">
-          <div className="flex justify-center items-center gap-2 mb-2">
-            {[1, 2, 3, 4, 5].map((stepNum) => (
-              <div
-                key={stepNum}
-                className={`w-8 h-8 flex items-center justify-center text-sm font-medium ${
-                  stepNum === step
-                    ? "bg-[#02D482] text-white"
-                    : stepNum < step
-                    ? "bg-[#02D482] bg-opacity-50 text-white"
-                    : "bg-gray-600 text-gray-300"
-                }`}
-              >
-                {stepNum}
-              </div>
-            ))}
-          </div>
-          <p className="text-sm text-gray-300">Step {step} of 5</p>
-        </div>
-
+       
         {/* Steps */}
         {step === 1 && (
           <div className="text-center flex flex-col items-center justify-center space-y-6">
@@ -196,58 +180,79 @@ export default function MultiStepForm() {
         )}
 
         {step === 3 && (
-          <div className="space-y-6">
-            <div className="text-center space-y-2">
-              <h2 className="text-2xl font-semibold">Select Your Package</h2>
-              <p className="text-gray-300">
-                Choose the number of Landr coins you'd like to purchase
-              </p>
-            </div>
+           <div className="space-y-6">
+      {/* Header */}
+      <div className="text-center space-y-2">
+        <h2 className="text-2xl font-semibold">Select Your Package</h2>
+        <p className="text-gray-300">
+          Choose the number of Landr coins you'd like to purchase
+        </p>
+      </div>
 
-            <div className="space-y-4">
-              <select
-                name="landrCoin"
-                className="w-full p-4 text-white bg-[#02D482] shadow-md focus:outline-none focus:ring-2 focus:ring-[#02D482] focus:ring-opacity-50"
-                value={selectedPack?.id || ""}
-                onChange={(e) =>
-                  setSelectedPack(
-                    coinPacks.find((p) => p.id === e.target.value)
-                  )
-                }
-              >
-                <option value="" disabled>
-                  Select Landr Coin Package
-                </option>
-                {coinPacks.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.coins} Landr coins for ${p.price.toFixed(2)}
-                  </option>
-                ))}
-              </select>
+      {/* Dropdown */}
+      <div className="group transition-transform duration-200 hover:-translate-y-1">
+        <div className="relative inline-block w-full group">
+          {/* hover border effect */}
+          <div className="absolute top-1 left-1 w-full h-full border-2 border-black pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-              {selectedPack && (
-                <div className="bg-[#1f473a] p-4 shadow-md">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-300">Selected Package:</span>
-                    <span className="font-semibold">
-                      {selectedPack.coins} coins - $
-                      {selectedPack.price.toFixed(2)}
-                    </span>
-                  </div>
-                </div>
-              )}
+          {/* Dropdown button */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="relative border-2 border-black bg-[#02D482] text-white w-full flex justify-between items-center px-4 py-3 rounded"
+          >
+            <span>
+              {selectedPack
+                ? `${selectedPack.coins} Landr coins for $${selectedPack.price.toFixed(2)}`
+                : "Select Landr Coin Package"}
+            </span>
+            <ChevronDown size={16} />
+          </button>
 
-              <div className="relative group w-full">
-                <div className="absolute top-1 left-1 w-full h-full bg-[#02D482] opacity-0 group-hover:opacity-100 pointer-events-none"></div>
-                <button
-                  className="relative bg-white text-[#02D482] w-full py-3 px-6 font-medium hover:bg-gray-100 transition-all duration-200"
-                  onClick={nextStep}
+          {/* Dropdown menu */}
+          {open && (
+            <div className=" mt-1 border-2 border-black bg-white shadow-lg z-10 rounded">
+              {coinPacks.map((p) => (
+                <div
+                  key={p.id}
+                  onClick={() => {
+                    setSelectedPack(p);
+                    setOpen(false);
+                  }}
+                  className={`px-4 py-2 text-sm cursor-pointer 
+                    hover:bg-gray-100 
+                    ${selectedPack?.id === p.id ? "bg-gray-200 font-semibold" : "text-gray-700"}`}
                 >
-                  Proceed to Payment
-                </button>
-              </div>
+                  {p.coins} Landr coins for ${p.price.toFixed(2)}
+                </div>
+              ))}
             </div>
+          )}
+        </div>
+      </div>
+
+      {/* Selected Package Preview */}
+      {selectedPack && (
+        <div className="bg-[#1f473a] p-4 shadow-md rounded">
+          <div className="flex justify-between items-center">
+            <span className="text-gray-300">Selected Package:</span>
+            <span className="font-semibold">
+              {selectedPack.coins} coins – ${selectedPack.price.toFixed(2)}
+            </span>
           </div>
+        </div>
+      )}
+
+      {/* Proceed Button */}
+      <div className="relative group w-full">
+        <div className="absolute top-1 left-1 w-full h-full bg-[#02D482] opacity-0 group-hover:opacity-100 pointer-events-none"></div>
+        <button
+          className="relative bg-white text-[#02D482] w-full py-3 px-6 font-medium hover:bg-gray-100 transition-all duration-200 rounded"
+          onClick={nextStep}
+        >
+          Proceed to Payment
+        </button>
+      </div>
+    </div>
         )}
 
         {step === 4 && (
@@ -434,6 +439,26 @@ export default function MultiStepForm() {
             </button>
           </div>
         )}
+         <div className="mt-8 text-center">
+          <div className="flex justify-center items-center gap-2 mb-2">
+            {[1, 2, 3, 4, 5].map((stepNum) => (
+              <div
+                key={stepNum}
+                className={`w-8 h-8 flex items-center justify-center text-sm font-medium ${
+                  stepNum === step
+                    ? "bg-[#02D482] text-white"
+                    : stepNum < step
+                    ? "bg-[#02D482] bg-opacity-50 text-white"
+                    : "bg-gray-600 text-gray-300"
+                }`}
+              >
+                {stepNum}
+              </div>
+            ))}
+          </div>
+         
+        </div>
+
       </GlassEffect>
     </div>
   );

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import logo from '../../assets/Landr.png';
 import { mockProperties } from './mockProperties.jsx';
 import { useNavigate } from 'react-router-dom';
-import ContactLandlord from './Contactlandlord.jsx';
-import { MapPin, User, CheckCircle, Search, X } from 'lucide-react';
+import ContactLandlord from './Contactlandlord.jsx'
+import { MapPin, User, CheckCircle, Search, X,Heart } from 'lucide-react';
 
 // Updated Sponsored Property Slideshow Component
 const SponsoredPropertySlideshow = ({ properties, onContact, onMoreInfo, onContactLandlord }) => {
@@ -72,6 +72,7 @@ const SponsoredPropertySlideshow = ({ properties, onContact, onMoreInfo, onConta
   if (!properties || properties.length === 0) return null;
 
   return (
+    <>
    <div className="relative w-full max-w-screen-lg mx-auto aspect-[3/4] sm:aspect-[16/9] overflow-hidden mb-8 cursor-pointer group">
   {/* Background Image */}
   <div className="absolute inset-0">
@@ -88,51 +89,11 @@ const SponsoredPropertySlideshow = ({ properties, onContact, onMoreInfo, onConta
   </div>
 
   {/* Sponsored Badge */}
-  <div className="absolute top-3 right-3 bg-white text-gray-900 px-2 py-1 text-xs sm:text-sm font-semibold shadow">
+  <div className="absolute top-3 right-3 bg-white text-gray-900 px-4 py-3 text-xs sm:text-sm font-semibold shadow">
     Sponsored Post
   </div>
 
-  {/* Property Navigation Arrows */}
-  {properties.length > 1 && (
-    <>
-      <button
-        onClick={goToPrevProperty}
-        className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-[#02D482]/80 hover:bg-[#02D482] text-white p-2 sm:p-3 rounded-full z-20 transition-all duration-300 backdrop-blur-sm shadow-lg"
-      >
-        <svg
-          className="w-4 h-4 sm:w-6 sm:h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
-      </button>
-      <button
-        onClick={goToNextProperty}
-        className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-[#02D482]/80 hover:bg-[#02D482] text-white p-2 sm:p-3 rounded-full z-20 transition-all duration-300 backdrop-blur-sm shadow-lg"
-      >
-        <svg
-          className="w-4 h-4 sm:w-6 sm:h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
-      </button>
-    </>
-  )}
+  
 
   {/* Inner Overlay */}
   <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10 w-[90%] sm:w-auto">
@@ -174,13 +135,59 @@ const SponsoredPropertySlideshow = ({ properties, onContact, onMoreInfo, onConta
     </div>
   </div>
 </div>
-
+{/* Property Navigation Arrows */}
+  {properties.length > 1 && (
+    <>
+    <div className='flex gap-4 items-center justify-end'>
+      <div className='border border-[#02D482] w-full'/>
+      <button
+        onClick={goToPrevProperty}
+        className=" shadow-[6px_6px_0px_rgba(2,212,130,0.4)]  active:shadow-[2px_2px_0px_rgba(2,212,130,0.2)] active:translate-y-[2px] bg-[#02D482]/80 hover:bg-[#02D482] text-white p-2 sm:p-3  z-20 transition-all duration-300 backdrop-blur-sm "
+      >
+        <svg
+          className="w-4 h-4 sm:w-6 sm:h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
+      <button
+        onClick={goToNextProperty}
+        className=" shadow-[6px_6px_0px_rgba(2,212,130,0.4)]  active:shadow-[2px_2px_0px_rgba(2,212,130,0.2)] active:translate-y-[2px] bg-[#02D482]/80 hover:bg-[#02D482] text-white p-2 sm:p-3  z-20 transition-all duration-300 backdrop-blur-sm "
+      >
+        <svg
+          className="w-4 h-4 sm:w-6 sm:h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </button>
+       </div>
+    </>
+  )}
+ 
+</>
   );
 };
 
 
 
 const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord }) => {
+  const [heartfull,SetHeartfull] = useState(false)
   const navigate = useNavigate();
   // Use the first imported image as the display image
   const displayImage = property.images && property.images.length > 0 
@@ -191,14 +198,15 @@ const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord }) =>
     <div className="group cursor-pointer">
       {/* Image Container */}
       <div 
-        onClick={(e) => {
-          e.stopPropagation();
-          onMoreInfo(property);
-        }}
+       
         className="relative h-64 bg-gray-200 overflow-hidden mb-3"
       >
         <img
           src={displayImage}
+           onClick={(e) => {
+          e.stopPropagation();
+          onMoreInfo(property);
+        }}
           alt={`${property.type} in ${property.location}`}
           className="w-full h-full object-cover transition-transform duration-300"
         />
@@ -210,6 +218,14 @@ const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord }) =>
             <span className="text-xs text-gray-700">Verified</span>
           </div>
         )}
+
+          <div 
+          onClick={ ()=> {SetHeartfull(!heartfull)}}
+          className={`absolute top-3 right-3  backdrop-blur-sm p-2 rounded-full flex items-center gap-1 ${!heartfull ? "bg-white/90" :"bg-red-600" }`}>
+            <Heart className={`w-3 h-3 text-white `} />
+            
+          </div>
+
       </div>
 
       {/* Property Details */}
@@ -262,7 +278,7 @@ const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord }) =>
               onContactLandlord(property);
             }}
            
-            className="border-[#02D482] border-1 px-4 py-2 text-sm font-medium hover:bg-[#02D482] hover:text-amber-50 transition-colors"
+            className="border-[#02D482] border-1  px-4 py-2 text-sm font-poppins  hover:bg-[#02D482] hover:text-amber-50 transition-colors"
           >
             Bid for live tour
           </button>
@@ -271,7 +287,7 @@ const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord }) =>
               e.stopPropagation();
               onMoreInfo(property);
             }}
-            className="bg-[#02D482] text-white px-4 py-2 text-sm font-medium hover:bg-green-600 transition-colors"
+            className="bg-[#02D482] text-white px-4 py-2 text-sm  hover:bg-green-600 transition-colors"
           >
             View property
           </button>
@@ -392,7 +408,7 @@ const TenantsMainapp = () => {
       )}
 
       {/* Navigation Bar */}
-      <nav className='flex justify-between items-center bg-white px-8 py-4 shadow-sm border-b'>
+      <nav className='flex justify-between items-center bg-white px-8 py-4 '>
         <div className="flex items-center">
           <img src={logo} className='w-20' alt="Logo" />
         </div>
