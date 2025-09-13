@@ -1,5 +1,6 @@
 import { ArrowLeft, Coins, History, Plus, MapPin, CheckCircle, Heart } from "lucide-react";
 import { useNavigate ,useLocation  } from "react-router-dom";
+import PressButton from '../../../components/PressButton';
 
 export default function Profile( ) {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ export default function Profile( ) {
                 </div>
 
                 <div className="flex gap-2">
-                  <button className="inline-flex items-center gap-2 bg-white text-gray-900 hover:bg-gray-50 px-4 py-2 rounded-lg font-medium shadow-sm transition">
+                  <button className="inline-flex items-center gap-2 bg-gren-800 text-white px-4 py-2 rounded-lg font-medium  transition shadow-[6px_6px_0px_rgba(255,255,255)]  active:shadow-[2px_2px_0px_rgba(255,255,255,0.2)] active:translate-y-[2px]">
                     <Plus className="w-4 h-4" />
                     Top up
                   </button>
