@@ -1,12 +1,15 @@
-import { ArrowLeft, Coins, History, Plus } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Coins, History, Plus, MapPin, CheckCircle, Heart } from "lucide-react";
+import { useNavigate ,useLocation  } from "react-router-dom";
 
-export default function Profile() {
+export default function Profile( ) {
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const favorites = location.state?.favorites || [];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-      <div className="max-w-5xl mx-auto p-6 sm:p-8">
+      <div className="max-w-7xl mx-auto p-10 sm:p-8">
         {/* Back Button */}
         <button
           onClick={() => navigate("/TenantsMainapp")}
@@ -72,6 +75,108 @@ export default function Profile() {
           </div>
         </div>
       </div>
+
+        <div className="mt-8 p-6 sm:p-8 max-w-7xl  mx-auto">
+          <h2 className="text-2xl font-semibold font-poppins text-gray-900 mb-6">Your Favorites Houses</h2>
+          {favorites.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {favorites.map((property) => {
+                const displayImage = property.images && property.images.length > 0
+                  ? property.images[0].url
+                  : 'https://via.placeholder.com/400x300?text=No+Image';
+
+                return (
+                  <div key={property.id} className="group cursor-pointer">
+                    {/* Image Container */}
+                    <div
+                      className="relative h-64 bg-gray-200 overflow-hidden mb-3"
+                      onClick={() => navigate(`/property/${property.id}`)}
+                    >
+                      <img
+                        src={displayImage}
+                        alt={`${property.type} in ${property.location}`}
+                        className="w-full h-full object-cover transition-transform duration-300"
+                      />
+
+                      {/* Verification Badge */}
+                      {property.documentationStatus === 'Verified' && (
+                        <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full flex items-center gap-1">
+                          <CheckCircle className="w-3 h-3 text-[#02D482]" />
+                          <span className="text-xs text-gray-700">Verified</span>
+                        </div>
+                      )}
+
+                      {/* Favorite Heart - Filled since it's in favorites */}
+                      <div className="absolute top-3 right-3 p-2 rounded-full bg-red-600">
+                        <Heart className="w-4 h-4 text-white" />
+                      </div>
+                    </div>
+
+                    {/* Property Details */}
+                    <div className="space-y-2">
+                      {/* Location */}
+                      <div className="flex justify-between items-start">
+                        <div className="flex items-center gap-1 text-sm text-gray-600">
+                          <MapPin className="w-4 h-4" />
+                          <span className="truncate">{property.location}</span>
+                        </div>
+                      </div>
+
+                      {/* Property Type */}
+                      <h3 className="font-medium font-Poppins text-gray-900 group-hover:text-[#02D482] transition-colors">
+                        {property.type}
+                      </h3>
+
+                      {/* Landlord Info */}
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <img
+                          src={property.landlordAvatar}
+                          alt={property.landlordName}
+                          className="w-5 h-5 rounded-full object-cover"
+                        />
+                        <span>Hosted by {property.landlordName}</span>
+                      </div>
+
+                      {/* Property Features */}
+                      <div className="flex items-center gap-3 text-sm text-gray-600">
+                        <span>{property.bedrooms} bed{property.bedrooms > 1 ? 's' : ''}</span>
+                        <span>•</span>
+                        <span>{property.bathrooms} bath{property.bathrooms > 1 ? 's' : ''}</span>
+                      </div>
+
+                      {/* Price */}
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-lg font-semibold text-gray-900">
+                            ${property.price.toLocaleString()}
+                          </span>
+                          <span className="text-sm text-gray-600">/{property.priceUnit}</span>
+                        </div>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="flex gap-2">
+                        <button
+                          className="border-[#02D482] border px-4 py-2 text-sm font-poppins hover:bg-[#02D482] hover:text-white transition-colors"
+                        >
+                          Bid for live tour
+                        </button>
+                        <button
+                          onClick={() => navigate(`/property/${property.id}`)}
+                          className="bg-[#02D482] text-white px-4 py-2 text-sm hover:bg-green-600 transition-colors"
+                        >
+                          View property
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="text-gray-500">No favorites added yet.</p>
+          )}
+        </div>
     </div>
   );
 }

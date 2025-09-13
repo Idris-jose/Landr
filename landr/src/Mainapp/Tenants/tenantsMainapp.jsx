@@ -323,7 +323,8 @@ const TenantsMainapp = () => {
       
         return prevFavorites.filter((fav) => fav.id !== property.id)
       }else{
-        return [...prevFavorites,property]
+        return  [...prevFavorites,property]
+        console.log(favorites.length)
       }
   
 
@@ -446,8 +447,8 @@ const TenantsMainapp = () => {
             />
           </div>
           <div className="flex items-center gap-2">
-            <div 
-              onClick={() => {navigate("/TenantsMainapp/profile")}}
+            <div
+              onClick={() => navigate("/TenantsMainapp/profile", { state: { favorites } })}
                 className=" shadow-[6px_6px_0px_rgba(2,212,130,0.4)]  active:shadow-[2px_2px_0px_rgba(2,212,130,0.2)] active:translate-y-[2px] bg-[#02D482]/80 hover:bg-[#02D482] text-white p-2 sm:p-3  z-20 transition-all duration-300 backdrop-blur-sm"
             >
               <User className="w-4 h-4 text-white" />
