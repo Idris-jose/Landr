@@ -5,7 +5,7 @@ import image1 from "../../assets/hugging face.png";
 import coins from "../../assets/coins.png";
 import GlassEffect from "../../components/GlassEffect";
 import PressButton from "../../components/PressButton";
-import { ChevronDown} from "lucide-react"
+import { ChevronDown, GlassWater} from "lucide-react"
 
 export default function MultiStepForm() {
   const navigate = useNavigate();
@@ -193,7 +193,7 @@ export default function MultiStepForm() {
       <div className="group transition-transform duration-200 hover:-translate-y-1">
         <div className="relative inline-block w-full group">
           {/* hover border effect */}
-          <div className="absolute top-1 left-1 w-full h-full border-2 border-black pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          
 
           {/* Dropdown button */}
           <button
@@ -210,7 +210,8 @@ export default function MultiStepForm() {
 
           {/* Dropdown menu */}
           {open && (
-            <div className=" mt-1 border-2 border-black bg-white shadow-lg z-10 rounded">
+            <GlassEffect>
+            <div className=" mt-1 bg-white shadow-lg z-10 rounded">
               {coinPacks.map((p) => (
                 <div
                   key={p.id}
@@ -219,13 +220,14 @@ export default function MultiStepForm() {
                     setOpen(false);
                   }}
                   className={`px-4 py-2 text-sm cursor-pointer 
-                    hover:bg-gray-100 
-                    ${selectedPack?.id === p.id ? "bg-gray-200 font-semibold" : "text-gray-700"}`}
+                    hover:bg-green-600 hover:text-white
+                    ${selectedPack?.id === p.id ? "bg-[#02D482] font-semibold" : "text-gray-700"}`}
                 >
                   {p.coins} Landr coins for ${p.price.toFixed(2)}
                 </div>
               ))}
             </div>
+            </GlassEffect>
           )}
         </div>
       </div>
@@ -244,13 +246,8 @@ export default function MultiStepForm() {
 
       {/* Proceed Button */}
       <div className="relative group w-full">
-        <div className="absolute top-1 left-1 w-full h-full bg-[#02D482] opacity-0 group-hover:opacity-100 pointer-events-none"></div>
-        <button
-          className="relative bg-white text-[#02D482] w-full py-3 px-6 font-medium hover:bg-gray-100 transition-all duration-200 rounded"
-          onClick={nextStep}
-        >
-          Proceed to Payment
-        </button>
+        
+   <PressButton text="proceed to payment" shadow="white" onClick={nextStep}/>
       </div>
     </div>
         )}
@@ -407,11 +404,9 @@ export default function MultiStepForm() {
                   </div>
                 </div>
 
-                <button className="w-full bg-[#02D482] py-3 px-6 mb-4 font-medium text-white hover:bg-[#02D482] hover:bg-opacity-90 transition-all duration-200">
-                  Proceed to payments
-                </button>
+             <PressButton text="Proceed to payment" shadow="green"/>
 
-                <div className="bg-[#0f1f1a] p-3 shadow-sm">
+                <div className="bg-[#0f1f1a] p-3 mt-5 shadow-sm">
                   <p className="text-xs text-gray-300 leading-relaxed">
                     These tokens would expire on <b>31 July, 2025</b> & unused
                     tokens would be rolled over for the next month.

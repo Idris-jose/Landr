@@ -186,8 +186,10 @@ const SponsoredPropertySlideshow = ({ properties, onContact, onMoreInfo, onConta
 
 
 
-const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord }) => {
+const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord, onToggleFavorite ,favorites }) => {
   const [heartfull,SetHeartfull] = useState(false)
+
+    const isFavorite = favorites.some((fav) => fav.id === property.id);
   const navigate = useNavigate();
   // Use the first imported image as the display image
   const displayImage = property.images && property.images.length > 0 
@@ -219,12 +221,17 @@ const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord }) =>
           </div>
         )}
 
-          <div 
-          onClick={ ()=> {SetHeartfull(!heartfull)}}
-          className={`absolute top-3 right-3  backdrop-blur-sm p-2 rounded-full flex items-center gap-1 ${!heartfull ? "bg-white/90" :"bg-red-600" }`}>
-            <Heart className={`w-3 h-3 text-white `} />
-            
-          </div>
+           <div
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleFavorite(property);
+          }}
+          className={`absolute top-3 right-3 p-2 rounded-full cursor-pointer transition ${
+            isFavorite ? "bg-red-600" : "bg-white/90"
+          }`}
+        >
+          <Heart className={`w-4 h-4 ${isFavorite ? "text-white" : "text-gray-600"}`} />
+        </div>
 
       </div>
 
@@ -306,6 +313,22 @@ const TenantsMainapp = () => {
   const [showContactModal, setShowContactModal] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [showSetupModal, setShowSetupModal] = useState(false);
+ const [favorites, setFavorites] = useState([]);
+
+
+  const handleToggleFavorite =(property) => {
+     setFavorites((prevFavorites) => {
+     
+      if (prevFavorites.some((fav) => fav.id === property.id)){
+      
+        return prevFavorites.filter((fav) => fav.id !== property.id)
+      }else{
+        return [...prevFavorites,property]
+      }
+  
+
+     })
+  }
 
   const navigate = useNavigate();
 
@@ -425,9 +448,9 @@ const TenantsMainapp = () => {
           <div className="flex items-center gap-2">
             <div 
               onClick={() => {navigate("/TenantsMainapp/profile")}}
-              className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center cursor-pointer"
+                className=" shadow-[6px_6px_0px_rgba(2,212,130,0.4)]  active:shadow-[2px_2px_0px_rgba(2,212,130,0.2)] active:translate-y-[2px] bg-[#02D482]/80 hover:bg-[#02D482] text-white p-2 sm:p-3  z-20 transition-all duration-300 backdrop-blur-sm"
             >
-              <User className="w-4 h-4 text-gray-600" />
+              <User className="w-4 h-4 text-white" />
             </div>
           </div>
         </div>
@@ -446,6 +469,31 @@ const TenantsMainapp = () => {
             />
           </div>
         )}
+       
+       <div  className="overflow-hidden mb-5 bg-[#02D482] text-white p-2">
+        <div
+          className="whitespace-nowrap animate-marquee text-center text-lg font-semibold"
+          style={{
+            display: "inline-block",
+            minWidth: "100%",
+            animation: "marquee 12s linear infinite",
+          }}
+        >
+          Join Landr today & truly live within your means.
+        </div>
+        </div>
+           
+           <style>
+        {`
+        @keyframes marquee {
+          0% { transform: translateX(100%); }
+          100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+          animation: marquee 12s linear infinite;
+        }
+        `}
+      </style>
 
         {/* Regular Properties */}
         <div>
@@ -457,9 +505,11 @@ const TenantsMainapp = () => {
               <PropertyCard 
                 key={property.id} 
                 property={property} 
+                onToggleFavorite={handleToggleFavorite}
                 onContact={handleContactLandlord}
                 onMoreInfo={handleMoreInfo}
                 onContactLandlord={handleContactLandlord}
+                favorites={favorites}
               />
             ))}
           </div>
