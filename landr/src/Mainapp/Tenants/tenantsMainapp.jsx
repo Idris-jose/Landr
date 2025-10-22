@@ -31,7 +31,7 @@ const TenantsMainapp = () => {
         return prevFavorites.filter((fav) => fav.id !== property.id)
       }else{
         return  [...prevFavorites,property]
-        console.log(favorites.length)
+
       }
   
 
@@ -47,7 +47,7 @@ const TenantsMainapp = () => {
   };
 
   const handleMoreInfo = (property) => {
-    console.log('More info for property:', property);
+
     navigate(`/property/${property.id}`);
   };
 
@@ -120,14 +120,12 @@ const TenantsMainapp = () => {
       )}
 
         {/* Virtual Bid Form Modal */}
-            <div className={`fixed inset-0   flex items-center justify-center z-50 transition-opacity ${showVirtualBidForm ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-
-            <VirtualBidForm
-              property={selectedPropertyForVirtual}
-              isOpen={showVirtualBidForm}
-              onClose={closeVirtualBidForm}
-            />
-            </div>
+        {showVirtualBidForm && (
+          <VirtualBidForm
+            property={selectedPropertyForVirtual}
+            onClose={closeVirtualBidForm}
+          />
+        )}
      
       {/* Setup Modal */}
       <SetupModal isOpen={showSetupModal} onClose={handleCloseModal} />

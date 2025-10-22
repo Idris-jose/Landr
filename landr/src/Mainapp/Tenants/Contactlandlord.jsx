@@ -22,7 +22,7 @@ const ContactLandlord = ({ landlord, property, onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Here you would typically send the form data to your backend
-    console.log('Form submitted:', formData);
+
     setIsSubmitted(true);
   };
 

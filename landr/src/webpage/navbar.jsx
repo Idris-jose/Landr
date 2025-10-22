@@ -68,14 +68,14 @@ export default function Navbar() {
       );
       const data = await response.json();
 
-      console.log("User logging:::" + JSON.stringify(data));
-      console.log("User logging error:::" + data.message);
+
+
 
       if (data.message) {
         throw new Error(` ${data.message}`);
       }
 
-      console.log("Login successful:", data);
+
       toast.success("Welcome back " + data.firstName + " " + data.lastName, {
         position: "top-right",
         autoClose: 5000,

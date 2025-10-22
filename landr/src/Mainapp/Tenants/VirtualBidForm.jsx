@@ -12,6 +12,8 @@ const VirtualBidForm = ({ property, onClose }) => {
   if (!property) return null;
 
   const [step, setStep] = useState(1);
+  const [message, setMessage] = useState(`Hi, ${property.landlordName} I'm interested in Scheduling a tour with your property. Thanks`);
+  const [isEditingMessage, setIsEditingMessage] = useState(false);
   const navigate = useNavigate();
 
   const nextStep = () => {
@@ -126,11 +128,20 @@ const VirtualBidForm = ({ property, onClose }) => {
                   />
                   <span className="font-medium">{property.landlordName}</span>
                 </div>
-                <p className="font-light text-sm sm:text-base mb-4">
-                  Hi, Sandles I'm interested in Scheduling a tour with <br className="hidden sm:block" />{" "}
-                  your property. Thanks
-                </p>
-                <PressButton onClick={nextStep} text="Edit" shadow="white" />
+                {isEditingMessage ? (
+                  <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="font-light text-sm sm:text-base mb-4 w-full bg-transparent text-white border border-white/30 rounded px-2 py-1 outline-none resize-none"
+                    rows={7}
+                    autoFocus
+                  />
+                ) : (
+                  <p className="font-light text-sm sm:text-base mb-4">
+                    {message}
+                  </p>
+                )}
+                <PressButton onClick={() => setIsEditingMessage(!isEditingMessage)} text={isEditingMessage ? "Save" : "Edit"} shadow="white" />
               </div>
             </div>
 
@@ -207,7 +218,7 @@ const VirtualBidForm = ({ property, onClose }) => {
               </p>
             </div>
             
-            <PressButton onClick={onclose} text="Proceed to dashboard" shadow="white" />
+            <PressButton onClick={onClose} text="Proceed to dashboard" shadow="white" />
           </div>
         )}
         </div>

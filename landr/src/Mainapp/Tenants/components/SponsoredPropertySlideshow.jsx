@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, User, CheckCircle, ChevronLeft, ChevronRight, Eye } from 'lucide-react';
 import { mockProperties } from '../mockProperties';
+import VirtualBidForm from '../VirtualBidForm';
 
 const SponsoredPropertySlideshow = ({ properties, onContact, onMoreInfo, onContactLandlord, onVirtualTour }) => {
   const [currentPropertyIndex, setCurrentPropertyIndex] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showVirtualBidForm, setShowVirtualBidForm] = useState(false);
+  const [selectedPropertyForVirtual, setSelectedPropertyForVirtual] = useState(null);
 
   // Get current property
   const currentProperty = properties[currentPropertyIndex];
@@ -65,10 +68,21 @@ const SponsoredPropertySlideshow = ({ properties, onContact, onMoreInfo, onConta
     }
   }, [currentImages.length, currentPropertyIndex]);
 
+  const handleVirtualTourClick = (property) => {
+    setSelectedPropertyForVirtual(property);
+    setShowVirtualBidForm(true);
+  };
+
+  const closeVirtualBidForm = () => {
+    setShowVirtualBidForm(false);
+    setSelectedPropertyForVirtual(null);
+  };
+
   if (!properties || properties.length === 0) return null;
 
   return (
-    <div className="relative w-full max-w-7xl mx-auto px-4 py-8">
+    <>
+      <div className="relative w-full max-w-7xl mx-auto px-4 py-8">
       <div className="relative w-full h-[600px] rounded-3xl overflow-hidden shadow-2xl group">
         {/* Background Image with Gradient Overlay */}
         <div className="absolute inset-0">
@@ -186,7 +200,7 @@ const SponsoredPropertySlideshow = ({ properties, onContact, onMoreInfo, onConta
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  onVirtualTour(currentProperty);
+                  handleVirtualTourClick(currentProperty);
                 }}
                 className="w-full bg-gradient-to-r from-[#02D482] to-emerald-500 hover:from-[#02D482] hover:to-[#02D482] text-white py-4 px-6 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 group"
               >
@@ -244,6 +258,15 @@ const SponsoredPropertySlideshow = ({ properties, onContact, onMoreInfo, onConta
       )}
          </div>
     </div>
+
+      {/* Virtual Bid Form Modal */}
+      {showVirtualBidForm && selectedPropertyForVirtual && (
+        <VirtualBidForm
+          property={selectedPropertyForVirtual}
+          onClose={closeVirtualBidForm}
+        />
+      )}
+    </>
   );
 };
 
@@ -254,7 +277,7 @@ const SponsoredPropertySlideshow = ({ properties, onContact, onMoreInfo, onConta
 const Demo = () => {
 
   const handleVirtualTour = (property) => {
-    alert(`Booking virtual tour for ${property.type}`);
+    
   };
 
   return (

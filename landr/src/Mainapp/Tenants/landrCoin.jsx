@@ -72,7 +72,7 @@ export default function MultiStepForm() {
   };
 
   const handleSubmit = () => {
-    console.log("Form submitted:", formData);
+
     navigate("/TenantsMainapp");
     alert("Form submitted ✅");
   };

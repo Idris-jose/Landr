@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserRound, Mail, LockKeyhole, Eye, EyeOff } from 'lucide-react';
-import background from '../assets/architecture-1719526_1920.jpg'; 
+import background from '../assets/architecture-1719526_1920.jpg';
 import logo from '../assets/Landr.png';
 
-export default function SignupPage() {
+export default function SignupPage({ onClose }) {
+  const navigate = useNavigate();
   const [signupData, setSignupData] = useState({
     firstName: '',
     lastName: '',
@@ -13,7 +15,7 @@ export default function SignupPage() {
     confirmPassword: '',
     termsAccepted: false
   });
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -32,9 +34,9 @@ export default function SignupPage() {
 
   const NavigateUser = (accountType) => {
     if (accountType === 'tenant') {
-      console.log('Navigate to tenant app');
+      navigate('/TenantsMainapp/landrCoin');
     } else if (accountType === 'landlord') {
-      console.log('Navigate to landlord app');
+      navigate('/LandlordMainapp');
     }
   };
 
@@ -44,6 +46,12 @@ export default function SignupPage() {
     setError('');
 
     // Basic validation
+    if (!signupData.accountType) {
+      setError("Please select an account type.");
+      setIsLoading(false);
+      return;
+    }
+
     if (signupData.password !== signupData.confirmPassword) {
       setError("Passwords do not match.");
       setIsLoading(false);
@@ -76,7 +84,7 @@ export default function SignupPage() {
 
             console.log('Success:', data);
             // Optionally redirect or show success toast
-            NavigateUser(accountType)
+            NavigateUser(signupData.accountType)
         } catch (err) {
             // console.error('Error:', JSON.stringify(err));
             console.error('Error:', {
@@ -94,11 +102,6 @@ export default function SignupPage() {
     onClose();
   };
 
-  const navigate = (path) => {
-    console.log('Navigate to:', path);
-    onClose(); // Close modal when navigating
-  };
-
   const handleGoogleSignIn = () => {
     console.log('Google sign in clicked');
   };
@@ -106,7 +109,7 @@ export default function SignupPage() {
   const goToLogin = () => {
     console.log('Navigate to login page');
     onClose(); // Close modal when navigating
-  }
+  };
 
 
   return (

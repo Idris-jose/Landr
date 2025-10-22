@@ -10,7 +10,7 @@ export default function Onboarding2(){
      
      const handleCompleteSetup = () => {
         setShowSetupModal(true);
-         console.log('Form submitted with file:', selectedFile)
+
     };
 
     const navigate = useNavigate()
