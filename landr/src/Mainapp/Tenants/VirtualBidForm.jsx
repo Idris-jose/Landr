@@ -9,6 +9,8 @@ import GlassEffect from "../../components/GlassEffect";
 import PressButton from "../../components/PressButton";
 
 const VirtualBidForm = ({ property, onClose }) => {
+  if (!property) return null;
+
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
 
@@ -17,8 +19,8 @@ const VirtualBidForm = ({ property, onClose }) => {
   };
 
   // Use the first imported image as the display image
-  const displayImage = property.images && property.images.length > 0 
-    ? property.images[0].url 
+  const displayImage = property.images && property.images.length > 0
+    ? property.images[0].url
     : 'https://via.placeholder.com/400x300?text=No+Image';
 
   return (

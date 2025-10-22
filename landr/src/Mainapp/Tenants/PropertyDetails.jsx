@@ -208,7 +208,7 @@ export default function PropertyDetails() {
             <div className="flex items-center gap-3">
               <span>10 Landr Coins</span>
                <div>
-                 <PressButton text="Purchase coin here" shadow='green'  />
+                 <PressButton  text="Purchase coin here" shadow='green'  />
             </div>
             </div>
           </div>
