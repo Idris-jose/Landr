@@ -9,18 +9,18 @@ export default function Section4() {
 
   return (
     <Element name="section4">
-      <section className="px-6 md:px-10 py-12 md:py-16">
-        <div className="bg-[#F2F4F3]  p-8 md:p-12 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+      <section className="px-4 sm:px-6 md:px-10 py-8 sm:py-12 md:py-16">
+        <div className="bg-[#F2F4F3] p-4 sm:p-6 md:p-8 lg:p-12 flex flex-col lg:flex-row items-center gap-6 sm:gap-8 lg:gap-12">
           <div className="flex-1 max-w-2xl">
-            <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-4 sm:mb-6">
               See how we solve solutions effectively
             </h1>
-            <p className="font-Poppins text-lg leading-relaxed mb-6 text-gray-700">
+            <p className="font-Poppins text-base sm:text-lg leading-relaxed mb-4 sm:mb-6 text-gray-700">
               At Landr, our focus is the Nigerian. The average people working
               extremely hard, but facing monstrous housing costs, that ought not
               to be so. We believe in our resolve to ensure everyone has a home.
             </p>
-            <p className="font-Poppins font-bold text-lg mb-8 text-gray-800">
+            <p className="font-Poppins font-bold text-base sm:text-lg mb-6 sm:mb-8 text-gray-800">
               - The team at Landr.
             </p>
 
@@ -45,11 +45,11 @@ export default function Section4() {
           </div>
 
           <div className="flex-1 flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[550px] aspect-[1.1/1]">
+            <div className="relative w-full max-w-[400px] sm:max-w-[500px] md:max-w-[550px] aspect-[1.1/1]">
               <img
                 src={Frame9}
                 alt="Landr solutions illustration"
-                className="absolute h-full w-full object-cover shadow-lg"
+                className="absolute h-full w-full object-cover shadow-lg rounded-lg"
               />
             </div>
           </div>

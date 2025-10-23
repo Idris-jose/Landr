@@ -281,16 +281,16 @@ const LandlordDashboard = () => {
   return (
     <div className="">
       <div className="">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-4">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">My Properties</h1>
-            <p className="text-gray-600">{filteredProperties.length} properties listed</p>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">My Properties</h1>
+            <p className="text-gray-600 text-sm sm:text-base">{filteredProperties.length} properties listed</p>
           </div>
           <button
             onClick={handleStartAdd}
-            className="flex items-center gap-2 bg-[#02D482] text-white px-4 py-2 rounded-lg hover:bg-[#72cf7a] transition-colors"
+            className="flex items-center gap-2 bg-[#02D482] text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-[#72cf7a] transition-colors text-sm sm:text-base"
           >
-            <Plus size={20} />
+            <Plus size={18} className="sm:w-5 sm:h-5" />
             Add Property
           </button>
         </div>

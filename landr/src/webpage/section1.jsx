@@ -104,18 +104,18 @@ export default function Section1() {
   return (
     <section name="section1">
       <motion.section
-        className="flex flex-col gap-12 px-6 md:px-10 py-8 md:py-12 relative"
+        className="flex flex-col gap-8 sm:gap-12 px-4 sm:px-6 md:px-10 py-6 sm:py-8 md:py-12 relative"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={containerVariants}
       >
         <motion.div
-          className="flex flex-col gap-6 max-w-4xl"
+          className="flex flex-col gap-4 sm:gap-6 max-w-4xl"
           variants={containerVariants}
         >
           <motion.h1
-            className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
             variants={itemVariants}
           >
             Find your next home without middlemen.
@@ -123,23 +123,23 @@ export default function Section1() {
 
           {/* ***********************removing the font-poppins class ************************* */}
           <motion.p
-            className="text-lg md:text-xl text-gray-500 leading-relaxed max-w-3xl"
+            className="text-base sm:text-lg md:text-xl text-gray-500 leading-relaxed max-w-3xl"
             variants={itemVariants}
           >
             Connect directly with landlords and tenants from the comfort of your
             home. No agents. No fees. Just honest housing.
           </motion.p>
 
-          <div className="flex font-Poppins flex-col md:flex-row gap-4 items-start md:items-center relative">
-            <div className="flex font-Poppins flex-col md:flex-row gap-4 items-start md:items-center relative">
+          <div className="flex font-Poppins flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center relative">
+            <div className="flex font-Poppins flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center relative w-full sm:w-auto">
               {/* City Button */}
-              <div className="relative">
+              <div className="relative w-full sm:w-auto">
                 <button
                   ref={cityButtonRef}
                   onClick={handleCitySearch}
-                  className="border-2 border-[#02D482]  px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2"
+                  className="border-2 border-[#02D482] px-3 sm:px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start text-sm sm:text-base"
                 >
-                  <MapPin className="w-5 h-5" />
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
                   {selectedCity || "City"}
                 </button>
                 {showCitySearch && (
@@ -152,13 +152,13 @@ export default function Section1() {
               </div>
 
               {/* Bed Button */}
-              <div className="relative">
+              <div className="relative w-full sm:w-auto">
                 <button
                   ref={bedButtonRef}
                   onClick={handleBedSearch}
-                  className="border-2 border-[#02D482]  px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2"
+                  className="border-2 border-[#02D482] px-3 sm:px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start text-sm sm:text-base"
                 >
-                  <BedSingle className="w-5 h-5" />
+                  <BedSingle className="w-4 h-4 sm:w-5 sm:h-5" />
                   {selectedBed || "Bed"}
                 </button>
                 {showBedSearch && (
@@ -171,13 +171,13 @@ export default function Section1() {
               </div>
 
               {/* Budget Button */}
-              <div className="relative">
+              <div className="relative w-full sm:w-auto">
                 <button
                   ref={budgetButtonRef}
                   onClick={handleBudgetSearch}
-                  className="border-2 border-[#02D482]  px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2"
+                  className="border-2 border-[#02D482] px-3 sm:px-4 md:px-10 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start text-sm sm:text-base"
                 >
-                  <Wallet className="w-5 h-5" />
+                  <Wallet className="w-4 h-4 sm:w-5 sm:h-5" />
                   {budgetRange.min === 50000 && budgetRange.max === 500000
                     ? "Budget"
                     : `${formatCurrency(budgetRange.min)} - ${formatCurrency(
@@ -197,14 +197,16 @@ export default function Section1() {
               {/* <div className='relative'>
          <div className="absolute top-2 left-2 w-full h-full bg-black "></div>
       <button className='bg-[#02D482] relative px-10 py-2 shadow-black  text-white hover:bg-green-700 transition-colors duration-200'>
-            Find your ideal Home           
+            Find your ideal Home
           </button>
        </div> */}
-              <PressButton
-                text="Find your ideal Home"
-                color="green"
-                shadow="black"
-              />
+              <div className="w-full sm:w-auto flex justify-center sm:justify-start">
+                <PressButton
+                  text="Find your ideal Home"
+                  color="green"
+                  shadow="black"
+                />
+              </div>
             </div>
           </div>
         </motion.div>

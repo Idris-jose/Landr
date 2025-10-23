@@ -138,8 +138,8 @@ export default function SignupPage({ onClose }) {
           </div>
           
           {/* Title and Description */}
-          <h2 className="text-2xl font-bold text-center mb-2">Create your Landr account</h2>
-          <p className="text-center mb-6 text-sm text-gray-600">
+          <h2 className="text-xl sm:text-2xl font-bold text-center mb-2">Create your Landr account</h2>
+          <p className="text-center mb-4 sm:mb-6 text-xs sm:text-sm text-gray-600">
             Create your account, purchase landr coins & start bidding for your dream home.
           </p>
 

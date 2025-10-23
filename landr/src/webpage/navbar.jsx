@@ -93,17 +93,17 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="flex justify-between items-center p-4 ml-10 mr-10">
-        <img src={logo} className="w-20" alt="Logo" />
+      <div className="flex justify-between items-center p-2 sm:p-4 ml-4 sm:ml-6 md:ml-10 mr-4 sm:mr-6 md:mr-10">
+        <img src={logo} className="w-12 sm:w-16 md:w-20" alt="Logo" />
         <ToastContainer />
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center font-Poppins gap-2">
+        <nav className="hidden md:flex items-center font-Poppins gap-2 lg:gap-4">
           <Link
             to="section1"
             smooth={true}
             duration={800}
-            className="cursor-pointer text-gray-500 hover:text-black"
+            className="cursor-pointer text-gray-500 hover:text-black text-sm lg:text-base"
             onClick={() => setMenuOpen(false)}
             spy={true}
           >
@@ -113,7 +113,7 @@ export default function Navbar() {
             to="section2"
             smooth={true}
             duration={800}
-            className="cursor-pointer text-gray-500 hover:text-black"
+            className="cursor-pointer text-gray-500 hover:text-black text-sm lg:text-base"
             onClick={() => setMenuOpen(false)}
             spy={true}
           >
@@ -123,7 +123,7 @@ export default function Navbar() {
             to="section3"
             smooth={true}
             duration={800}
-            className="cursor-pointer text-gray-500 hover:text-black"
+            className="cursor-pointer text-gray-500 hover:text-black text-sm lg:text-base"
             onClick={() => setMenuOpen(false)}
             spy={true}
           >
@@ -133,7 +133,7 @@ export default function Navbar() {
             to="section4"
             smooth={true}
             duration={800}
-            className="cursor-pointer text-gray-500 hover:text-black"
+            className="cursor-pointer text-gray-500 hover:text-black text-sm lg:text-base"
             onClick={() => setMenuOpen(false)}
             spy={true}
           >
@@ -143,7 +143,7 @@ export default function Navbar() {
             to="section5"
             smooth={true}
             duration={800}
-            className="cursor-pointer text-gray-500 hover:text-black"
+            className="cursor-pointer text-gray-500 hover:text-black text-sm lg:text-base"
             onClick={() => setMenuOpen(false)}
             spy={true}
           >
@@ -152,16 +152,7 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop Buttons */}
-        <div className="hidden md:flex items-center gap-2">
-          {/* ************commenting the initial button out to replace it with the press button************** */}
-
-          {/* <button
-            className=" border-black border py-3 px-6 text-[13px] font-Poppins"
-            onClick={handleLoginOpen}
-          >
-            Login
-          </button> */}
-
+        <div className="hidden md:flex items-center gap-1 lg:gap-2">
           <PressButton
             onClick={handleLoginOpen}
             border="green"
@@ -169,16 +160,6 @@ export default function Navbar() {
             shadow="green"
             text="Login"
           />
-          {/* *********************** */}
-          {/* *********************** */}
-          {/* <button
-            className=" bg-[#02D482] relative text-white px-4 py-3 text-[13px] font-Poppins"
-            onClick={() => {
-              navigate("/Signup");
-            }}
-          >
-            Create an account
-          </button> */}
 
           <PressButton text="create an account" color="green" shadow="black" />
         </div>

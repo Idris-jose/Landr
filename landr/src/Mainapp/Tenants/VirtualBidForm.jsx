@@ -119,8 +119,8 @@ const VirtualBidForm = ({ property, onClose }) => {
             <div className="border-t border-gray-200" />
 
             <div>
-              <div className="bg-[#02D482] p-4 sm:p-6 md:p-8 rounded-lg">
-                <div className="flex items-center mb-4 sm:mb-6 gap-2 text-xs sm:text-sm text-white">
+            <div className="bg-[#02D482] p-3 sm:p-4 md:p-6 rounded-lg">
+                <div className="flex items-center mb-3 sm:mb-4 md:mb-6 gap-2 text-xs sm:text-sm text-white">
                   <img
                     src={property.landlordAvatar}
                     alt={property.landlordName}
@@ -132,12 +132,12 @@ const VirtualBidForm = ({ property, onClose }) => {
                   <textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="font-light text-sm sm:text-base mb-4 w-full bg-transparent text-white border border-white/30 rounded px-2 py-1 outline-none resize-none"
-                    rows={7}
+                    className="font-light text-xs sm:text-sm md:text-base mb-3 sm:mb-4 w-full bg-transparent text-white border border-white/30 rounded px-2 py-1 outline-none resize-none"
+                    rows={5}
                     autoFocus
                   />
                 ) : (
-                  <p className="font-light text-sm sm:text-base mb-4">
+                  <p className="font-light text-xs sm:text-sm md:text-base mb-3 sm:mb-4">
                     {message}
                   </p>
                 )}

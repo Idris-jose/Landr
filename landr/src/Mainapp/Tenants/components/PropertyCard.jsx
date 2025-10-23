@@ -92,13 +92,13 @@ const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord, onTo
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <button
             onClick={(e) => {
               e.stopPropagation();
               onVirtualTour(property);
             }}
-            className="border-[#02D482] border-1  px-4 py-2 text-sm font-poppins  hover:bg-[#02D482] hover:text-amber-50 transition-colors"
+            className="border-[#02D482] border px-3 sm:px-4 py-2 text-xs sm:text-sm font-poppins hover:bg-[#02D482] hover:text-amber-50 transition-colors"
           >
             Bid for live tour
           </button>
@@ -107,7 +107,7 @@ const PropertyCard = ({ property, onContact, onMoreInfo, onContactLandlord, onTo
               e.stopPropagation();
               onMoreInfo(property);
             }}
-            className="bg-[#02D482] text-white px-4 py-2 text-sm  hover:bg-green-600 transition-colors"
+            className="bg-[#02D482] text-white px-3 sm:px-4 py-2 text-xs sm:text-sm hover:bg-green-600 transition-colors"
           >
             View property
           </button>

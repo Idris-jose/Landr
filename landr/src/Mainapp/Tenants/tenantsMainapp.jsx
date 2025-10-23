@@ -131,18 +131,18 @@ const TenantsMainapp = () => {
       <SetupModal isOpen={showSetupModal} onClose={handleCloseModal} />
 
       {/* Navigation Bar */}
-      <nav className='flex justify-between items-center bg-white px-8 py-4 '>
+      <nav className='flex justify-between items-center bg-white px-4 sm:px-6 md:px-8 py-3 sm:py-4'>
         <div className="flex items-center">
-          <img src={logo} className='w-20' alt="Logo" />
+          <img src={logo} className='w-16 sm:w-20' alt="Logo" />
         </div>
-        <div className='flex items-center gap-6'>
+        <div className='flex items-center gap-4 sm:gap-6'>
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input 
+            <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
+            <input
               placeholder='Search properties, locations, or landlords'
               value={searchQuery}
               onChange={handleSearch}
-              className='bg-gray-50 border border-gray-200 rounded-full pl-12 pr-6 py-3 text-sm w-80 focus:outline-none focus:ring-2 focus:ring-[#02D482] focus:border-transparent'
+              className='bg-gray-50 border border-gray-200 rounded-full pl-10 sm:pl-12 pr-4 sm:pr-6 py-2 sm:py-3 text-sm w-full sm:w-80 focus:outline-none focus:ring-2 focus:ring-[#02D482] focus:border-transparent'
             />
           </div>
           <div className="flex items-center gap-2">
@@ -157,10 +157,10 @@ const TenantsMainapp = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-8">
         {/* Sponsored Properties - New Banner Style */}
         {sponsoredProperties.length > 0 && (
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <SponsoredPropertySlideshow
               properties={sponsoredProperties}
               onContact={handleContactLandlord}
@@ -170,10 +170,10 @@ const TenantsMainapp = () => {
             />
           </div>
         )}
-       
-       <div  className="overflow-hidden mb-5 bg-[#02D482] text-white p-2">
+
+       <div  className="overflow-hidden mb-4 sm:mb-5 bg-[#02D482] text-white p-2">
         <div
-          className="whitespace-nowrap animate-marquee text-center text-lg font-semibold"
+          className="whitespace-nowrap animate-marquee text-center text-base sm:text-lg font-semibold"
           style={{
             display: "inline-block",
             minWidth: "100%",
@@ -183,7 +183,7 @@ const TenantsMainapp = () => {
           Join Landr today & truly live within your means.
         </div>
         </div>
-           
+
            <style>
         {`
         @keyframes marquee {
@@ -198,10 +198,10 @@ const TenantsMainapp = () => {
 
         {/* Regular Properties */}
         <div>
-          <h2 className="text-2xl font-normal mb-6 text-gray-900">
+          <h2 className="text-xl sm:text-2xl font-normal mb-4 sm:mb-6 text-gray-900">
             Home according <span className='text-[#02D482]'>to your Search</span>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {regularProperties.map((property) => (
               <PropertyCard
                 key={property.id}
@@ -219,11 +219,11 @@ const TenantsMainapp = () => {
 
         {/* Empty State */}
         {filteredProperties.length === 0 && (
-          <div className="text-center py-16">
-            <div className="text-gray-500 text-lg mb-2">No properties found</div>
+          <div className="text-center py-12 sm:py-16">
+            <div className="text-gray-500 text-base sm:text-lg mb-2">No properties found</div>
             <div className="text-gray-400">Try adjusting your search criteria</div>
           </div>
-       
+
         )}
       </div>
     </div>
